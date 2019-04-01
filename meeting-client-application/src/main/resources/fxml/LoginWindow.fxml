@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Pane layoutX="123.0" layoutY="100.0" prefHeight="200.0" prefWidth="373.0">
+         <children>
+            <Button layoutX="166.0" layoutY="145.0" mnemonicParsing="false" text="OK" />
+            <Label layoutX="87.0" layoutY="37.0" text="Ujebales TINy ;)" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
