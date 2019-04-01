@@ -6,13 +6,16 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane id="userLogin" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Pane layoutX="123.0" layoutY="100.0" prefHeight="200.0" prefWidth="373.0">
+      <Pane prefHeight="419.0" prefWidth="600.0">
          <children>
-            <Button layoutX="166.0" layoutY="145.0" mnemonicParsing="false" text="OK" />
-            <Label layoutX="87.0" layoutY="37.0" text="Ujebales TINy ;)" />
+            <Label layoutX="186.0" layoutY="155.0" text="Username" />
+            <Label layoutX="186.0" layoutY="190.0" text="Password" />
+            <TextField layoutX="266.0" layoutY="150.0" />
+            <PasswordField layoutX="266.0" layoutY="185.0" />
+            <Button layoutX="226.0" layoutY="227.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="80.0" text="Sign in" />
+            <Button layoutX="319.0" layoutY="227.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="80.0" text="Sign up" />
          </children>
       </Pane>
    </children>
