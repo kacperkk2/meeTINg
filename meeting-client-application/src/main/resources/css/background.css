@@ -5,3 +5,11 @@
 }
 
 #footer:hover {-fx-background-color: #000000; -fx-opacity: 0.8;}
+
+.button {
+    -fx-background-color: #000000;
+}
+
+.button:hover {
+    -fx-background-color: #abcdef
+}

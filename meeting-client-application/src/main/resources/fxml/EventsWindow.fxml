@@ -41,7 +41,15 @@
                   <FontIcon iconColor="WHITE" iconLiteral="typ-arrow-left-outline" iconSize="22" strokeType="OUTSIDE" strokeWidth="0.0" />
                </graphic>
                 </Button>
-                <Button layoutX="20.0" layoutY="80.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="160.0" style="-fx-background-color: #000000;" text=" CREATE" textFill="WHITE">
+                <Button layoutX="20.0" layoutY="80.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="160.0" style="-fx-background-color: #000000;" text=" REFRESH" textFill="WHITE">
+                    <font>
+                        <Font name="System Bold" size="15.0" />
+                    </font>
+                    <graphic>
+                        <FontIcon iconColor="WHITE" iconLiteral="typ-refresh-outline" iconSize="22" strokeType="OUTSIDE" strokeWidth="0.0" />
+                    </graphic>
+                </Button>
+                <Button layoutX="20.0" layoutY="130.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="160.0" style="-fx-background-color: #000000;" text=" CREATE" textFill="WHITE">
                     <font>
                         <Font name="System Bold" size="15.0" />
                     </font>

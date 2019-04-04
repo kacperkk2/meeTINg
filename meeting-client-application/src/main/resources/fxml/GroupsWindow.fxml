@@ -33,7 +33,15 @@
          </children></Pane>
       <Pane layoutX="600.0" layoutY="100.0" prefHeight="480.0" prefWidth="200.0" style="-fx-background-color: #ECECEC;">
          <children>
-            <Button layoutX="20.0" layoutY="30.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="160.0" style="-fx-background-color: #000000;" text=" CREATE" textFill="WHITE">
+            <Button layoutX="20.0" layoutY="30.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="160.0" style="-fx-background-color: #000000;" text=" REFRESH" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+               <graphic>
+                  <FontIcon iconColor="WHITE" iconLiteral="typ-refresh-outline" iconSize="22" strokeType="OUTSIDE" strokeWidth="0.0" />
+               </graphic>
+            </Button>
+            <Button layoutX="20.0" layoutY="80.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="160.0" style="-fx-background-color: #000000;" text=" CREATE" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
@@ -41,7 +49,7 @@
                   <FontIcon iconColor="WHITE" iconLiteral="typ-plus-outline" iconSize="22" strokeType="OUTSIDE" strokeWidth="0.0" />
                </graphic>
             </Button>
-            <Button layoutX="20.0" layoutY="80.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="160.0" style="-fx-background-color: #000000;" text=" REQUESTS" textFill="WHITE">
+            <Button layoutX="20.0" layoutY="130.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="160.0" style="-fx-background-color: #000000;" text=" REQUESTS" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
