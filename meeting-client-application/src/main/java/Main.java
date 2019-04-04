@@ -40,12 +40,12 @@ public class Main extends Application {
         Rectangle2D primScreenBounds = Screen.getPrimary().getVisualBounds();
         Stage loginStage = new Stage();
 
-        loadStage(loginStage, "/fxml/LoginWindow.fxml", "meeTINg Client Application");
+        loadStage(loginStage, "/fxml/GroupsWindow.fxml", "meeTINg Client Application");
         loginStage.show();
-        loginStage.setWidth(640);
-        loginStage.setHeight(480);
-        loginStage.setX((primScreenBounds.getWidth()/2) - 320);
-        loginStage.setY((primScreenBounds.getHeight()/2) - 240);
+//        loginStage.setWidth(640);
+//        loginStage.setHeight(480);
+//        loginStage.setX((primScreenBounds.getWidth()/2) - 320);
+//        loginStage.setY((primScreenBounds.getHeight()/2) - 240);
     }
 
     private void loadStage(Stage stage, String resourcePath, String title)
@@ -53,7 +53,7 @@ public class Main extends Application {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource(resourcePath));
             AnchorPane root = fxmlLoader.load();
-            root.setId("userLogin");
+            //root.setId("userLogin");
             Scene scene = new Scene(root);
             scene.getStylesheets().addAll(this.getClass().getResource("css/background.css").toExternalForm());
             stage.setScene(scene);

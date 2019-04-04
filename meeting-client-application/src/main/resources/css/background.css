@@ -3,3 +3,5 @@
     -fx-background-position: center;
     -fx-background-size: 640 480;
 }
+
+#footer:hover {-fx-background-color: #000000; -fx-opacity: 0.8;}
