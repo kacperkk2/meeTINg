@@ -1,16 +1,38 @@
 package controller;
 
+import client.Client;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import controller.GroupsWindowController;
+
+import java.awt.*;
 
 public class LoginWindowController {
 
+    private Client client;
+
     @FXML
-    public void logging() {
-        System.out.println("logging");
+    public void signInClicked(ActionEvent event) {
+
+        // dodac ladowanie do wiadomosci tresci pola na login i haslo i przesylac wiadomosc z tym do serwa
+        client.sendMessage();
+
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/GroupsWindow.fxml"));
+            AnchorPane root = fxmlLoader.load();
+            Scene scene = new Scene(root);
+            Stage userMainStage = (Stage)((Node) event.getSource()).getScene().getWindow();
+
+            userMainStage.setScene(scene);
+            userMainStage.show();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -41,4 +63,7 @@ public class LoginWindowController {
         }
     }
 
+    public void setClient(Client client) {
+        this.client = client;
+    }
 }

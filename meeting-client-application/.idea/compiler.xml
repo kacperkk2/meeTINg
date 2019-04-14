@@ -6,8 +6,11 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="meeting-client-application" />
+        <module name="meeting-client-app" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="meeting-client-app" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
 </project>

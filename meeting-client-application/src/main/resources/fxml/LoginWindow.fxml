@@ -6,13 +6,13 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="userLogin" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginWindowController">
+<AnchorPane id="userLogin" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginWindowController">
          <children>
             <Label layoutX="186.0" layoutY="155.0" text="Username" />
             <Label layoutX="186.0" layoutY="190.0" text="Password" />
             <TextField layoutX="266.0" layoutY="150.0" />
             <PasswordField layoutX="266.0" layoutY="185.0" />
-            <Button layoutX="226.0" layoutY="227.0" mnemonicParsing="false" onAction="#logging" prefHeight="25.0" prefWidth="80.0" text="Sign in" />
+            <Button layoutX="226.0" layoutY="227.0" mnemonicParsing="false" onAction="#signInClicked" prefHeight="25.0" prefWidth="80.0" text="Sign in" />
             <Button layoutX="319.0" layoutY="227.0" mnemonicParsing="false" onAction="#registration" prefHeight="25.0" prefWidth="80.0" text="Sign up" />
          </children>
 </AnchorPane>
