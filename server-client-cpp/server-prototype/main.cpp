@@ -1,13 +1,22 @@
-//
-// Created by Tomasz Suchodolski, Kacper Klimczuk on 14.04.19.
-//
-
+#include <iostream>
 #include <unistd.h>
-#include <fstream>
-#include "ClientManager.h"
+#include <arpa/inet.h>
+#include <cstring>
+#include "ConnectionManager.h"
 #include "ConsoleManager.h"
+#include "PackageSizeParser.h"
+
+#define PORT 9543
+#define BACKLOG 10
 
 using namespace std;
+
+void *handle_client(void* fd)
+{
+    ConnectionManager connectionManager;
+    connectionManager.manage_connections(PORT, BACKLOG, fd);
+    return 0;
+}
 
 
 int main()
@@ -23,7 +32,7 @@ int main()
     // utworz nowy watek i przekaz mu deskryptor do pipe do read
     pthread_t thread_id;
 
-    if(pthread_create(&thread_id, NULL, ClientManager::handle_client, (void *) (intptr_t) &pipefd) < 0)
+    if(pthread_create(&thread_id, NULL, handle_client, (void *) (intptr_t) &pipefd) < 0)
     {
         perror("pthread_create");
         exit(EXIT_FAILURE);

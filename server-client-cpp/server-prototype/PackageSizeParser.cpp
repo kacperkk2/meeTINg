@@ -1,7 +1,3 @@
-//
-// Created by Tomasz Suchodolski on 14.04.19.
-//
-
 #include "PackageSizeParser.h"
 
 int32_t PackageSizeParser::parse_int_32(const char (&buf)[4])

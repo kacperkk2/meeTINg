@@ -4,7 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/tomas/Desktop/servclient 2 watki/server-prototype/ClientManager.cpp" "/home/tomas/Desktop/servclient 2 watki/server-prototype/cmake-build-debug/CMakeFiles/server_prototype.dir/ClientManager.cpp.o"
+  "/home/tomas/Desktop/servclient 2 watki/server-prototype/ConnectionManager.cpp" "/home/tomas/Desktop/servclient 2 watki/server-prototype/cmake-build-debug/CMakeFiles/server_prototype.dir/ConnectionManager.cpp.o"
   "/home/tomas/Desktop/servclient 2 watki/server-prototype/ConsoleManager.cpp" "/home/tomas/Desktop/servclient 2 watki/server-prototype/cmake-build-debug/CMakeFiles/server_prototype.dir/ConsoleManager.cpp.o"
   "/home/tomas/Desktop/servclient 2 watki/server-prototype/PackageSizeParser.cpp" "/home/tomas/Desktop/servclient 2 watki/server-prototype/cmake-build-debug/CMakeFiles/server_prototype.dir/PackageSizeParser.cpp.o"
   "/home/tomas/Desktop/servclient 2 watki/server-prototype/main.cpp" "/home/tomas/Desktop/servclient 2 watki/server-prototype/cmake-build-debug/CMakeFiles/server_prototype.dir/main.cpp.o"

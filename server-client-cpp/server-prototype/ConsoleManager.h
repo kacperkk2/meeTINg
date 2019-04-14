@@ -1,7 +1,3 @@
-//
-// Created by Tomasz Suchodolski on 14.04.19.
-//
-
 #ifndef SERVER_PROTOTYPE_CONSOLEMANAGER_H
 #define SERVER_PROTOTYPE_CONSOLEMANAGER_H
 

@@ -84,10 +84,10 @@
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/home/tomas/Desktop/servclient 2 watki/server-prototype/ClientManager.cpp">
+		<Unit filename="/home/tomas/Desktop/servclient 2 watki/server-prototype/ConnectionManager.cpp">
 			<Option target="server_prototype"/>
 		</Unit>
-		<Unit filename="/home/tomas/Desktop/servclient 2 watki/server-prototype/ClientManager.h">
+		<Unit filename="/home/tomas/Desktop/servclient 2 watki/server-prototype/ConnectionManager.h">
 			<Option target="server_prototype"/>
 		</Unit>
 		<Unit filename="/home/tomas/Desktop/servclient 2 watki/server-prototype/ConsoleManager.cpp">

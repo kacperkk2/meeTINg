@@ -83,18 +83,18 @@ CMakeFiles/server_prototype.dir/PackageSizeParser.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/server_prototype.dir/PackageSizeParser.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/home/tomas/Desktop/servclient 2 watki/server-prototype/PackageSizeParser.cpp" -o CMakeFiles/server_prototype.dir/PackageSizeParser.cpp.s
 
-CMakeFiles/server_prototype.dir/ClientManager.cpp.o: CMakeFiles/server_prototype.dir/flags.make
-CMakeFiles/server_prototype.dir/ClientManager.cpp.o: ../ClientManager.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/home/tomas/Desktop/servclient 2 watki/server-prototype/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/server_prototype.dir/ClientManager.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/server_prototype.dir/ClientManager.cpp.o -c "/home/tomas/Desktop/servclient 2 watki/server-prototype/ClientManager.cpp"
+CMakeFiles/server_prototype.dir/ConnectionManager.cpp.o: CMakeFiles/server_prototype.dir/flags.make
+CMakeFiles/server_prototype.dir/ConnectionManager.cpp.o: ../ConnectionManager.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/home/tomas/Desktop/servclient 2 watki/server-prototype/cmake-build-debug/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/server_prototype.dir/ConnectionManager.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/server_prototype.dir/ConnectionManager.cpp.o -c "/home/tomas/Desktop/servclient 2 watki/server-prototype/ConnectionManager.cpp"
 
-CMakeFiles/server_prototype.dir/ClientManager.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/server_prototype.dir/ClientManager.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/home/tomas/Desktop/servclient 2 watki/server-prototype/ClientManager.cpp" > CMakeFiles/server_prototype.dir/ClientManager.cpp.i
+CMakeFiles/server_prototype.dir/ConnectionManager.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/server_prototype.dir/ConnectionManager.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/home/tomas/Desktop/servclient 2 watki/server-prototype/ConnectionManager.cpp" > CMakeFiles/server_prototype.dir/ConnectionManager.cpp.i
 
-CMakeFiles/server_prototype.dir/ClientManager.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/server_prototype.dir/ClientManager.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/home/tomas/Desktop/servclient 2 watki/server-prototype/ClientManager.cpp" -o CMakeFiles/server_prototype.dir/ClientManager.cpp.s
+CMakeFiles/server_prototype.dir/ConnectionManager.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/server_prototype.dir/ConnectionManager.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/home/tomas/Desktop/servclient 2 watki/server-prototype/ConnectionManager.cpp" -o CMakeFiles/server_prototype.dir/ConnectionManager.cpp.s
 
 CMakeFiles/server_prototype.dir/ConsoleManager.cpp.o: CMakeFiles/server_prototype.dir/flags.make
 CMakeFiles/server_prototype.dir/ConsoleManager.cpp.o: ../ConsoleManager.cpp
@@ -113,7 +113,7 @@ CMakeFiles/server_prototype.dir/ConsoleManager.cpp.s: cmake_force
 server_prototype_OBJECTS = \
 "CMakeFiles/server_prototype.dir/main.cpp.o" \
 "CMakeFiles/server_prototype.dir/PackageSizeParser.cpp.o" \
-"CMakeFiles/server_prototype.dir/ClientManager.cpp.o" \
+"CMakeFiles/server_prototype.dir/ConnectionManager.cpp.o" \
 "CMakeFiles/server_prototype.dir/ConsoleManager.cpp.o"
 
 # External object files for target server_prototype
@@ -121,7 +121,7 @@ server_prototype_EXTERNAL_OBJECTS =
 
 server_prototype: CMakeFiles/server_prototype.dir/main.cpp.o
 server_prototype: CMakeFiles/server_prototype.dir/PackageSizeParser.cpp.o
-server_prototype: CMakeFiles/server_prototype.dir/ClientManager.cpp.o
+server_prototype: CMakeFiles/server_prototype.dir/ConnectionManager.cpp.o
 server_prototype: CMakeFiles/server_prototype.dir/ConsoleManager.cpp.o
 server_prototype: CMakeFiles/server_prototype.dir/build.make
 server_prototype: CMakeFiles/server_prototype.dir/link.txt

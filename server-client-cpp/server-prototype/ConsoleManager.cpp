@@ -1,7 +1,3 @@
-//
-// Created by Tomasz Suchodolski on 14.04.19.
-//
-
 #include <iostream>
 #include <unistd.h>
 #include "ConsoleManager.h"

@@ -123,32 +123,32 @@ server_prototype/fast:
 	$(MAKE) -f CMakeFiles/server_prototype.dir/build.make CMakeFiles/server_prototype.dir/build
 .PHONY : server_prototype/fast
 
-ClientManager.o: ClientManager.cpp.o
+ConnectionManager.o: ConnectionManager.cpp.o
 
-.PHONY : ClientManager.o
+.PHONY : ConnectionManager.o
 
 # target to build an object file
-ClientManager.cpp.o:
-	$(MAKE) -f CMakeFiles/server_prototype.dir/build.make CMakeFiles/server_prototype.dir/ClientManager.cpp.o
-.PHONY : ClientManager.cpp.o
+ConnectionManager.cpp.o:
+	$(MAKE) -f CMakeFiles/server_prototype.dir/build.make CMakeFiles/server_prototype.dir/ConnectionManager.cpp.o
+.PHONY : ConnectionManager.cpp.o
 
-ClientManager.i: ClientManager.cpp.i
+ConnectionManager.i: ConnectionManager.cpp.i
 
-.PHONY : ClientManager.i
+.PHONY : ConnectionManager.i
 
 # target to preprocess a source file
-ClientManager.cpp.i:
-	$(MAKE) -f CMakeFiles/server_prototype.dir/build.make CMakeFiles/server_prototype.dir/ClientManager.cpp.i
-.PHONY : ClientManager.cpp.i
+ConnectionManager.cpp.i:
+	$(MAKE) -f CMakeFiles/server_prototype.dir/build.make CMakeFiles/server_prototype.dir/ConnectionManager.cpp.i
+.PHONY : ConnectionManager.cpp.i
 
-ClientManager.s: ClientManager.cpp.s
+ConnectionManager.s: ConnectionManager.cpp.s
 
-.PHONY : ClientManager.s
+.PHONY : ConnectionManager.s
 
 # target to generate assembly for a file
-ClientManager.cpp.s:
-	$(MAKE) -f CMakeFiles/server_prototype.dir/build.make CMakeFiles/server_prototype.dir/ClientManager.cpp.s
-.PHONY : ClientManager.cpp.s
+ConnectionManager.cpp.s:
+	$(MAKE) -f CMakeFiles/server_prototype.dir/build.make CMakeFiles/server_prototype.dir/ConnectionManager.cpp.s
+.PHONY : ConnectionManager.cpp.s
 
 ConsoleManager.o: ConsoleManager.cpp.o
 
@@ -240,9 +240,9 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... server_prototype"
 	@echo "... edit_cache"
-	@echo "... ClientManager.o"
-	@echo "... ClientManager.i"
-	@echo "... ClientManager.s"
+	@echo "... ConnectionManager.o"
+	@echo "... ConnectionManager.i"
+	@echo "... ConnectionManager.s"
 	@echo "... ConsoleManager.o"
 	@echo "... ConsoleManager.i"
 	@echo "... ConsoleManager.s"

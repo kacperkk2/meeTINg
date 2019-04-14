@@ -6,25 +6,41 @@
 
 #IncludeRegexTransform: 
 
-/home/tomas/Desktop/servclient 2 watki/server-prototype/ClientManager.cpp
+/home/tomas/Desktop/servclient 2 watki/server-prototype/ConnectionManager.cpp
 iostream
 -
 arpa/inet.h
 -
 unistd.h
 -
-fstream
--
 cstring
 -
+ConnectionManager.h
+/home/tomas/Desktop/servclient 2 watki/server-prototype/ConnectionManager.h
 PackageSizeParser.h
 /home/tomas/Desktop/servclient 2 watki/server-prototype/PackageSizeParser.h
-ClientManager.h
-/home/tomas/Desktop/servclient 2 watki/server-prototype/ClientManager.h
 
-/home/tomas/Desktop/servclient 2 watki/server-prototype/ClientManager.h
+/home/tomas/Desktop/servclient 2 watki/server-prototype/ConnectionManager.h
+
+/home/tomas/Desktop/servclient 2 watki/server-prototype/ConsoleManager.h
 
 /home/tomas/Desktop/servclient 2 watki/server-prototype/PackageSizeParser.h
 cstdint
 -
+
+/home/tomas/Desktop/servclient 2 watki/server-prototype/main.cpp
+iostream
+-
+unistd.h
+-
+arpa/inet.h
+-
+cstring
+-
+ConnectionManager.h
+/home/tomas/Desktop/servclient 2 watki/server-prototype/ConnectionManager.h
+ConsoleManager.h
+/home/tomas/Desktop/servclient 2 watki/server-prototype/ConsoleManager.h
+PackageSizeParser.h
+/home/tomas/Desktop/servclient 2 watki/server-prototype/PackageSizeParser.h
 
