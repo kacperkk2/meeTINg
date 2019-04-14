@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="server_prototype"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/home/tomas/Desktop/servclient 2 watki/server-prototype/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/tomas/Desktop/servclient\ 2\ watki/server-prototype/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/tomas/Desktop/servclient\ 2\ watki/server-prototype/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/tomas/Desktop/servclient\ 2\ watki/server-prototype/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/tomas/Desktop/servclient\ 2\ watki/server-prototype/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="/home/tomas/Desktop/servclient 2 watki/server-prototype/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/tomas/Desktop/servclient\ 2\ watki/server-prototype/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/tomas/Desktop/servclient\ 2\ watki/server-prototype/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/tomas/Desktop/servclient\ 2\ watki/server-prototype/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/tomas/Desktop/servclient\ 2\ watki/server-prototype/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="server_prototype">
+				<Option output="/home/tomas/Desktop/servclient 2 watki/server-prototype/cmake-build-debug/server_prototype" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/tomas/Desktop/servclient 2 watki/server-prototype/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/include/c++/7"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/7"/>
+					<Add directory="/usr/include/c++/7/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/7/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/tomas/Desktop/servclient\ 2\ watki/server-prototype/cmake-build-debug/Makefile&quot;  VERBOSE=1 server_prototype"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/tomas/Desktop/servclient\ 2\ watki/server-prototype/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/tomas/Desktop/servclient\ 2\ watki/server-prototype/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/tomas/Desktop/servclient\ 2\ watki/server-prototype/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="server_prototype/fast">
+				<Option output="/home/tomas/Desktop/servclient 2 watki/server-prototype/cmake-build-debug/server_prototype" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/tomas/Desktop/servclient 2 watki/server-prototype/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/include/c++/7"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/7"/>
+					<Add directory="/usr/include/c++/7/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/7/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/tomas/Desktop/servclient\ 2\ watki/server-prototype/cmake-build-debug/Makefile&quot;  VERBOSE=1 server_prototype/fast"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/tomas/Desktop/servclient\ 2\ watki/server-prototype/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/tomas/Desktop/servclient\ 2\ watki/server-prototype/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/tomas/Desktop/servclient\ 2\ watki/server-prototype/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/home/tomas/Desktop/servclient 2 watki/server-prototype/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/tomas/Desktop/servclient\ 2\ watki/server-prototype/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/tomas/Desktop/servclient\ 2\ watki/server-prototype/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/tomas/Desktop/servclient\ 2\ watki/server-prototype/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/tomas/Desktop/servclient\ 2\ watki/server-prototype/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/home/tomas/Desktop/servclient 2 watki/server-prototype/ClientManager.cpp">
+			<Option target="server_prototype"/>
+		</Unit>
+		<Unit filename="/home/tomas/Desktop/servclient 2 watki/server-prototype/ClientManager.h">
+			<Option target="server_prototype"/>
+		</Unit>
+		<Unit filename="/home/tomas/Desktop/servclient 2 watki/server-prototype/ConsoleManager.cpp">
+			<Option target="server_prototype"/>
+		</Unit>
+		<Unit filename="/home/tomas/Desktop/servclient 2 watki/server-prototype/ConsoleManager.h">
+			<Option target="server_prototype"/>
+		</Unit>
+		<Unit filename="/home/tomas/Desktop/servclient 2 watki/server-prototype/PackageSizeParser.cpp">
+			<Option target="server_prototype"/>
+		</Unit>
+		<Unit filename="/home/tomas/Desktop/servclient 2 watki/server-prototype/PackageSizeParser.h">
+			<Option target="server_prototype"/>
+		</Unit>
+		<Unit filename="/home/tomas/Desktop/servclient 2 watki/server-prototype/main.cpp">
+			<Option target="server_prototype"/>
+		</Unit>
+		<Unit filename="/home/tomas/Desktop/servclient 2 watki/server-prototype/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>

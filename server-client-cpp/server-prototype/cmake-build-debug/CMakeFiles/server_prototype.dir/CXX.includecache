@@ -1,0 +1,30 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/tomas/Desktop/servclient 2 watki/server-prototype/ClientManager.cpp
+iostream
+-
+arpa/inet.h
+-
+unistd.h
+-
+fstream
+-
+cstring
+-
+PackageSizeParser.h
+/home/tomas/Desktop/servclient 2 watki/server-prototype/PackageSizeParser.h
+ClientManager.h
+/home/tomas/Desktop/servclient 2 watki/server-prototype/ClientManager.h
+
+/home/tomas/Desktop/servclient 2 watki/server-prototype/ClientManager.h
+
+/home/tomas/Desktop/servclient 2 watki/server-prototype/PackageSizeParser.h
+cstdint
+-
+
