@@ -78,8 +78,8 @@ void ConnectionManager::handle_client_request(int fd) {
             }
 
             // przywracam domyslne ustawienia, bo wyslalem, zostaje czyste na nastepny raz
-            cli_struct[fd].init();
             cli_struct[fd].dealloc();
+            cli_struct[fd].init();
         }
         else
             cout << "Jeszcze nie mam calej wiadomosci" << endl;

@@ -28,25 +28,7 @@ map
 ClientStructure.h
 /home/kklimczu/STUDIA/TIN/meeTINg/server-client-cpp/server-prototype/ClientStructure.h
 
-/home/kklimczu/STUDIA/TIN/meeTINg/server-client-cpp/server-prototype/ConsoleManager.h
-
 /home/kklimczu/STUDIA/TIN/meeTINg/server-client-cpp/server-prototype/PackageSizeParser.h
 cstdint
 -
-
-/home/kklimczu/STUDIA/TIN/meeTINg/server-client-cpp/server-prototype/main.cpp
-iostream
--
-unistd.h
--
-arpa/inet.h
--
-cstring
--
-ConnectionManager.h
-/home/kklimczu/STUDIA/TIN/meeTINg/server-client-cpp/server-prototype/ConnectionManager.h
-ConsoleManager.h
-/home/kklimczu/STUDIA/TIN/meeTINg/server-client-cpp/server-prototype/ConsoleManager.h
-PackageSizeParser.h
-/home/kklimczu/STUDIA/TIN/meeTINg/server-client-cpp/server-prototype/PackageSizeParser.h
 
