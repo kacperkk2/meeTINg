@@ -1,21 +1,21 @@
 #ifndef SERVER_PROTOTYPE_CONNECTIONMANAGER_H
 #define SERVER_PROTOTYPE_CONNECTIONMANAGER_H
 
-#define BUFLEN 128
+#include <map>
+#include "ClientStructure.h"
+
 
 class ConnectionManager {
 
 private:
+    std::map<int, ClientStructure> cli_struct; // mapuje deskryptor klienta -> struktura klienta, w niej gromadzone sa otrzymane bajty
     int fdmax; // numer najwiekszego deskryptora
     fd_set master; // glowna lista deskryptorow
     fd_set ready; // pomocnicza lista deskryptorow dla selecta
     int listenerfd; // deskryptor gniazda nasluchujacego
     sockaddr_in listeneraddr; // adres nasluchujacego
     char buf; // jednobajtowe komunikaty od watka nadrzednego
-    char incomingMessage[BUFLEN]; // bufor na wiadomosci przychodzace
-    char completeMessage[BUFLEN]; // bufor do wyslania pelnej wiadomosci zwrotnej klientowi
     int nbytes_rec;
-    int processed_bytes;
     bool work = true;
     int *readfd_pipe;
 
@@ -27,6 +27,7 @@ public:
     int handle_console_request();
     void handle_client_request(int);
     int send_all(int, char*, int*);
+    void set_if_higher_fd(int);
 
 };
 

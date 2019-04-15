@@ -1,4 +1,4 @@
-/opt/clion-2019.1/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" "/home/tomas/Desktop/servclient 2 watki/server-prototype"
+/snap/clion/67/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /home/kklimczu/STUDIA/TIN/meeTINg/server-client-cpp/server-prototype
 -- Configuring done
 -- Generating done
--- Build files have been written to: /home/tomas/Desktop/servclient 2 watki/server-prototype/cmake-build-debug
+-- Build files have been written to: /home/kklimczu/STUDIA/TIN/meeTINg/server-client-cpp/server-prototype/cmake-build-debug

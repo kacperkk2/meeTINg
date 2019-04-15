@@ -1,3 +1,3 @@
-/home/tomas/Desktop/servclient 2 watki/server-prototype/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/home/tomas/Desktop/servclient 2 watki/server-prototype/cmake-build-debug/CMakeFiles/server_prototype.dir
-/home/tomas/Desktop/servclient 2 watki/server-prototype/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/kklimczu/STUDIA/TIN/meeTINg/server-client-cpp/server-prototype/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/kklimczu/STUDIA/TIN/meeTINg/server-client-cpp/server-prototype/cmake-build-debug/CMakeFiles/server_prototype.dir
+/home/kklimczu/STUDIA/TIN/meeTINg/server-client-cpp/server-prototype/cmake-build-debug/CMakeFiles/edit_cache.dir

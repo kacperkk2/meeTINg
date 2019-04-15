@@ -43,6 +43,7 @@ int main()
     ConsoleManager::runConsole(writefd);
 
     close(writefd);
+    pthread_join(thread_id, NULL);
 
     return 0;
 }

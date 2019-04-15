@@ -3,7 +3,6 @@
 #include <unistd.h>
 #include <cstring>
 #include "ConnectionManager.h"
-#include "PackageSizeParser.h"
 
 
 using namespace std;
@@ -11,18 +10,15 @@ using namespace std;
 ConnectionManager::ConnectionManager() {
     FD_ZERO(&master);
     FD_ZERO(&ready);
-    processed_bytes = 0;
 }
 
 int ConnectionManager::send_all(int fd, char *buf, int *len) {
-    cout << "~~W FUNKCJI" << endl;
     int total = 0; // ile juz sie udalo wyslac
     int left = *len; // ile jeszcze do wyslania
     int nbytes = 0;
 
     while(total < *len)
     {
-        cout << "~~WYSYLAM" << endl;
         nbytes = send(fd, buf+total, left, 0);
         if(nbytes == -1)
             break;
@@ -40,11 +36,11 @@ int ConnectionManager::send_all(int fd, char *buf, int *len) {
 }
 
 void ConnectionManager::handle_client_request(int fd) {
-    memset(incomingMessage, 0, BUFLEN);
-    memset(completeMessage, 0, BUFLEN);
-    nbytes_rec = recv(fd, incomingMessage, sizeof(incomingMessage), 0);
-    // otrzymujemy jakas wiadomosc
 
+    char* incomingMessage = new char[cli_struct[fd].get_bytes_needed()];
+
+    // otrzymujemy jakas wiadomosc
+    nbytes_rec = recv(fd, incomingMessage, cli_struct[fd].get_bytes_needed(), 0);
 
     if(nbytes_rec  <= 0) // jesli rozlaczyl sie lub sa bledy, to zamykam jego deskryptor
     {
@@ -55,64 +51,38 @@ void ConnectionManager::handle_client_request(int fd) {
 
         close(fd);
         FD_CLR(fd, &master);
+
+        // jesli ten klient ktory sie rozlaczyl to byl najwiekszy deskryptor, to teraz najwiekszy bedzie o jeden mniej
+        if(fd == fdmax)
+            fdmax --;
+
+        // usuwam miejsce w mapie
+        cli_struct.erase(fd);
     }
     else // odebrano wiadomosc
     {
-        memcpy(completeMessage, incomingMessage, nbytes_rec);
-        processed_bytes = nbytes_rec;
-        cout << "Otrzymalem na poczatku: " << processed_bytes << endl; // --------------------------------------------------------------------
+        cout << "Odebrano bajtow: "<< nbytes_rec << endl;
+        cli_struct[fd].set_part_message(incomingMessage, nbytes_rec);
+        delete [] incomingMessage;
 
-        while (processed_bytes < 4) {
-            cout << "Mam mniej niz 4 bajty" << endl; // ------------------------------------
-            nbytes_rec = recv(fd, incomingMessage, sizeof(incomingMessage), 0);
-            if(nbytes_rec  <= 0) // jesli rozlaczyl sie lub sa bledy, to zamykam jego deskryptor
-            {
-                if (nbytes_rec == 0) // koniec lacznosci
-                    printf("~~ Socket %d hung up \n", fd);
-                else
-                    perror("recv");
+        //zostawiam stare rozwiazanie bo jak byly by watki to nwm czy tamto by dzialalo, rozkmina
+//        if (cli_struct[fd].whole_package_size != -1 && cli_struct[fd].get_bytes_received() >= cli_struct[fd].whole_package_size) {
+        // jesli odebralismy caly pakiet to wyslij mu wiadomosc spowrotem
+        if (cli_struct[fd].get_bytes_needed() <= 0) {
+            cout << "Mam juz cala wiadomosc, moge ja zwrocic" << endl;
+
+            int bytes = cli_struct[fd].get_whole_package_size();
+            if (send_all(fd, cli_struct[fd].get_buffer_message(), &bytes) == -1) {
+                perror("send");
+                printf("~~ Sent only %d bytes (error) \n", bytes);
             }
 
-            memcpy(&completeMessage[processed_bytes], incomingMessage, nbytes_rec);
-            processed_bytes += nbytes_rec;
+            // przywracam domyslne ustawienia, bo wyslalem, zostaje czyste na nastepny raz
+            cli_struct[fd].init();
+            cli_struct[fd].dealloc();
         }
-
-        cout << "Przerobilem bytes: " << processed_bytes << endl; // --------------------------------------------------------------------
-
-        int32_t message_size;
-        char size_to_convert[4];
-        size_to_convert[0] = completeMessage[0];
-        size_to_convert[1] = completeMessage[1];
-        size_to_convert[2] = completeMessage[2];
-        size_to_convert[3] = completeMessage[3];
-
-        message_size = PackageSizeParser::parse_int_32(size_to_convert);
-        int package_size = message_size + 4;
-
-        cout << "message_size(bez naglowka): "<< message_size << endl; // --------------------------------------------------------------------
-        cout << "processed_bytes: "<< processed_bytes << endl;
-        cout << "package_size: "<< package_size << endl;
-
-        if (processed_bytes != package_size) {
-            cout << "Mam za malo, musze dozbierac wiadomosc" << endl;
-            do {
-                nbytes_rec = recv(fd, incomingMessage, sizeof(incomingMessage), 0);
-                memcpy(&completeMessage[processed_bytes], incomingMessage, nbytes_rec);
-                processed_bytes += nbytes_rec;
-            } while (processed_bytes < package_size);
-        }
-
-        cout << "processed_bytes: "<< processed_bytes << endl;
-        cout << "Mam cala wiadomosc, daje ja do klienta" << endl; // --------------------------------------------------------------------
-
-        // wyslij mu wiadomosc spowrotem
-        if(send_all(fd, completeMessage, &processed_bytes) == -1)
-        {
-            perror("send");
-            printf("~~ Sent only %d bytes (error) \n", processed_bytes);
-        }
-
-        cout << "Wyslalem mu wiadomosc .............. " << endl;
+        else
+            cout << "Jeszcze nie mam calej wiadomosci" << endl;
     }
 }
 
@@ -133,6 +103,10 @@ int ConnectionManager::handle_console_request() {
             {
                 close(j);
                 FD_CLR(j, &master);
+
+                // fdmax ustawiam na najnizsze mozliwe, bo zamknalem wszystkich klientow
+                fdmax = readfd_pipe[0];
+                set_if_higher_fd(listenerfd);
             }
         }
 
@@ -149,13 +123,16 @@ void ConnectionManager::handle_new_connection() {
     int clientfd; // deskryptor nowego clienta
     sockaddr_in clientaddr; // adres klienta
     addrlength = sizeof(clientaddr);
+
     if ((clientfd = accept(listenerfd, (sockaddr*)&clientaddr, &addrlength)) == -1)
         perror("accept"); // na wszelki wypadek nie wychodze jakby sie nie udalo accept
     else
     {
         FD_SET(clientfd, &master);
-        if(clientfd > fdmax) // jesli ten numer jest wiekszy to zapamietuje
-            fdmax = clientfd;
+        set_if_higher_fd(clientfd);
+
+        // tworze w mapie miejsce na strukture klienta
+        cli_struct[clientfd] = ClientStructure();
 
         printf("~~ New connection from %s on socket %d \n", inet_ntoa(clientaddr.sin_addr), clientfd);
     }
@@ -184,17 +161,14 @@ void ConnectionManager::create_listener(int PORT, int BACKLOG) {
     }
 
     FD_SET(listenerfd, &master);
-    if(listenerfd > fdmax) // jesli ten numer jest wiekszy to zapamietuje
-        fdmax = listenerfd;
+    set_if_higher_fd(listenerfd);
 }
 
 void ConnectionManager::manage_connections(int PORT, int BACKLOG, void* fd) {
 
     readfd_pipe = (int*) (intptr_t) fd;
     FD_SET(readfd_pipe[0], &master); // dodaje read pipe deskryptor do listy moich deskryptorow
-    FD_SET(readfd_pipe[1], &master); // dodaje write pipe deskryptor do listy moich deskryptorow
-
-    fdmax = readfd_pipe[0] > readfd_pipe[1] ? readfd_pipe[0] : readfd_pipe[1]; // poki co ten jest najwiekszy
+    fdmax = readfd_pipe[0];
 
     create_listener(PORT, BACKLOG);
 
@@ -229,4 +203,9 @@ void ConnectionManager::manage_connections(int PORT, int BACKLOG, void* fd) {
     close(readfd_pipe[0]);
     close(readfd_pipe[1]);
     close(listenerfd);
+}
+
+void ConnectionManager::set_if_higher_fd(int fdnew) {
+    if(fdnew > fdmax) // jesli ten numer jest wiekszy od aktualnego to zapamietuje
+        fdmax = fdnew;
 }

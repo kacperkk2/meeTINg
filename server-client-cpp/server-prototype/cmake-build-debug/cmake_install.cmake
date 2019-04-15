@@ -1,4 +1,4 @@
-# Install script for directory: /home/tomas/Desktop/servclient 2 watki/server-prototype
+# Install script for directory: /home/kklimczu/STUDIA/TIN/meeTINg/server-client-cpp/server-prototype
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -45,5 +45,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/tomas/Desktop/servclient 2 watki/server-prototype/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/kklimczu/STUDIA/TIN/meeTINg/server-client-cpp/server-prototype/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
