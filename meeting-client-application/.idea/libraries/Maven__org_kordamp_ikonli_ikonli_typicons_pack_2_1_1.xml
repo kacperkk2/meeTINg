@@ -3,9 +3,6 @@
     <CLASSES>
       <root url="jar://$MAVEN_REPOSITORY$/org/kordamp/ikonli/ikonli-typicons-pack/2.1.1/ikonli-typicons-pack-2.1.1.jar!/" />
     </CLASSES>
-    <JAVADOC>
-      <root url="jar://$MAVEN_REPOSITORY$/org/kordamp/ikonli/ikonli-typicons-pack/2.1.1/ikonli-typicons-pack-2.1.1-javadoc.jar!/" />
-    </JAVADOC>
     <SOURCES>
       <root url="jar://$MAVEN_REPOSITORY$/org/kordamp/ikonli/ikonli-typicons-pack/2.1.1/ikonli-typicons-pack-2.1.1-sources.jar!/" />
     </SOURCES>

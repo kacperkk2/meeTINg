@@ -2,6 +2,7 @@
 #include <arpa/inet.h>
 #include <unistd.h>
 #include <cstring>
+#include <fcntl.h>
 #include "ConnectionManager.h"
 
 
@@ -87,7 +88,7 @@ void ConnectionManager::handle_client_request(int fd) {
 }
 
 int ConnectionManager::handle_console_request() {
-    if(read(readfd_pipe[0], &buf, 1) == -1)
+    if(read(pipe_fd[0], &buf, 1) == -1)
     {
         perror("read_readfd_pipe");
         exit(EXIT_FAILURE);
@@ -99,16 +100,16 @@ int ConnectionManager::handle_console_request() {
         for(int j = 3; j < fdmax+1; j++)
         {
             // nie zamykam pipe do lacznosci z watkiem i swojego socketa nasluchujacego
-            if(j != readfd_pipe[0] && j != readfd_pipe[1] && j != listenerfd)
+            if(j != pipe_fd[0] && j != pipe_fd[1] && j != listenerfd)
             {
                 close(j);
                 FD_CLR(j, &master);
-
-                // fdmax ustawiam na najnizsze mozliwe, bo zamknalem wszystkich klientow
-                fdmax = readfd_pipe[0];
-                set_if_higher_fd(listenerfd);
             }
         }
+
+        // fdmax ustawiam na najnizsze mozliwe, bo zamknalem wszystkich klientow
+        fdmax = pipe_fd[0];
+        set_if_higher_fd(listenerfd);
 
         if(buf == 'q')
             work = false;
@@ -128,6 +129,8 @@ void ConnectionManager::handle_new_connection() {
         perror("accept"); // na wszelki wypadek nie wychodze jakby sie nie udalo accept
     else
     {
+        int flags = fcntl(clientfd, F_GETFL);
+        fcntl(clientfd, F_SETFL, flags | O_NONBLOCK);
         FD_SET(clientfd, &master);
         set_if_higher_fd(clientfd);
 
@@ -139,47 +142,68 @@ void ConnectionManager::handle_new_connection() {
 }
 
 void ConnectionManager::create_listener(int PORT, int BACKLOG) {
-    if((listenerfd = socket(AF_INET, SOCK_STREAM, 0)) == -1)
-    {
-        perror("socket");
-        exit(EXIT_FAILURE);
-    }
+    bool listener_set = false;
 
     listeneraddr.sin_family = AF_INET;
     listeneraddr.sin_port = htons(PORT);
     inet_pton(AF_INET, "0.0.0.0", &listeneraddr.sin_addr);
-    if (bind(listenerfd, (sockaddr*)&listeneraddr, sizeof(listeneraddr)) == -1)
-    {
-        perror("bind");
-        exit(EXIT_FAILURE);
-    }
 
-    if (listen(listenerfd, BACKLOG) == -1)
-    {
-        perror("listen");
-        exit(EXIT_FAILURE);
-    }
+     while (!listener_set) {
+         sleep(2);
 
-    FD_SET(listenerfd, &master);
-    set_if_higher_fd(listenerfd);
+        if((listenerfd = socket(AF_INET, SOCK_STREAM, 0)) == -1)
+        {
+            perror("socket");
+            continue;
+        }
+
+        int flags = fcntl(listenerfd, F_GETFL);
+        fcntl(listenerfd, F_SETFL, flags | O_NONBLOCK);
+
+        if (bind(listenerfd, (sockaddr*)&listeneraddr, sizeof(listeneraddr)) == -1)
+        {
+            perror("bind");
+            close(listenerfd);
+            continue;
+        }
+
+        if (listen(listenerfd, BACKLOG) == -1)
+        {
+            perror("listen");
+            close(listenerfd);
+            continue;
+        }
+
+        FD_SET(listenerfd, &master);
+        set_if_higher_fd(listenerfd);
+        listener_set = true;
+    }
 }
 
-void ConnectionManager::manage_connections(int PORT, int BACKLOG, void* fd) {
+void ConnectionManager::manage_connections(int BACKLOG, void* args) {
 
-    readfd_pipe = (int*) (intptr_t) fd;
-    FD_SET(readfd_pipe[0], &master); // dodaje read pipe deskryptor do listy moich deskryptorow
-    fdmax = readfd_pipe[0];
+    int* casted_args = (int*) (intptr_t) args;
+    pipe_fd[0] = casted_args[0];
+    pipe_fd[1] = casted_args[1];
 
-    create_listener(PORT, BACKLOG);
+    FD_SET(pipe_fd[0], &master); // dodaje read pipe deskryptor do listy moich deskryptorow
+    fdmax = pipe_fd[0];
+
+    struct timeval tv;
+
+    create_listener(casted_args[2], BACKLOG);
 
     // glowna petla, czyli obsluguj wszystkie deskryptory
     while(work)
     {
+        tv = {2, 0};
         ready = master; // przekopiuj oryginalny set, bo select zmienia seta
+        errors = master;
+        // TODO sprawdzenie, czy nie wywalilo klienta - errors powinien w jakis sposob zwracac deskryptor, gdzie wystapil blad
 
-        if(select(fdmax+1, &ready, (fd_set *)0, (fd_set *)0, 0) == -1) {
+        if(select(fdmax+1, &ready, (fd_set *)0, &errors, &tv) == -1) {
             perror("select");
-            exit(EXIT_FAILURE);
+            continue;
         }
 
         // patrze ktory deskryptor obudzil selecta
@@ -190,7 +214,7 @@ void ConnectionManager::manage_connections(int PORT, int BACKLOG, void* fd) {
                 if(i == listenerfd) { // to nasluchiwacz, wiec przyszlo nowe polaczenie od klienta
                     handle_new_connection();
                 }
-                else if(i == readfd_pipe[0]) { // watek nadrzedny cos chce
+                else if(i == pipe_fd[0]) { // watek nadrzedny cos chce
                     if (handle_console_request() == 1) break;
                 }
                 else { // ktorys klient cos napisal
@@ -200,8 +224,8 @@ void ConnectionManager::manage_connections(int PORT, int BACKLOG, void* fd) {
         }
     }
 
-    close(readfd_pipe[0]);
-    close(readfd_pipe[1]);
+    close(pipe_fd[0]);
+    close(pipe_fd[1]);
     close(listenerfd);
 }
 

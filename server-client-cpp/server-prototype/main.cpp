@@ -6,22 +6,26 @@
 #include "ConsoleManager.h"
 #include "PackageSizeParser.h"
 
-#define PORT 9543
 #define BACKLOG 10
 
 using namespace std;
 
-void *handle_client(void* fd)
+void *handle_client(void* args)
 {
     ConnectionManager connectionManager;
-    connectionManager.manage_connections(PORT, BACKLOG, fd);
+    connectionManager.manage_connections(BACKLOG, args);
     return 0;
 }
 
 
-int main()
+int main(int argc, char* argv[])
 {
     int pipefd[2];
+    int port = atoi(argv[1]);
+    if (!port) {
+        perror("Illegal argument (port)");
+        return 0;
+    }
 
     // uzyskanie 2 deskryptorow pipe, [1] do pisania, [0] do czytania
     if (pipe(pipefd) == -1) {
@@ -32,7 +36,9 @@ int main()
     // utworz nowy watek i przekaz mu deskryptor do pipe do read
     pthread_t thread_id;
 
-    if(pthread_create(&thread_id, NULL, handle_client, (void *) (intptr_t) &pipefd) < 0)
+    int thread_args[3] = {pipefd[0], pipefd[1], port};
+
+    if(pthread_create(&thread_id, NULL, handle_client, (void *) (intptr_t) &thread_args) < 0)
     {
         perror("pthread_create");
         exit(EXIT_FAILURE);

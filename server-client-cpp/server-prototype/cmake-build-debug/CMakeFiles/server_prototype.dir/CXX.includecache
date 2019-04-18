@@ -6,11 +6,11 @@
 
 #IncludeRegexTransform: 
 
-/home/kklimczu/STUDIA/TIN/meeTINg/server-client-cpp/server-prototype/ClientStructure.h
+/home/tomas/TINmeeting/meeTINg/server-client-cpp/server-prototype/ClientStructure.h
 PackageSizeParser.h
-/home/kklimczu/STUDIA/TIN/meeTINg/server-client-cpp/server-prototype/PackageSizeParser.h
+/home/tomas/TINmeeting/meeTINg/server-client-cpp/server-prototype/PackageSizeParser.h
 
-/home/kklimczu/STUDIA/TIN/meeTINg/server-client-cpp/server-prototype/ConnectionManager.cpp
+/home/tomas/TINmeeting/meeTINg/server-client-cpp/server-prototype/ConnectionManager.cpp
 iostream
 -
 arpa/inet.h
@@ -19,16 +19,18 @@ unistd.h
 -
 cstring
 -
+fcntl.h
+-
 ConnectionManager.h
-/home/kklimczu/STUDIA/TIN/meeTINg/server-client-cpp/server-prototype/ConnectionManager.h
+/home/tomas/TINmeeting/meeTINg/server-client-cpp/server-prototype/ConnectionManager.h
 
-/home/kklimczu/STUDIA/TIN/meeTINg/server-client-cpp/server-prototype/ConnectionManager.h
+/home/tomas/TINmeeting/meeTINg/server-client-cpp/server-prototype/ConnectionManager.h
 map
 -
 ClientStructure.h
-/home/kklimczu/STUDIA/TIN/meeTINg/server-client-cpp/server-prototype/ClientStructure.h
+/home/tomas/TINmeeting/meeTINg/server-client-cpp/server-prototype/ClientStructure.h
 
-/home/kklimczu/STUDIA/TIN/meeTINg/server-client-cpp/server-prototype/PackageSizeParser.h
+/home/tomas/TINmeeting/meeTINg/server-client-cpp/server-prototype/PackageSizeParser.h
 cstdint
 -
 

@@ -12,16 +12,17 @@ private:
     int fdmax; // numer najwiekszego deskryptora
     fd_set master; // glowna lista deskryptorow
     fd_set ready; // pomocnicza lista deskryptorow dla selecta
+    fd_set errors;
     int listenerfd; // deskryptor gniazda nasluchujacego
     sockaddr_in listeneraddr; // adres nasluchujacego
     char buf; // jednobajtowe komunikaty od watka nadrzednego
     int nbytes_rec;
     bool work = true;
-    int *readfd_pipe;
+    int pipe_fd[2];
 
 public:
     ConnectionManager();
-    void manage_connections(int, int, void*);
+    void manage_connections(int, void*);
     void create_listener(int, int);
     void handle_new_connection();
     int handle_console_request();
