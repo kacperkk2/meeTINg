@@ -40,32 +40,37 @@ public class LoginWindowController {
     }
 
     @FXML
-    public void registration() {
-        Stage loginStage = new Stage();
+    public void registration(ActionEvent event) {
 
-        loadStage(loginStage, "/fxml/RegistrationWindow.fxml", "meeTINg Registration");
-        loginStage.show();
-        loginStage.setWidth(640);
-        loginStage.setHeight(480);
-        loginStage.setX(300);
-        loginStage.setY(300);
-    }
 
-    private void loadStage(Stage stage, String resourcePath, String title)
-    {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(LoginWindowController.class.getResource(resourcePath));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/RegistrationWindow.fxml"));
             AnchorPane root = fxmlLoader.load();
-            root.setId("userLogin");
             Scene scene = new Scene(root);
-            scene.getStylesheets().addAll(this.getClass().getResource("../../resources/css/background.css").toExternalForm());
-            stage.setScene(scene);
-            stage.setTitle(title);
-            stage.setResizable(false);
-        } catch (Exception e) {
+            Stage userMainStage = (Stage)((Node) event.getSource()).getScene().getWindow();
+
+            userMainStage.setScene(scene);
+            userMainStage.show();
+        } catch(Exception e) {
             e.printStackTrace();
         }
     }
+
+//    private void loadStage(Stage stage, String resourcePath, String title)
+//    {
+//        try {
+//            FXMLLoader fxmlLoader = new FXMLLoader(LoginWindowController.class.getResource(resourcePath));
+//            AnchorPane root = fxmlLoader.load();
+//            root.setId("userLogin");
+//            Scene scene = new Scene(root);
+//            scene.getStylesheets().addAll(this.getClass().getResource("../../resources/css/background.css").toExternalForm());
+//            stage.setScene(scene);
+//            stage.setTitle(title);
+//            stage.setResizable(false);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     public void setClient(Client client) {
         this.client = client;
