@@ -124,22 +124,46 @@ void ConnectionManager::handle_new_connection() {
     int clientfd; // deskryptor nowego clienta
     sockaddr_in clientaddr; // adres klienta
     addrlength = sizeof(clientaddr);
+    int attempts = 0;
 
-    if ((clientfd = accept(listenerfd, (sockaddr*)&clientaddr, &addrlength)) == -1)
-        perror("accept"); // na wszelki wypadek nie wychodze jakby sie nie udalo accept
-    else
-    {
-        int flags = fcntl(clientfd, F_GETFL);
-        fcntl(clientfd, F_SETFL, flags | O_NONBLOCK);
-        FD_SET(clientfd, &master);
-        set_if_higher_fd(clientfd);
+    while(attempts < 20) {
+        sleep(2);
+        if ((clientfd = accept(listenerfd, (sockaddr*)&clientaddr, &addrlength)) == -1)
+        {
+            attempts++;
+            continue; // na wszelki wypadek nie wychodze jakby sie nie udalo accept
+        }
+        else
+        {
+            int flags = fcntl(clientfd, F_GETFL);
+            if (flags == -1) {
+                attempts++;
+                perror("F_GETFL clientfd");
+                printf("~~ Connection from %s on socket %d refused. Retrying... \n", inet_ntoa(clientaddr.sin_addr), clientfd);
+                close(clientfd);
+                continue;
+            }
+            if (fcntl(clientfd, F_SETFL, flags | O_NONBLOCK) == -1) {
+                attempts++;
+                perror("F_SETFL clientfd");
+                printf("~~ Connection from %s on socket %d refused. Retrying... \n", inet_ntoa(clientaddr.sin_addr), clientfd);
+                close(clientfd);
+                continue;
+            }
+            FD_SET(clientfd, &master);
+            set_if_higher_fd(clientfd);
 
-        // tworze w mapie miejsce na strukture klienta
-        cli_struct[clientfd] = ClientStructure();
+            // tworze w mapie miejsce na strukture klienta
+            cli_struct[clientfd] = ClientStructure();
 
-        printf("~~ New connection from %s on socket %d \n", inet_ntoa(clientaddr.sin_addr), clientfd);
+            printf("~~ New connection from %s on socket %d \n", inet_ntoa(clientaddr.sin_addr), clientfd);
+            return;
+        }
     }
+    perror("handle_new_connection() failed");
+    exit(EXIT_FAILURE);
 }
+
 
 void ConnectionManager::create_listener(int PORT, int BACKLOG) {
     bool listener_set = false;
@@ -158,7 +182,16 @@ void ConnectionManager::create_listener(int PORT, int BACKLOG) {
         }
 
         int flags = fcntl(listenerfd, F_GETFL);
-        fcntl(listenerfd, F_SETFL, flags | O_NONBLOCK);
+        if (flags == -1) {
+            perror("F_GETFL listenerfd");
+            close(listenerfd);
+            continue;
+        }
+        if (fcntl(listenerfd, F_SETFL, flags | O_NONBLOCK) == -1) {
+            perror("F_SETFL listenerfd");
+            close(listenerfd);
+            continue;
+        }
 
         if (bind(listenerfd, (sockaddr*)&listeneraddr, sizeof(listeneraddr)) == -1)
         {
