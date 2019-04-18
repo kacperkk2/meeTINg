@@ -166,6 +166,7 @@ void ConnectionManager::handle_new_connection() {
 
 
 void ConnectionManager::create_listener(int PORT, int BACKLOG) {
+    // TODO mozna dodac tak samo ograniczona ilosc prob stworzenia socketu nasluchujacego (tak jak w handle_new_connection), ale to do ustalenia
     bool listener_set = false;
 
     listeneraddr.sin_family = AF_INET;
