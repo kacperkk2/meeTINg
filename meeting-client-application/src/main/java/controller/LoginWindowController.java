@@ -6,21 +6,25 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import controller.GroupsWindowController;
 
-import java.awt.*;
 
 public class LoginWindowController {
 
     private Client client;
 
+    @FXML TextField usernameField;
+    @FXML PasswordField passwordField;
+
     @FXML
     public void signInClicked(ActionEvent event) {
 
-        // dodac ladowanie do wiadomosci tresci pola na login i haslo i przesylac wiadomosc z tym do serwa
-        client.sendMessage();
+        // te pola username i haslo to musza byc pola obiektu user
+        //                                    a tu musi byc json w stringu
+        String response = client.sendRequestRecResponse(usernameField.getText() + passwordField.getText());
 
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/GroupsWindow.fxml"));
