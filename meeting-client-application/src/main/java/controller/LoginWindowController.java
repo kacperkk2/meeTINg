@@ -24,7 +24,7 @@ public class LoginWindowController {
 
         // te pola username i haslo to musza byc pola obiektu user
         //                                    a tu musi byc json w stringu
-        String response = client.sendRequestRecResponse(usernameField.getText() + passwordField.getText());
+        //String response = client.sendRequestRecResponse(usernameField.getText() + passwordField.getText());
 
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/GroupsWindow.fxml"));
@@ -41,7 +41,6 @@ public class LoginWindowController {
 
     @FXML
     public void registration(ActionEvent event) {
-
 
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/RegistrationWindow.fxml"));
