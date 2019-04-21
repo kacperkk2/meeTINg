@@ -1,14 +1,11 @@
-package model;
+package api.response;
 
-import lombok.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
-@AllArgsConstructor
-@ToString
-@Builder
-public class User {
+public class UserLoginResponse {
 
     private long id;
 

@@ -1,6 +1,4 @@
 meeting-client-application/target/
-meeting-client-application/.idea/workspace.xml
-meeting-client-application/.idea/tasks.xml
-server-client-cpp/server-prototype/.idea/workspace.xml
-server-client-cpp/server-prototype/.idea/tasks.xml
+meeting-client-application/.idea/
+server-client-cpp/server-prototype/.idea/
 

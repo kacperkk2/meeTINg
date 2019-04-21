@@ -1,6 +1,7 @@
 package client;
 
 import java.io.*;
+
 import java.net.Socket;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -32,7 +33,7 @@ public class Client {
         }
     }
 
-    public void init() {
+    private void init() {
         bytesNeeded = 128; // ile chcemy za pierwszym zamahem pobrac bajtow
         bufferPackage = new byte[bytesNeeded]; // robie bufor zeby pomiescil ten pierwszy rzut
         messageSize = -1;
@@ -66,7 +67,7 @@ public class Client {
         return response;
     }
 
-    public String removeHeader(byte[] responsePackage) {
+    private String removeHeader(byte[] responsePackage) {
 
         // biore pierwsze 4 bajty paczki, na nich jest zapisany rozmiar dalszej czesci
         //int mSize = convertHeaderToInt(Arrays.copyOfRange(responsePackage, 0, 4));
@@ -84,7 +85,7 @@ public class Client {
         return responseString;
     }
 
-    public void receiveResponse() {
+    private void receiveResponse() {
 
         while(bytesReceived != packageSize) {
             portion = new byte[bytesNeeded];
@@ -100,7 +101,7 @@ public class Client {
         }
     }
 
-    public void handlePortion() {
+    private void handlePortion() {
         System.arraycopy(portion, 0, bufferPackage, bytesReceived, bytesFromRead);
         bytesReceived += bytesFromRead;
         bytesNeeded -= bytesFromRead;
@@ -122,7 +123,7 @@ public class Client {
         }
     }
 
-    public void sendRequest(byte[] requestPackage) {
+    private void sendRequest(byte[] requestPackage) {
         try {
             // chyba java martwi sie o to zeby to zostalo cale wyslane
             writer.write(requestPackage);
@@ -133,7 +134,7 @@ public class Client {
         }
     }
 
-    public String addHeader(String message) {
+    private String addHeader(String message) {
         // dlugosc wiadomosci do tablicy header[4]
         byte header[] = convertIntToHeader(message.length());
 
@@ -145,14 +146,14 @@ public class Client {
         return sb.toString();
     }
 
-    public int convertHeaderToInt(byte[] header) {
+    private int convertHeaderToInt(byte[] header) {
 
         ByteBuffer buffer = ByteBuffer.wrap(header);
         buffer.order(ByteOrder.nativeOrder());
         return buffer.getInt();
     }
 
-    public byte[] convertIntToHeader(int mSize) {
+    private byte[] convertIntToHeader(int mSize) {
 
         ByteBuffer buffer = ByteBuffer.allocate(4);
         buffer.order(ByteOrder.nativeOrder());
