@@ -60,7 +60,7 @@ public class LoginWindowController {
 //        String responseString = client.sendRequestRecResponse(requestString);
 
         //symulacja poprawnego responsa:
-        String responseString = ResponseFlag.LOGGING.toString() +
+        String responseString = ResponseFlag.LOGG_OK.toString() +
                 "{\n" +
                 "  \"id\": \"1\",\n" +
                 "  \"username\": \"asd123_#\",\n" +
@@ -68,7 +68,7 @@ public class LoginWindowController {
                 "  \"isLeader\": true\n" +
                 "}";
 
-        if (responseString.substring(0, 7).equals(ResponseFlag.__ERROR.toString())) {
+        if (!responseString.substring(0, 7).equals(ResponseFlag.LOGG_OK.toString())) {
             // TODO obsługa niepoprawnego logowania. Teraz wchodzi w tego ifa po wywołaniu sendRequestRecResponse, bo to zwraca flage LOGGING
             return;
         }
@@ -92,7 +92,7 @@ public class LoginWindowController {
 
 //        String groupResponseString = client.sendRequestRecResponse(requestString);
 
-        String groupResponseString = ResponseFlag.USERGRP.toString() +
+        String groupResponseString = ResponseFlag.UGRP_OK.toString() +
                 "{\n" +
                 "  \"items\": [\n" +
                 "    {\n" +
@@ -108,7 +108,7 @@ public class LoginWindowController {
                 "  ]\n" +
                 "}\n";
 
-        if(groupResponseString.substring(0, 7).equals(ResponseFlag.__ERROR.toString())) {
+        if(!groupResponseString.substring(0, 7).equals(ResponseFlag.UGRP_OK.toString())) {
             // TODO obsługa błędu pobrania listy grup
             return;
         }
