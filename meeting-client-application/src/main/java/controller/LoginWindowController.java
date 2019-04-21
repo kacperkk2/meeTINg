@@ -1,7 +1,7 @@
 package controller;
 
 import api.request.GroupListRequest;
-import api.request.UserLoginRequest;
+import api.request.UserDataRequest;
 import api.response.GroupListResponse;
 import api.response.UserLoginResponse;
 import client.Client;
@@ -46,7 +46,7 @@ public class LoginWindowController {
                 .toString();
 
         // tworze requesta
-        UserLoginRequest request = UserLoginRequest.builder()
+        UserDataRequest request = UserDataRequest.builder()
                 .username(usernameField.getText())
                 .password(hashedPassword)
                 .build();
