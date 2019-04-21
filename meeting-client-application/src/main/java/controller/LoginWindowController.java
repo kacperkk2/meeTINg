@@ -85,53 +85,15 @@ public class LoginWindowController {
                 .systemRole(SystemRole.valueOf(response.getSystemRole()))
                 .build();
 
-        GroupListRequest groupRequest = GroupListRequest.builder()
-                .userId(user.getId())
-                .build();
-
-        requestString = RequestFlag.USERGRP.toString() + gson.toJson(groupRequest);
-
-//        String groupResponseString = client.sendRequestRecResponse(requestString);
-
-        String groupResponseString = ResponseFlag.USERGRP.toString() +
-                "{\n" +
-                "  \"items\": [\n" +
-                "    {\n" +
-                "      \"id\": \"1\",\n" +
-                "      \"name\": \"TKOM\",\n" +
-                "      \"leader\": \"Gawkowski\"\n" +
-                "    },\n" +
-                "    {\n" +
-                "      \"id\": \"21\",\n" +
-                "      \"name\": \"TIN\",\n" +
-                "      \"leader\": \"Blinowski\"\n" +
-                "    }\n" +
-                "  ]\n" +
-                "}\n";
-
-        if(groupResponseString.substring(0, 7).equals(ResponseFlag.__ERROR.toString())) {
-            // TODO obsługa błędu pobrania listy grup
-            return;
-        }
-
-        GroupListResponse groupListResponse = gson.fromJson(groupResponseString.substring(7), GroupListResponse.class);
-
-        List<Group> groups = new ArrayList<>();
-
-        groupListResponse.getItems().forEach(element -> {
-            Group g = Group.builder()
-                    .id(element.getId())
-                    .name(element.getName())
-                    .leader(element.getLeader())
-                    .build();
-            groups.add(g);
-        });
-
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/GroupsWindow.fxml"));
             AnchorPane root = fxmlLoader.load();
             Scene scene = new Scene(root);
             Stage userMainStage = (Stage)((Node) event.getSource()).getScene().getWindow();
+
+            GroupsWindowController groupsWindowController = fxmlLoader.getController();
+            groupsWindowController.setClient(client);
+            groupsWindowController.setUser(user);
 
             userMainStage.setScene(scene);
             userMainStage.show();

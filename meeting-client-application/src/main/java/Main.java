@@ -20,7 +20,6 @@ public class Main extends Application {
         client = new Client();
     }
 
-
     @Override
     public void start(Stage primaryStage) {
         initClient();

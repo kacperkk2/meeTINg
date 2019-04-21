@@ -1,5 +1,12 @@
 package controller;
 
+import api.request.GroupListRequest;
+import api.response.GroupListResponse;
+import client.Client;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import enums.RequestFlag;
+import enums.ResponseFlag;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -9,11 +16,13 @@ import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import model.Group;
+import model.User;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+
+import static enums.SystemRole.USER;
 
 public class GroupsWindowController {
 
@@ -22,29 +31,21 @@ public class GroupsWindowController {
     @FXML Button requestsButton;
 
     private Group pickedGroup;
+    private Client client;
     private List<Group> groups;
+    private User user;
 
     // na refresh powinno isc od klienta do serwa zapytanie o wszystkie grupy, to samo jak przy wejsciu do groupsview
     // i pozniej od nowa odpalic loadGroups
 
     @FXML
     public void initialize() {
+        // TODO  initialize wyprzedza setUser
         // jesli ktos nie jest leader to trzeba buttons disable
-        int leader = 0;
-        if(leader == 0) {
+        if(user.getSystemRole() == USER) {
             createButton.setDisable(true);
             requestsButton.setDisable(true);
         }
-
-        // imitacja zwracanego responsa, domyslnie raczej bedzie od np loginwindow wolac setera i ustawiac grupy
-        Group g1 = new Group();
-        g1.setId(1);
-        g1.setName("Jakas grupa");
-        Group g2 = new Group();
-        g2.setId(2);
-        g2.setName("Super grupa na tiny");
-        groups = new ArrayList<>();
-        groups.addAll(Arrays.asList(g1, g2));
 
         refreshClicked();
     }
@@ -64,6 +65,7 @@ public class GroupsWindowController {
 
     @FXML
     private void signOutClicked(ActionEvent event){
+        // TODO wyslanie requesta o wylogowanie, ale czy potrzeba???
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirmation Dialog");
@@ -87,13 +89,64 @@ public class GroupsWindowController {
 
     @FXML
     private void refreshClicked() {
-        // daje requesta i jako odpowiedz przypisuje dostana liste grup do groups
-        // cos ala groups = sendRequest(cos tam);
-        // jak juz ja mam to wrzucam
+        // robie JSONa
+        GsonBuilder builder = new GsonBuilder();
+        builder.setPrettyPrinting();
+        Gson gson = builder.create();
+
+        GroupListRequest groupRequest = GroupListRequest.builder()
+                .userId(user.getId())
+                .build();
+
+        String requestString = RequestFlag.USERGRP.toString() + gson.toJson(groupRequest);
+
+//        String groupResponseString = client.sendRequestRecResponse(requestString);
+
+        String groupResponseString = ResponseFlag.USERGRP.toString() +
+                "{\n" +
+                "  \"items\": [\n" +
+                "    {\n" +
+                "      \"id\": \"1\",\n" +
+                "      \"name\": \"TKOM\",\n" +
+                "      \"leader\": \"Gawkowski\"\n" +
+                "    },\n" +
+                "    {\n" +
+                "      \"id\": \"21\",\n" +
+                "      \"name\": \"TIN\",\n" +
+                "      \"leader\": \"Blinowski\"\n" +
+                "    }\n" +
+                "  ]\n" +
+                "}\n";
+
+        if(groupResponseString.substring(0, 7).equals(ResponseFlag.__ERROR.toString())) {
+            // TODO obsługa błędu pobrania listy grup
+            return;
+        }
+
+        GroupListResponse groupListResponse = gson.fromJson(groupResponseString.substring(7), GroupListResponse.class);
+
+        List<Group> groups = new ArrayList<>();
+
+        groupListResponse.getItems().forEach(element -> {
+            Group g = Group.builder()
+                    .id(element.getId())
+                    .name(element.getName())
+                    .leader(element.getLeader())
+                    .build();
+            groups.add(g);
+        });
+
         listView.getItems().clear();
         listView.getItems().addAll(groups);
 
         System.out.println("refresh!");
     }
 
+    public void setClient(Client client) {
+        this.client = client;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 }
