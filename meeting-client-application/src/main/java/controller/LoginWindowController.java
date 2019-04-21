@@ -9,6 +9,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import enums.RequestFlag;
 import enums.ResponseFlag;
+import enums.SystemRole;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -65,7 +66,7 @@ public class LoginWindowController {
                 "  \"id\": \"1\",\n" +
                 "  \"username\": \"asd123_#\",\n" +
                 "  \"password\": \"b790d976a02850ac9d5605e92ac7283ac477c76c203556fdd94726dd106cdae3\",\n" +
-                "  \"isLeader\": true\n" +
+                "  \"systemRole\": USER\n" +
                 "}";
 
         if (responseString.substring(0, 7).equals(ResponseFlag.__ERROR.toString())) {
@@ -81,7 +82,7 @@ public class LoginWindowController {
                 .id(response.getId())
                 .username(response.getUsername())
                 .password(response.getPassword())
-                .isLeader(response.isLeader())
+                .systemRole(SystemRole.valueOf(response.getSystemRole()))
                 .build();
 
         GroupListRequest groupRequest = GroupListRequest.builder()
@@ -125,8 +126,6 @@ public class LoginWindowController {
                     .build();
             groups.add(g);
         });
-
-        System.out.println(groups);
 
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/GroupsWindow.fxml"));

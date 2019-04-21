@@ -13,5 +13,5 @@ public class UserLoginResponse {
 
     private String password;
 
-    private boolean isLeader;
+    private String systemRole;
 }

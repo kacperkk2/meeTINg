@@ -1,5 +1,6 @@
 package model;
 
+import enums.SystemRole;
 import lombok.*;
 
 @Getter
@@ -16,5 +17,5 @@ public class User {
 
     private String password;
 
-    private boolean isLeader;
+    private SystemRole systemRole;
 }
