@@ -7,10 +7,12 @@ public enum RequestFlag {
 
     USERGRP, // wyświetl grupy użytkownika
     SHOWGRP, // pokaż konkretną grupę
+    GRPLIST, // pokaż wszystkie dostepne grupy
     MAKEGRP, // stwórz nową grupę
     RMGROUP, // usuń grupę
     LEAVGRP, // wyjdź z grupy
     LEADREQ, // aplikuj o status lidera
+    MEMBREQ, // aplikuj o dolaczenie do grupy
 
     USERREQ, // wyświetl requesty użytkowników
     USERDEC, // zaakceptuj/odrzuć użytkownika

@@ -6,11 +6,13 @@ public enum ResponseFlag {
 
     USERGRP, // grupy użytkownika
     SHOWGRP, // konkretna grupa
+    GRPLIST, // wszystkie mozliwe grupy
     MAKEGRP, // pomyślne stworzenie grupy
     RMGROUP, // pomyślne usunięcie grupy
     LEAVGRP, // pomyślne wyjście z grupy
     LEADREQ, // zaaplikowano o status lidera
     LEADRSP, // decyzja o nadaniu statusu lidera
+    MEMBREQ, // decyzja o dodaniu do grupy
 
     USERREQ, // requesty użytkowników
     USERDEC, // potwierdzenie decyzji
