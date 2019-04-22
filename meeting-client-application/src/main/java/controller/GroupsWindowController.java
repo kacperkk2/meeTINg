@@ -7,6 +7,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import enums.RequestFlag;
 import enums.ResponseFlag;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -35,31 +36,47 @@ public class GroupsWindowController {
     private List<Group> groups;
     private User user;
 
-    // na refresh powinno isc od klienta do serwa zapytanie o wszystkie grupy, to samo jak przy wejsciu do groupsview
-    // i pozniej od nowa odpalic loadGroups
-
     @FXML
     public void initialize() {
-        // TODO  initialize wyprzedza setUser
-        // jesli ktos nie jest leader to trzeba buttons disable
-        if(user.getSystemRole() == USER) {
-            createButton.setDisable(true);
-            requestsButton.setDisable(true);
-        }
 
-        refreshClicked();
+        Platform.runLater(() ->{
+            // jesli ktos nie jest leader to trzeba buttons disable
+            if(user.getSystemRole() == USER) {
+                createButton.setDisable(true);
+                requestsButton.setDisable(true);
+            }
+
+            refreshClicked();
+        });
     }
 
     @FXML
-    private void listClicked(){
-        // albo po kliknieciu przerzucac do grupy albo dac buttona ktory klika enter picked group
-
+    private void listClicked(ActionEvent event){
+        System.out.println("tu-2");
         // warunek zeby po kliknieciu w puste pola sie nie wywolywalo i zeby po kliknieciu w puste pole nie odpalalo sie dla biezacego pickedGroup
-        if(listView.getSelectionModel().getSelectedItem() != null
-                && listView.getSelectionModel().getSelectedItem() != pickedGroup) {
+        if(listView.getSelectionModel().getSelectedItem() != null &&
+                listView.getSelectionModel().getSelectedItem() != pickedGroup) {
+
+            System.out.println("tu-1");
             pickedGroup = listView.getSelectionModel().getSelectedItem();
 
             System.out.println(pickedGroup.toString());
+//            try {
+//                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/EventsWindow.fxml"));
+//                AnchorPane root = fxmlLoader.load();
+//                Scene scene = new Scene(root);
+//                Stage userMainStage = (Stage)((Node) event.getSource()).getScene().getWindow();
+//
+//                System.out.println("tu1");
+//                EventsWindowController eventsWindowController = fxmlLoader.getController();
+//                eventsWindowController.setPickedGroup(pickedGroup);
+//                System.out.println("tu2");
+//
+//                userMainStage.setScene(scene);
+//                userMainStage.show();
+//            } catch(Exception e) {
+//                e.printStackTrace();
+//            }
         }
     }
 
@@ -138,8 +155,6 @@ public class GroupsWindowController {
 
         listView.getItems().clear();
         listView.getItems().addAll(groups);
-
-        System.out.println("refresh!");
     }
 
     public void setClient(Client client) {
