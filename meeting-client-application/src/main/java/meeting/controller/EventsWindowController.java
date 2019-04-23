@@ -123,7 +123,8 @@ public class EventsWindowController {
                 "}\n";
 
         if(response.substring(0, 7).equals(ResponseFlag.__ERROR.toString())) {
-            // TODO obsługa błędu pobrania listy eventów
+            ErrorResponse errorResponse = gson.fromJson(response.substring(7), ErrorResponse.class);
+            showEventErrorAlert(errorResponse.getMessage());
             return;
         }
 
@@ -153,7 +154,7 @@ public class EventsWindowController {
         Optional<String> result = dialog.showAndWait();
 
         result.ifPresent(name -> {
-            if (name.equals("")) showNewEventErrorAlert("Field can not be empty!");
+            if (name.equals("")) showEventErrorAlert("Field can not be empty!");
             else {
                 sendNewEventRequest(name);
             }
@@ -183,7 +184,7 @@ public class EventsWindowController {
 
         if(response.substring(0, 7).equals(ResponseFlag.__ERROR.toString())) {
             ErrorResponse errorResponse = gson.fromJson(response.substring(7), ErrorResponse.class);
-            showNewEventErrorAlert(errorResponse.getMessage());
+            showEventErrorAlert(errorResponse.getMessage());
             return;
         }
 
@@ -197,7 +198,7 @@ public class EventsWindowController {
         eventList.getItems().add(e);
     }
 
-    private void showNewEventErrorAlert(String message) {
+    private void showEventErrorAlert(String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setHeaderText(null);
         alert.setContentText(message);
