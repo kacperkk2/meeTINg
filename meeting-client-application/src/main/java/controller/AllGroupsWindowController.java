@@ -73,6 +73,7 @@ public class AllGroupsWindowController {
         }
 
         // TODO jesli juz aplikowal do grupy to teraz to sprawdzic idac komunikat, albo blokowac button po wybraniu grupy do ktorej juz aplikowal
+        // Tomek: prosciej: nie pobierac grup do ktorych uzytkownik juz nalezy
 
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Information Dialog");

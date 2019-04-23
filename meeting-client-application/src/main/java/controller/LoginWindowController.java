@@ -13,6 +13,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
@@ -25,15 +26,18 @@ import static com.google.common.hash.Hashing.sha256;
 
 public class LoginWindowController {
 
-    private Client client;
-
-    private User user;
+    private Client client = new Client();
 
     @FXML private TextField usernameField;
     @FXML private PasswordField passwordField;
 
     @FXML
     public void signInClicked(ActionEvent event) {
+
+        if(!validateCredentials()) {
+            showLoginErrorAlert();
+            return;
+        }
 
         // hashuje hasło
         String hashedPassword = sha256()
@@ -65,7 +69,7 @@ public class LoginWindowController {
                 "}";
 
         if (responseString.substring(0, 7).equals(ResponseFlag.__ERROR.toString())) {
-            // TODO obsługa niepoprawnego logowania. Teraz wchodzi w tego ifa po wywołaniu sendRequestRecResponse, bo to zwraca flage LOGGING
+            showLoginErrorAlert();
             return;
         }
 
@@ -73,7 +77,7 @@ public class LoginWindowController {
         UserLoginResponse response = gson.fromJson(responseString.substring(7), UserLoginResponse.class);
 
         // tworze obiekt użytkownika
-        user = User.builder()
+        User user = User.builder()
                 .id(response.getId())
                 .username(response.getUsername())
                 .password(response.getPassword())
@@ -129,7 +133,14 @@ public class LoginWindowController {
 //        }
 //    }
 
-    public void setClient(Client client) {
-        this.client = client;
+    private void showLoginErrorAlert() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Error");
+        alert.setHeaderText("Wrong username or password");
+        alert.show();
+    }
+
+    private boolean validateCredentials() {
+        return !usernameField.getText().trim().equals("") && !passwordField.getText().trim().equals("");
     }
 }

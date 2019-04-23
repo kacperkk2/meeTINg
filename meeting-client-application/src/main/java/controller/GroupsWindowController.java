@@ -86,6 +86,9 @@ public class GroupsWindowController {
 
                 EventsWindowController eventsWindowController = fxmlLoader.getController();
                 eventsWindowController.setPickedGroup(pickedGroup);
+                eventsWindowController.setClient(client);
+                eventsWindowController.setUser(user);
+                eventsWindowController.refreshButton.fire();
 
                 userMainStage.setScene(scene);
                 userMainStage.show();
@@ -98,6 +101,7 @@ public class GroupsWindowController {
     @FXML
     private void signOutClicked(ActionEvent event){
         // TODO wyslanie requesta o wylogowanie, ale czy potrzeba???
+        // Tomek: potrzeba chyba przynajmniej dlatego zeby serwer mogl wywalic sockety zwiazane z tym uzytkownikiem
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirmation Dialog");
