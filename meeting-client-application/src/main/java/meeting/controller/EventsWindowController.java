@@ -4,6 +4,7 @@ import javafx.scene.control.*;
 import meeting.StageLoader;
 import meeting.api.request.EventListRequest;
 import meeting.api.request.NewEventRequest;
+import meeting.api.response.ErrorResponse;
 import meeting.api.response.EventListResponse;
 import meeting.api.response.NewEventResponse;
 import meeting.client.Client;
@@ -44,7 +45,6 @@ public class EventsWindowController {
     @FXML
     public void initialize() {
         Platform.runLater(() ->{
-            // jesli ktos nie jest leader to trzeba buttons disable
             if(user.getSystemRole() == USER) {
                 createButton.setDisable(true);
             }
@@ -153,7 +153,7 @@ public class EventsWindowController {
         Optional<String> result = dialog.showAndWait();
 
         result.ifPresent(name -> {
-            if (name.equals("")) showNewEventErrorAlert();
+            if (name.equals("")) showNewEventErrorAlert("Field can not be empty!");
             else {
                 sendNewEventRequest(name);
             }
@@ -182,7 +182,8 @@ public class EventsWindowController {
                 "}\n";
 
         if(response.substring(0, 7).equals(ResponseFlag.__ERROR.toString())) {
-            // TODO obsługa błędu utworzenia nowego eventu
+            ErrorResponse errorResponse = gson.fromJson(response.substring(7), ErrorResponse.class);
+            showNewEventErrorAlert(errorResponse.getMessage());
             return;
         }
 
@@ -196,10 +197,10 @@ public class EventsWindowController {
         eventList.getItems().add(e);
     }
 
-    private void showNewEventErrorAlert() {
+    private void showNewEventErrorAlert(String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setHeaderText(null);
-        alert.setContentText("Illegal event name!");
+        alert.setContentText(message);
         alert.show();
     }
 
