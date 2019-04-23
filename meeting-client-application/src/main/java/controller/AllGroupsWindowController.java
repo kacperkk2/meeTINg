@@ -1,6 +1,5 @@
 package controller;
 
-import api.request.GroupListRequest;
 import api.request.MembershipRequest;
 import api.response.GroupListResponse;
 import client.Client;
@@ -28,7 +27,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static enums.SystemRole.USER;
 
 public class AllGroupsWindowController {
 

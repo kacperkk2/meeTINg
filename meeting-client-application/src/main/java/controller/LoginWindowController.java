@@ -1,8 +1,6 @@
 package controller;
 
-import api.request.GroupListRequest;
 import api.request.UserDataRequest;
-import api.response.GroupListResponse;
 import api.response.UserLoginResponse;
 import client.Client;
 import com.google.gson.Gson;
@@ -19,12 +17,9 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import model.Group;
 import model.User;
 
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.List;
 
 import static com.google.common.hash.Hashing.sha256;
 

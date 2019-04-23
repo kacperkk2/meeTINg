@@ -1,7 +1,6 @@
 package controller;
 
 import api.request.UserDataRequest;
-import client.Client;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import enums.RequestFlag;
@@ -14,10 +13,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import model.Group;
 
 import java.nio.charset.StandardCharsets;
-import java.util.List;
 
 import static com.google.common.hash.Hashing.sha256;
 

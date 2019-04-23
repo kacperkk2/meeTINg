@@ -1,6 +1,5 @@
 package controller;
 
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -8,7 +7,6 @@ import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
 import model.Group;
 
-import static enums.SystemRole.USER;
 
 public class EventsWindowController {
 

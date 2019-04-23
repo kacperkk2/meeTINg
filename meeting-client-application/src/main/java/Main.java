@@ -1,4 +1,3 @@
-
 import client.Client;
 import controller.LoginWindowController;
 import javafx.application.Application;
