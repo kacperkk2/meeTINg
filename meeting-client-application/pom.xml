@@ -73,7 +73,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>Main</mainClass>
+                            <mainClass>meeting.Main</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>
