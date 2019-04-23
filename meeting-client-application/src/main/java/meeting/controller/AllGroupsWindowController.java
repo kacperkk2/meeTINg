@@ -173,11 +173,11 @@ public class AllGroupsWindowController {
         listView.getItems().addAll(groups);
     }
 
-    public void setClient(Client client) {
+    void setClient(Client client) {
         this.client = client;
     }
 
-    public void setUser(User user) {
+    void setUser(User user) {
         this.user = user;
     }
 }

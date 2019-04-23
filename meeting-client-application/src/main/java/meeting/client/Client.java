@@ -5,11 +5,11 @@ import java.io.*;
 import java.net.Socket;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
 public class Client {
 
-    private Socket clientSocket;
     private OutputStream writer;
     private DataInputStream reader;
 
@@ -23,7 +23,7 @@ public class Client {
 
     public Client() {
         try {
-            clientSocket = new Socket("localhost", 9543);
+            Socket clientSocket = new Socket("localhost", 9543);
             writer = clientSocket.getOutputStream();
             reader = new DataInputStream(new BufferedInputStream(clientSocket.getInputStream()));
 
@@ -76,11 +76,7 @@ public class Client {
         byte[] response = Arrays.copyOfRange(responsePackage, 4, packageSize);
 
         String responseString;
-        try{
-            responseString = new String(response, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            throw new AssertionError("UTF-8 is unknown");
-        }
+        responseString = new String(response, StandardCharsets.UTF_8);
 
         return responseString;
     }
@@ -136,14 +132,10 @@ public class Client {
 
     private String addHeader(String message) {
         // dlugosc wiadomosci do tablicy header[4]
-        byte header[] = convertIntToHeader(message.length());
+        byte[] header = convertIntToHeader(message.length());
 
         // cala paczka to header + wiadomosc
-        StringBuilder sb = new StringBuilder();
-        sb.append(new String(header));
-        sb.append(message);
-
-        return sb.toString();
+        return new String(header) + message;
     }
 
     private int convertHeaderToInt(byte[] header) {

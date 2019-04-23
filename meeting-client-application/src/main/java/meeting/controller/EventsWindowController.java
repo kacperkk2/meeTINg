@@ -2,7 +2,6 @@ package meeting.controller;
 
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
-import meeting.Main;
 import meeting.StageLoader;
 import meeting.api.request.EventListRequest;
 import meeting.api.response.EventListResponse;
@@ -155,15 +154,15 @@ public class EventsWindowController {
         System.out.println("eventClicked");
     }
 
-    public void setPickedGroup(Group pickedGroup) {
+    void setPickedGroup(Group pickedGroup) {
         this.pickedGroup = pickedGroup;
     }
 
-    public void setClient(Client client) {
+    void setClient(Client client) {
         this.client = client;
     }
 
-    public void setUser(User user) {
+    void setUser(User user) {
         this.user = user;
     }
 }
