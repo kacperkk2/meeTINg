@@ -15,7 +15,8 @@ public class Group {
 
     private String leader;
 
+    @Override
     public String toString() {
-        return (id + " " + name + " " + leader);
+        return (name + " (" + leader + ")");
     }
 }

@@ -13,4 +13,8 @@ public class Event {
 
     private String name;
 
+    @Override
+    public String toString() {
+        return name;
+    }
 }
