@@ -38,9 +38,7 @@ public class AllGroupsWindowController {
 
     @FXML
     public void initialize() {
-
         applyButton.setDisable(true);
-
         Platform.runLater(this::refreshClicked);
     }
 
@@ -106,8 +104,8 @@ public class AllGroupsWindowController {
         // TODO wyslanie requesta o wylogowanie, ale czy potrzeba???
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Confirmation Dialog");
-        alert.setHeaderText("Are you sure??");
+        alert.setHeaderText(null);
+        alert.setContentText("Do you want to sign out?");
 
         Optional<ButtonType> result = alert.showAndWait();
         if(result.isPresent()){

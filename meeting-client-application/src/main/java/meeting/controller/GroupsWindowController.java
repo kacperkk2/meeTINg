@@ -89,8 +89,8 @@ public class GroupsWindowController {
         // Tomek: potrzeba chyba przynajmniej dlatego zeby serwer mogl wywalic sockety zwiazane z tym uzytkownikiem
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Confirmation Dialog");
-        alert.setHeaderText("Are you sure??");
+        alert.setHeaderText(null);
+        alert.setContentText("Do you want to sign out?");
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent()) {

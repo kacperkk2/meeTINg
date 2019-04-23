@@ -122,9 +122,9 @@ public class LoginWindowController {
 //    }
 
     private void showLoginErrorAlert() {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Error");
-        alert.setHeaderText("Wrong username or password");
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setHeaderText(null);
+        alert.setContentText("Wrong username or password!");
         alert.show();
     }
 

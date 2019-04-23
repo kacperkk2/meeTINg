@@ -1,10 +1,11 @@
 package meeting.controller;
 
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
+import javafx.scene.control.*;
 import meeting.StageLoader;
 import meeting.api.request.EventListRequest;
+import meeting.api.request.NewEventRequest;
 import meeting.api.response.EventListResponse;
+import meeting.api.response.NewEventResponse;
 import meeting.client.Client;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -15,8 +16,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import meeting.model.Event;
@@ -59,8 +58,8 @@ public class EventsWindowController {
         // Tomek: potrzeba chyba przynajmniej dlatego zeby serwer mogl wywalic sockety zwiazane z tym uzytkownikiem
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Confirmation Dialog");
-        alert.setHeaderText("Are you sure??");
+        alert.setHeaderText(null);
+        alert.setContentText("Do you want to sign out?");
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent()) {
@@ -145,8 +144,63 @@ public class EventsWindowController {
     }
 
     @FXML
-    public void createClicked(ActionEvent actionEvent) {
-        System.out.println("createClicked");
+    public void createClicked() {
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("New event");
+        dialog.setHeaderText(null);
+        dialog.setContentText("Please enter event name:");
+
+        Optional<String> result = dialog.showAndWait();
+
+        result.ifPresent(name -> {
+            if (name.equals("")) showNewEventErrorAlert();
+            else {
+                sendNewEventRequest(name);
+            }
+        });
+    }
+
+    private void sendNewEventRequest(String name) {
+        // robie JSONa
+        GsonBuilder builder = new GsonBuilder();
+        builder.setPrettyPrinting();
+        Gson gson = builder.create();
+
+        NewEventRequest newEventRequest = NewEventRequest.builder()
+                .groupId(pickedGroup.getId())
+                .eventName(name)
+                .build();
+
+        String request = RequestFlag.MAKEEVT.toString() + gson.toJson(newEventRequest);
+
+//        String response = meeting.client.sendRequestRecResponse(request);
+
+        String response = ResponseFlag.MAKEEVT.toString() +
+                "{\n" +
+                "  \"id\": \"65\",\n" +
+                "  \"name\": \"Nowy event\"\n" +
+                "}\n";
+
+        if(response.substring(0, 7).equals(ResponseFlag.__ERROR.toString())) {
+            // TODO obsługa błędu utworzenia nowego eventu
+            return;
+        }
+
+        NewEventResponse newEventResponse = gson.fromJson(response.substring(7), NewEventResponse.class);
+
+        Event e = Event.builder()
+                .id(newEventResponse.getId())
+                .name(newEventResponse.getName())
+                .build();
+
+        eventList.getItems().add(e);
+    }
+
+    private void showNewEventErrorAlert() {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setHeaderText(null);
+        alert.setContentText("Illegal event name!");
+        alert.show();
     }
 
     @FXML
