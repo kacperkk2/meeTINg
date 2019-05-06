@@ -1,4 +1,15 @@
 meeting-client-application/target/
 meeting-client-application/.idea/
 server-client-cpp/server-prototype/.idea/
+MakeLists.txt.user
+CMakeCache.txt
+CMakeFiles
+CMakeScripts
+Testing
+Makefile
+cmake_install.cmake
+install_manifest.txt
+compile_commands.json
+CTestTestfile.cmake
+_deps
 
