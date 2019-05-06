@@ -39,19 +39,19 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /snap/clion/69/bin/cmake/linux/bin/cmake
+CMAKE_COMMAND = /opt/clion-2019.1.2/bin/cmake/linux/bin/cmake
 
 # The command to remove a file.
-RM = /snap/clion/69/bin/cmake/linux/bin/cmake -E remove -f
+RM = /opt/clion-2019.1.2/bin/cmake/linux/bin/cmake -E remove -f
 
 # Escaping for special characters.
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/michal/Desktop/meeTINg/server-client-cpp/server-prototype
+CMAKE_SOURCE_DIR = /home/marjan/Desktop/meeTINg/server-client-cpp/server-prototype
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/michal/Desktop/meeTINg/server-client-cpp/server-prototype/cmake-build-debug
+CMAKE_BINARY_DIR = /home/marjan/Desktop/meeTINg/server-client-cpp/server-prototype/cmake-build-debug
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -59,7 +59,7 @@ CMAKE_BINARY_DIR = /home/michal/Desktop/meeTINg/server-client-cpp/server-prototy
 # Special rule for the target rebuild_cache
 rebuild_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
-	/snap/clion/69/bin/cmake/linux/bin/cmake -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+	/opt/clion-2019.1.2/bin/cmake/linux/bin/cmake -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
 .PHONY : rebuild_cache
 
 # Special rule for the target rebuild_cache
@@ -70,7 +70,7 @@ rebuild_cache/fast: rebuild_cache
 # Special rule for the target edit_cache
 edit_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
-	/snap/clion/69/bin/cmake/linux/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+	/opt/clion-2019.1.2/bin/cmake/linux/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
 .PHONY : edit_cache
 
 # Special rule for the target edit_cache
@@ -80,9 +80,9 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/michal/Desktop/meeTINg/server-client-cpp/server-prototype/cmake-build-debug/CMakeFiles /home/michal/Desktop/meeTINg/server-client-cpp/server-prototype/cmake-build-debug/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/marjan/Desktop/meeTINg/server-client-cpp/server-prototype/cmake-build-debug/CMakeFiles /home/marjan/Desktop/meeTINg/server-client-cpp/server-prototype/cmake-build-debug/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/michal/Desktop/meeTINg/server-client-cpp/server-prototype/cmake-build-debug/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/marjan/Desktop/meeTINg/server-client-cpp/server-prototype/cmake-build-debug/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -204,6 +204,87 @@ DataBaseConnection.cpp.s:
 	$(MAKE) -f CMakeFiles/server_prototype.dir/build.make CMakeFiles/server_prototype.dir/DataBaseConnection.cpp.s
 .PHONY : DataBaseConnection.cpp.s
 
+Event.o: Event.cpp.o
+
+.PHONY : Event.o
+
+# target to build an object file
+Event.cpp.o:
+	$(MAKE) -f CMakeFiles/server_prototype.dir/build.make CMakeFiles/server_prototype.dir/Event.cpp.o
+.PHONY : Event.cpp.o
+
+Event.i: Event.cpp.i
+
+.PHONY : Event.i
+
+# target to preprocess a source file
+Event.cpp.i:
+	$(MAKE) -f CMakeFiles/server_prototype.dir/build.make CMakeFiles/server_prototype.dir/Event.cpp.i
+.PHONY : Event.cpp.i
+
+Event.s: Event.cpp.s
+
+.PHONY : Event.s
+
+# target to generate assembly for a file
+Event.cpp.s:
+	$(MAKE) -f CMakeFiles/server_prototype.dir/build.make CMakeFiles/server_prototype.dir/Event.cpp.s
+.PHONY : Event.cpp.s
+
+Group.o: Group.cpp.o
+
+.PHONY : Group.o
+
+# target to build an object file
+Group.cpp.o:
+	$(MAKE) -f CMakeFiles/server_prototype.dir/build.make CMakeFiles/server_prototype.dir/Group.cpp.o
+.PHONY : Group.cpp.o
+
+Group.i: Group.cpp.i
+
+.PHONY : Group.i
+
+# target to preprocess a source file
+Group.cpp.i:
+	$(MAKE) -f CMakeFiles/server_prototype.dir/build.make CMakeFiles/server_prototype.dir/Group.cpp.i
+.PHONY : Group.cpp.i
+
+Group.s: Group.cpp.s
+
+.PHONY : Group.s
+
+# target to generate assembly for a file
+Group.cpp.s:
+	$(MAKE) -f CMakeFiles/server_prototype.dir/build.make CMakeFiles/server_prototype.dir/Group.cpp.s
+.PHONY : Group.cpp.s
+
+Offer.o: Offer.cpp.o
+
+.PHONY : Offer.o
+
+# target to build an object file
+Offer.cpp.o:
+	$(MAKE) -f CMakeFiles/server_prototype.dir/build.make CMakeFiles/server_prototype.dir/Offer.cpp.o
+.PHONY : Offer.cpp.o
+
+Offer.i: Offer.cpp.i
+
+.PHONY : Offer.i
+
+# target to preprocess a source file
+Offer.cpp.i:
+	$(MAKE) -f CMakeFiles/server_prototype.dir/build.make CMakeFiles/server_prototype.dir/Offer.cpp.i
+.PHONY : Offer.cpp.i
+
+Offer.s: Offer.cpp.s
+
+.PHONY : Offer.s
+
+# target to generate assembly for a file
+Offer.cpp.s:
+	$(MAKE) -f CMakeFiles/server_prototype.dir/build.make CMakeFiles/server_prototype.dir/Offer.cpp.s
+.PHONY : Offer.cpp.s
+
 PackageSizeParser.o: PackageSizeParser.cpp.o
 
 .PHONY : PackageSizeParser.o
@@ -258,6 +339,33 @@ ServerController.cpp.s:
 	$(MAKE) -f CMakeFiles/server_prototype.dir/build.make CMakeFiles/server_prototype.dir/ServerController.cpp.s
 .PHONY : ServerController.cpp.s
 
+User.o: User.cpp.o
+
+.PHONY : User.o
+
+# target to build an object file
+User.cpp.o:
+	$(MAKE) -f CMakeFiles/server_prototype.dir/build.make CMakeFiles/server_prototype.dir/User.cpp.o
+.PHONY : User.cpp.o
+
+User.i: User.cpp.i
+
+.PHONY : User.i
+
+# target to preprocess a source file
+User.cpp.i:
+	$(MAKE) -f CMakeFiles/server_prototype.dir/build.make CMakeFiles/server_prototype.dir/User.cpp.i
+.PHONY : User.cpp.i
+
+User.s: User.cpp.s
+
+.PHONY : User.s
+
+# target to generate assembly for a file
+User.cpp.s:
+	$(MAKE) -f CMakeFiles/server_prototype.dir/build.make CMakeFiles/server_prototype.dir/User.cpp.s
+.PHONY : User.cpp.s
+
 main.o: main.cpp.o
 
 .PHONY : main.o
@@ -303,12 +411,24 @@ help:
 	@echo "... DataBaseConnection.o"
 	@echo "... DataBaseConnection.i"
 	@echo "... DataBaseConnection.s"
+	@echo "... Event.o"
+	@echo "... Event.i"
+	@echo "... Event.s"
+	@echo "... Group.o"
+	@echo "... Group.i"
+	@echo "... Group.s"
+	@echo "... Offer.o"
+	@echo "... Offer.i"
+	@echo "... Offer.s"
 	@echo "... PackageSizeParser.o"
 	@echo "... PackageSizeParser.i"
 	@echo "... PackageSizeParser.s"
 	@echo "... ServerController.o"
 	@echo "... ServerController.i"
 	@echo "... ServerController.s"
+	@echo "... User.o"
+	@echo "... User.i"
+	@echo "... User.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

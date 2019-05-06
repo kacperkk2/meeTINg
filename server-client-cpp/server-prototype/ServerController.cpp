@@ -17,6 +17,8 @@ ServerController::ServerController(){
 }
 
 void ServerController::test(){
-   json j = "{ \"happy\": true, \"pi\": 3.141 }"_json;
-   cout<<j;
+   json j = "{\n \"happy\": \"true\",\n \"pi\": \"3.141\" }"_json;
+   cout << j;
+
+
 }
