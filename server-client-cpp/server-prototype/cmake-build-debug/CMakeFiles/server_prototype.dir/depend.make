@@ -9,12 +9,51 @@ CMakeFiles/server_prototype.dir/ConnectionManager.cpp.o: ../PackageSizeParser.h
 CMakeFiles/server_prototype.dir/ConsoleManager.cpp.o: ../ConsoleManager.cpp
 CMakeFiles/server_prototype.dir/ConsoleManager.cpp.o: ../ConsoleManager.h
 
+CMakeFiles/server_prototype.dir/DataBaseConnection.cpp.o: ../DataBaseConnection.cpp
+CMakeFiles/server_prototype.dir/DataBaseConnection.cpp.o: ../DataBaseConnection.h
+
 CMakeFiles/server_prototype.dir/PackageSizeParser.cpp.o: ../PackageSizeParser.cpp
 CMakeFiles/server_prototype.dir/PackageSizeParser.cpp.o: ../PackageSizeParser.h
+
+CMakeFiles/server_prototype.dir/ServerController.cpp.o: .././nlohmann/adl_serializer.hpp
+CMakeFiles/server_prototype.dir/ServerController.cpp.o: .././nlohmann/detail/conversions/from_json.hpp
+CMakeFiles/server_prototype.dir/ServerController.cpp.o: .././nlohmann/detail/conversions/to_chars.hpp
+CMakeFiles/server_prototype.dir/ServerController.cpp.o: .././nlohmann/detail/conversions/to_json.hpp
+CMakeFiles/server_prototype.dir/ServerController.cpp.o: .././nlohmann/detail/exceptions.hpp
+CMakeFiles/server_prototype.dir/ServerController.cpp.o: .././nlohmann/detail/input/binary_reader.hpp
+CMakeFiles/server_prototype.dir/ServerController.cpp.o: .././nlohmann/detail/input/input_adapters.hpp
+CMakeFiles/server_prototype.dir/ServerController.cpp.o: .././nlohmann/detail/input/json_sax.hpp
+CMakeFiles/server_prototype.dir/ServerController.cpp.o: .././nlohmann/detail/input/lexer.hpp
+CMakeFiles/server_prototype.dir/ServerController.cpp.o: .././nlohmann/detail/input/parser.hpp
+CMakeFiles/server_prototype.dir/ServerController.cpp.o: .././nlohmann/detail/input/position_t.hpp
+CMakeFiles/server_prototype.dir/ServerController.cpp.o: .././nlohmann/detail/iterators/internal_iterator.hpp
+CMakeFiles/server_prototype.dir/ServerController.cpp.o: .././nlohmann/detail/iterators/iter_impl.hpp
+CMakeFiles/server_prototype.dir/ServerController.cpp.o: .././nlohmann/detail/iterators/iteration_proxy.hpp
+CMakeFiles/server_prototype.dir/ServerController.cpp.o: .././nlohmann/detail/iterators/iterator_traits.hpp
+CMakeFiles/server_prototype.dir/ServerController.cpp.o: .././nlohmann/detail/iterators/json_reverse_iterator.hpp
+CMakeFiles/server_prototype.dir/ServerController.cpp.o: .././nlohmann/detail/iterators/primitive_iterator.hpp
+CMakeFiles/server_prototype.dir/ServerController.cpp.o: .././nlohmann/detail/json_pointer.hpp
+CMakeFiles/server_prototype.dir/ServerController.cpp.o: .././nlohmann/detail/json_ref.hpp
+CMakeFiles/server_prototype.dir/ServerController.cpp.o: .././nlohmann/detail/macro_scope.hpp
+CMakeFiles/server_prototype.dir/ServerController.cpp.o: .././nlohmann/detail/macro_unscope.hpp
+CMakeFiles/server_prototype.dir/ServerController.cpp.o: .././nlohmann/detail/meta/cpp_future.hpp
+CMakeFiles/server_prototype.dir/ServerController.cpp.o: .././nlohmann/detail/meta/detected.hpp
+CMakeFiles/server_prototype.dir/ServerController.cpp.o: .././nlohmann/detail/meta/is_sax.hpp
+CMakeFiles/server_prototype.dir/ServerController.cpp.o: .././nlohmann/detail/meta/type_traits.hpp
+CMakeFiles/server_prototype.dir/ServerController.cpp.o: .././nlohmann/detail/meta/void_t.hpp
+CMakeFiles/server_prototype.dir/ServerController.cpp.o: .././nlohmann/detail/output/binary_writer.hpp
+CMakeFiles/server_prototype.dir/ServerController.cpp.o: .././nlohmann/detail/output/output_adapters.hpp
+CMakeFiles/server_prototype.dir/ServerController.cpp.o: .././nlohmann/detail/output/serializer.hpp
+CMakeFiles/server_prototype.dir/ServerController.cpp.o: .././nlohmann/detail/value_t.hpp
+CMakeFiles/server_prototype.dir/ServerController.cpp.o: .././nlohmann/json_fwd.hpp
+CMakeFiles/server_prototype.dir/ServerController.cpp.o: ../ServerController.cpp
+CMakeFiles/server_prototype.dir/ServerController.cpp.o: ../ServerController.h
+CMakeFiles/server_prototype.dir/ServerController.cpp.o: ../nlohmann/json.hpp
 
 CMakeFiles/server_prototype.dir/main.cpp.o: ../ClientStructure.h
 CMakeFiles/server_prototype.dir/main.cpp.o: ../ConnectionManager.h
 CMakeFiles/server_prototype.dir/main.cpp.o: ../ConsoleManager.h
 CMakeFiles/server_prototype.dir/main.cpp.o: ../PackageSizeParser.h
+CMakeFiles/server_prototype.dir/main.cpp.o: ../ServerController.h
 CMakeFiles/server_prototype.dir/main.cpp.o: ../main.cpp
 

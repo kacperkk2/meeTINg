@@ -39,19 +39,19 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /opt/clion-2019.1.2/bin/cmake/linux/bin/cmake
+CMAKE_COMMAND = /snap/clion/69/bin/cmake/linux/bin/cmake
 
 # The command to remove a file.
-RM = /opt/clion-2019.1.2/bin/cmake/linux/bin/cmake -E remove -f
+RM = /snap/clion/69/bin/cmake/linux/bin/cmake -E remove -f
 
 # Escaping for special characters.
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/marjan/Desktop/meeTINg/server-client-cpp/server-prototype
+CMAKE_SOURCE_DIR = /home/michal/Desktop/meeTINg/server-client-cpp/server-prototype
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/marjan/Desktop/meeTINg/server-client-cpp/server-prototype/cmake-build-debug
+CMAKE_BINARY_DIR = /home/michal/Desktop/meeTINg/server-client-cpp/server-prototype/cmake-build-debug
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -59,7 +59,7 @@ CMAKE_BINARY_DIR = /home/marjan/Desktop/meeTINg/server-client-cpp/server-prototy
 # Special rule for the target rebuild_cache
 rebuild_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
-	/opt/clion-2019.1.2/bin/cmake/linux/bin/cmake -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+	/snap/clion/69/bin/cmake/linux/bin/cmake -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
 .PHONY : rebuild_cache
 
 # Special rule for the target rebuild_cache
@@ -70,7 +70,7 @@ rebuild_cache/fast: rebuild_cache
 # Special rule for the target edit_cache
 edit_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
-	/opt/clion-2019.1.2/bin/cmake/linux/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+	/snap/clion/69/bin/cmake/linux/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
 .PHONY : edit_cache
 
 # Special rule for the target edit_cache
@@ -80,9 +80,9 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/marjan/Desktop/meeTINg/server-client-cpp/server-prototype/cmake-build-debug/CMakeFiles /home/marjan/Desktop/meeTINg/server-client-cpp/server-prototype/cmake-build-debug/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/michal/Desktop/meeTINg/server-client-cpp/server-prototype/cmake-build-debug/CMakeFiles /home/michal/Desktop/meeTINg/server-client-cpp/server-prototype/cmake-build-debug/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/marjan/Desktop/meeTINg/server-client-cpp/server-prototype/cmake-build-debug/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/michal/Desktop/meeTINg/server-client-cpp/server-prototype/cmake-build-debug/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -177,6 +177,33 @@ ConsoleManager.cpp.s:
 	$(MAKE) -f CMakeFiles/server_prototype.dir/build.make CMakeFiles/server_prototype.dir/ConsoleManager.cpp.s
 .PHONY : ConsoleManager.cpp.s
 
+DataBaseConnection.o: DataBaseConnection.cpp.o
+
+.PHONY : DataBaseConnection.o
+
+# target to build an object file
+DataBaseConnection.cpp.o:
+	$(MAKE) -f CMakeFiles/server_prototype.dir/build.make CMakeFiles/server_prototype.dir/DataBaseConnection.cpp.o
+.PHONY : DataBaseConnection.cpp.o
+
+DataBaseConnection.i: DataBaseConnection.cpp.i
+
+.PHONY : DataBaseConnection.i
+
+# target to preprocess a source file
+DataBaseConnection.cpp.i:
+	$(MAKE) -f CMakeFiles/server_prototype.dir/build.make CMakeFiles/server_prototype.dir/DataBaseConnection.cpp.i
+.PHONY : DataBaseConnection.cpp.i
+
+DataBaseConnection.s: DataBaseConnection.cpp.s
+
+.PHONY : DataBaseConnection.s
+
+# target to generate assembly for a file
+DataBaseConnection.cpp.s:
+	$(MAKE) -f CMakeFiles/server_prototype.dir/build.make CMakeFiles/server_prototype.dir/DataBaseConnection.cpp.s
+.PHONY : DataBaseConnection.cpp.s
+
 PackageSizeParser.o: PackageSizeParser.cpp.o
 
 .PHONY : PackageSizeParser.o
@@ -203,6 +230,33 @@ PackageSizeParser.s: PackageSizeParser.cpp.s
 PackageSizeParser.cpp.s:
 	$(MAKE) -f CMakeFiles/server_prototype.dir/build.make CMakeFiles/server_prototype.dir/PackageSizeParser.cpp.s
 .PHONY : PackageSizeParser.cpp.s
+
+ServerController.o: ServerController.cpp.o
+
+.PHONY : ServerController.o
+
+# target to build an object file
+ServerController.cpp.o:
+	$(MAKE) -f CMakeFiles/server_prototype.dir/build.make CMakeFiles/server_prototype.dir/ServerController.cpp.o
+.PHONY : ServerController.cpp.o
+
+ServerController.i: ServerController.cpp.i
+
+.PHONY : ServerController.i
+
+# target to preprocess a source file
+ServerController.cpp.i:
+	$(MAKE) -f CMakeFiles/server_prototype.dir/build.make CMakeFiles/server_prototype.dir/ServerController.cpp.i
+.PHONY : ServerController.cpp.i
+
+ServerController.s: ServerController.cpp.s
+
+.PHONY : ServerController.s
+
+# target to generate assembly for a file
+ServerController.cpp.s:
+	$(MAKE) -f CMakeFiles/server_prototype.dir/build.make CMakeFiles/server_prototype.dir/ServerController.cpp.s
+.PHONY : ServerController.cpp.s
 
 main.o: main.cpp.o
 
@@ -246,9 +300,15 @@ help:
 	@echo "... ConsoleManager.o"
 	@echo "... ConsoleManager.i"
 	@echo "... ConsoleManager.s"
+	@echo "... DataBaseConnection.o"
+	@echo "... DataBaseConnection.i"
+	@echo "... DataBaseConnection.s"
 	@echo "... PackageSizeParser.o"
 	@echo "... PackageSizeParser.i"
 	@echo "... PackageSizeParser.s"
+	@echo "... ServerController.o"
+	@echo "... ServerController.i"
+	@echo "... ServerController.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

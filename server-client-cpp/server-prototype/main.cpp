@@ -5,6 +5,7 @@
 #include "ConnectionManager.h"
 #include "ConsoleManager.h"
 #include "PackageSizeParser.h"
+#include "ServerController.h"
 
 #include "mysql_connection.h"
 #include <cppconn/driver.h>
@@ -30,6 +31,11 @@ void *handle_client(void* args)
 
 int main(int argc, char* argv[])
 {
+
+    ServerController sc;
+    sc.test();
+
+
     int pipefd[2];
     int port = atoi(argv[1]);
     if (!port) {

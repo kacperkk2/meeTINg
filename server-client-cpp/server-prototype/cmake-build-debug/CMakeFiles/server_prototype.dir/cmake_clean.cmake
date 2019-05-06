@@ -3,6 +3,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/server_prototype.dir/PackageSizeParser.cpp.o"
   "CMakeFiles/server_prototype.dir/ConnectionManager.cpp.o"
   "CMakeFiles/server_prototype.dir/ConsoleManager.cpp.o"
+  "CMakeFiles/server_prototype.dir/DataBaseConnection.cpp.o"
+  "CMakeFiles/server_prototype.dir/ServerController.cpp.o"
   "server_prototype.pdb"
   "server_prototype"
 )

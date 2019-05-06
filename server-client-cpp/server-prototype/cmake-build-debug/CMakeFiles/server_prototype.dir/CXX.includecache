@@ -6,23 +6,27 @@
 
 #IncludeRegexTransform: 
 
-/home/marjan/Desktop/meeTINg/server-client-cpp/server-prototype/ClientStructure.h
+/home/michal/Desktop/meeTINg/server-client-cpp/server-prototype/ClientStructure.h
 PackageSizeParser.h
-/home/marjan/Desktop/meeTINg/server-client-cpp/server-prototype/PackageSizeParser.h
+/home/michal/Desktop/meeTINg/server-client-cpp/server-prototype/PackageSizeParser.h
 
-/home/marjan/Desktop/meeTINg/server-client-cpp/server-prototype/ConnectionManager.h
+/home/michal/Desktop/meeTINg/server-client-cpp/server-prototype/ConnectionManager.h
 map
 -
 ClientStructure.h
-/home/marjan/Desktop/meeTINg/server-client-cpp/server-prototype/ClientStructure.h
+/home/michal/Desktop/meeTINg/server-client-cpp/server-prototype/ClientStructure.h
 
-/home/marjan/Desktop/meeTINg/server-client-cpp/server-prototype/ConsoleManager.h
+/home/michal/Desktop/meeTINg/server-client-cpp/server-prototype/ConsoleManager.h
 
-/home/marjan/Desktop/meeTINg/server-client-cpp/server-prototype/PackageSizeParser.h
+/home/michal/Desktop/meeTINg/server-client-cpp/server-prototype/PackageSizeParser.h
 cstdint
 -
 
-/home/marjan/Desktop/meeTINg/server-client-cpp/server-prototype/main.cpp
+/home/michal/Desktop/meeTINg/server-client-cpp/server-prototype/ServerController.h
+string
+-
+
+/home/michal/Desktop/meeTINg/server-client-cpp/server-prototype/main.cpp
 iostream
 -
 unistd.h
@@ -32,13 +36,15 @@ arpa/inet.h
 cstring
 -
 ConnectionManager.h
-/home/marjan/Desktop/meeTINg/server-client-cpp/server-prototype/ConnectionManager.h
+/home/michal/Desktop/meeTINg/server-client-cpp/server-prototype/ConnectionManager.h
 ConsoleManager.h
-/home/marjan/Desktop/meeTINg/server-client-cpp/server-prototype/ConsoleManager.h
+/home/michal/Desktop/meeTINg/server-client-cpp/server-prototype/ConsoleManager.h
 PackageSizeParser.h
-/home/marjan/Desktop/meeTINg/server-client-cpp/server-prototype/PackageSizeParser.h
+/home/michal/Desktop/meeTINg/server-client-cpp/server-prototype/PackageSizeParser.h
+ServerController.h
+/home/michal/Desktop/meeTINg/server-client-cpp/server-prototype/ServerController.h
 mysql_connection.h
-/home/marjan/Desktop/meeTINg/server-client-cpp/server-prototype/mysql_connection.h
+/home/michal/Desktop/meeTINg/server-client-cpp/server-prototype/mysql_connection.h
 cppconn/driver.h
 -
 cppconn/exception.h
@@ -48,7 +54,7 @@ cppconn/resultset.h
 cppconn/statement.h
 -
 mysql_driver.h
-/home/marjan/Desktop/meeTINg/server-client-cpp/server-prototype/mysql_driver.h
+/home/michal/Desktop/meeTINg/server-client-cpp/server-prototype/mysql_driver.h
 stdlib.h
 -
 iostream
