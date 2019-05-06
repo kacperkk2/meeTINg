@@ -4,15 +4,17 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/tomas/TINmeeting/meeTINg/server-client-cpp/server-prototype/ConnectionManager.cpp" "/home/tomas/TINmeeting/meeTINg/server-client-cpp/server-prototype/cmake-build-debug/CMakeFiles/server_prototype.dir/ConnectionManager.cpp.o"
-  "/home/tomas/TINmeeting/meeTINg/server-client-cpp/server-prototype/ConsoleManager.cpp" "/home/tomas/TINmeeting/meeTINg/server-client-cpp/server-prototype/cmake-build-debug/CMakeFiles/server_prototype.dir/ConsoleManager.cpp.o"
-  "/home/tomas/TINmeeting/meeTINg/server-client-cpp/server-prototype/PackageSizeParser.cpp" "/home/tomas/TINmeeting/meeTINg/server-client-cpp/server-prototype/cmake-build-debug/CMakeFiles/server_prototype.dir/PackageSizeParser.cpp.o"
-  "/home/tomas/TINmeeting/meeTINg/server-client-cpp/server-prototype/main.cpp" "/home/tomas/TINmeeting/meeTINg/server-client-cpp/server-prototype/cmake-build-debug/CMakeFiles/server_prototype.dir/main.cpp.o"
+  "/home/marjan/Desktop/meeTINg/server-client-cpp/server-prototype/ConnectionManager.cpp" "/home/marjan/Desktop/meeTINg/server-client-cpp/server-prototype/cmake-build-debug/CMakeFiles/server_prototype.dir/ConnectionManager.cpp.o"
+  "/home/marjan/Desktop/meeTINg/server-client-cpp/server-prototype/ConsoleManager.cpp" "/home/marjan/Desktop/meeTINg/server-client-cpp/server-prototype/cmake-build-debug/CMakeFiles/server_prototype.dir/ConsoleManager.cpp.o"
+  "/home/marjan/Desktop/meeTINg/server-client-cpp/server-prototype/PackageSizeParser.cpp" "/home/marjan/Desktop/meeTINg/server-client-cpp/server-prototype/cmake-build-debug/CMakeFiles/server_prototype.dir/PackageSizeParser.cpp.o"
+  "/home/marjan/Desktop/meeTINg/server-client-cpp/server-prototype/main.cpp" "/home/marjan/Desktop/meeTINg/server-client-cpp/server-prototype/cmake-build-debug/CMakeFiles/server_prototype.dir/main.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 
 # The include file search paths:
 set(CMAKE_CXX_TARGET_INCLUDE_PATH
+  "../."
+  "/usr/include/cppconn"
   )
 
 # Targets to which this target links.

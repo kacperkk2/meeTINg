@@ -2,6 +2,12 @@ cmake_minimum_required(VERSION 3.13)
 project(server_prototype)
 
 set(CMAKE_CXX_STANDARD 14)
-set(CMAKE_CXX_FLAGS -pthread)
+set(CMAKE_CXX_FLAGS -pthread )
+
+include_directories(. "/usr/include/cppconn")
+link_directories("/usr/lib/" "mysqlcppconn")
+
 
 add_executable(server_prototype main.cpp PackageSizeParser.cpp PackageSizeParser.h ConnectionManager.cpp ConnectionManager.h ConsoleManager.cpp ConsoleManager.h ClientStructure.h)
+
+target_link_libraries(server_prototype mysqlcppconn)
