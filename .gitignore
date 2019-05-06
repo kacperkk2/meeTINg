@@ -2,3 +2,4 @@ meeting-client-application/target/
 meeting-client-application/.idea/
 server-client-cpp/server-prototype/.idea/
 server-client-cpp/server-prototype/cmake-build-debug
+server-client-cpp/server-prototype/CMakeLists.txt
