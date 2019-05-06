@@ -123,6 +123,33 @@ server_prototype/fast:
 	$(MAKE) -f CMakeFiles/server_prototype.dir/build.make CMakeFiles/server_prototype.dir/build
 .PHONY : server_prototype/fast
 
+Comment.o: Comment.cpp.o
+
+.PHONY : Comment.o
+
+# target to build an object file
+Comment.cpp.o:
+	$(MAKE) -f CMakeFiles/server_prototype.dir/build.make CMakeFiles/server_prototype.dir/Comment.cpp.o
+.PHONY : Comment.cpp.o
+
+Comment.i: Comment.cpp.i
+
+.PHONY : Comment.i
+
+# target to preprocess a source file
+Comment.cpp.i:
+	$(MAKE) -f CMakeFiles/server_prototype.dir/build.make CMakeFiles/server_prototype.dir/Comment.cpp.i
+.PHONY : Comment.cpp.i
+
+Comment.s: Comment.cpp.s
+
+.PHONY : Comment.s
+
+# target to generate assembly for a file
+Comment.cpp.s:
+	$(MAKE) -f CMakeFiles/server_prototype.dir/build.make CMakeFiles/server_prototype.dir/Comment.cpp.s
+.PHONY : Comment.cpp.s
+
 ConnectionManager.o: ConnectionManager.cpp.o
 
 .PHONY : ConnectionManager.o
@@ -429,6 +456,9 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... server_prototype"
 	@echo "... edit_cache"
+	@echo "... Comment.o"
+	@echo "... Comment.i"
+	@echo "... Comment.s"
 	@echo "... ConnectionManager.o"
 	@echo "... ConnectionManager.i"
 	@echo "... ConnectionManager.s"

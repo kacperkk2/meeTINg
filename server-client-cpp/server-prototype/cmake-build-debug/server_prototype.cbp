@@ -91,6 +91,12 @@
 		<Unit filename="/home/marjan/Desktop/meeTINg/server-client-cpp/server-prototype/ClientStructure.h">
 			<Option target="server_prototype"/>
 		</Unit>
+		<Unit filename="/home/marjan/Desktop/meeTINg/server-client-cpp/server-prototype/Comment.cpp">
+			<Option target="server_prototype"/>
+		</Unit>
+		<Unit filename="/home/marjan/Desktop/meeTINg/server-client-cpp/server-prototype/Comment.h">
+			<Option target="server_prototype"/>
+		</Unit>
 		<Unit filename="/home/marjan/Desktop/meeTINg/server-client-cpp/server-prototype/ConnectionManager.cpp">
 			<Option target="server_prototype"/>
 		</Unit>
@@ -133,6 +139,12 @@
 		<Unit filename="/home/marjan/Desktop/meeTINg/server-client-cpp/server-prototype/PackageSizeParser.h">
 			<Option target="server_prototype"/>
 		</Unit>
+		<Unit filename="/home/marjan/Desktop/meeTINg/server-client-cpp/server-prototype/RequestFlag.h">
+			<Option target="server_prototype"/>
+		</Unit>
+		<Unit filename="/home/marjan/Desktop/meeTINg/server-client-cpp/server-prototype/ResposneFlag.h">
+			<Option target="server_prototype"/>
+		</Unit>
 		<Unit filename="/home/marjan/Desktop/meeTINg/server-client-cpp/server-prototype/ServerController.cpp">
 			<Option target="server_prototype"/>
 		</Unit>
@@ -145,10 +157,10 @@
 		<Unit filename="/home/marjan/Desktop/meeTINg/server-client-cpp/server-prototype/User.h">
 			<Option target="server_prototype"/>
 		</Unit>
-		<Unit filename="/home/marjan/Desktop/meeTINg/server-client-cpp/server-prototype/cmake-build-debug/Vote.cpp">
+		<Unit filename="/home/marjan/Desktop/meeTINg/server-client-cpp/server-prototype/Vote.cpp">
 			<Option target="server_prototype"/>
 		</Unit>
-		<Unit filename="/home/marjan/Desktop/meeTINg/server-client-cpp/server-prototype/cmake-build-debug/Vote.h">
+		<Unit filename="/home/marjan/Desktop/meeTINg/server-client-cpp/server-prototype/Vote.h">
 			<Option target="server_prototype"/>
 		</Unit>
 		<Unit filename="/home/marjan/Desktop/meeTINg/server-client-cpp/server-prototype/main.cpp">
