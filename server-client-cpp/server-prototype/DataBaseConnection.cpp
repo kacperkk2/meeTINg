@@ -26,7 +26,7 @@ DataBaseConnection::DataBaseConnection(string userName, string password) {
         con->setSchema("meeting");
 
         if (correctLogon(userName, password) == 1) {
-            cout << "ZALOGOWANO" << endl;
+            cout << "ZALOGOWANO" << userName << endl;
         } else {
             cout << "NIEZALOGOWANO" << endl;
             con->close();

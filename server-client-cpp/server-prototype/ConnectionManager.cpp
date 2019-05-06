@@ -4,6 +4,7 @@
 #include <cstring>
 #include <fcntl.h>
 #include "ConnectionManager.h"
+#include "ServerController.h"
 
 
 using namespace std;
@@ -216,6 +217,7 @@ void ConnectionManager::create_listener(int PORT, int BACKLOG) {
 
 void ConnectionManager::manage_connections(int BACKLOG, void* args) {
 
+    ServerController sc;
     int* casted_args = (int*) (intptr_t) args;
     pipe_fd[0] = casted_args[0];
     pipe_fd[1] = casted_args[1];
@@ -253,6 +255,8 @@ void ConnectionManager::manage_connections(int BACKLOG, void* args) {
                 }
                 else { // ktorys klient cos napisal
                     handle_client_request(i);
+                    //obsluga zadania klienta
+                    sc.selectAction(i,cli_struct[i]);
                 }
             }
         }

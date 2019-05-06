@@ -33,7 +33,8 @@ int main(int argc, char* argv[])
 {
 
     ServerController sc;
-    sc.test();
+    sc.logonData("a");
+    //sc.selectAction();
 
 
     int pipefd[2];

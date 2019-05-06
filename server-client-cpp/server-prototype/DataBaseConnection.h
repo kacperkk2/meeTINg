@@ -7,6 +7,7 @@
 
 #include <string>
 #include <mysql_connection.h>
+#include "DataBaseConnection.h"
 
 using namespace std;
 using namespace sql;
@@ -18,7 +19,6 @@ class DataBaseConnection {
     sql::Connection *con;
     sql::Driver *driver;
     sql::Statement *stmt;
-
 public:
 
     DataBaseConnection(string userName, string password);

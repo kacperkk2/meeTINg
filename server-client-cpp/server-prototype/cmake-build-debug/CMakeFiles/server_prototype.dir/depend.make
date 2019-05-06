@@ -7,7 +7,9 @@ CMakeFiles/server_prototype.dir/Comment.cpp.o: ../Comment.h
 CMakeFiles/server_prototype.dir/ConnectionManager.cpp.o: ../ClientStructure.h
 CMakeFiles/server_prototype.dir/ConnectionManager.cpp.o: ../ConnectionManager.cpp
 CMakeFiles/server_prototype.dir/ConnectionManager.cpp.o: ../ConnectionManager.h
+CMakeFiles/server_prototype.dir/ConnectionManager.cpp.o: ../DataBaseConnection.h
 CMakeFiles/server_prototype.dir/ConnectionManager.cpp.o: ../PackageSizeParser.h
+CMakeFiles/server_prototype.dir/ConnectionManager.cpp.o: ../ServerController.h
 
 CMakeFiles/server_prototype.dir/ConsoleManager.cpp.o: ../ConsoleManager.cpp
 CMakeFiles/server_prototype.dir/ConsoleManager.cpp.o: ../ConsoleManager.h
@@ -58,6 +60,9 @@ CMakeFiles/server_prototype.dir/ServerController.cpp.o: .././nlohmann/detail/out
 CMakeFiles/server_prototype.dir/ServerController.cpp.o: .././nlohmann/detail/output/serializer.hpp
 CMakeFiles/server_prototype.dir/ServerController.cpp.o: .././nlohmann/detail/value_t.hpp
 CMakeFiles/server_prototype.dir/ServerController.cpp.o: .././nlohmann/json_fwd.hpp
+CMakeFiles/server_prototype.dir/ServerController.cpp.o: ../ClientStructure.h
+CMakeFiles/server_prototype.dir/ServerController.cpp.o: ../DataBaseConnection.h
+CMakeFiles/server_prototype.dir/ServerController.cpp.o: ../PackageSizeParser.h
 CMakeFiles/server_prototype.dir/ServerController.cpp.o: ../ServerController.cpp
 CMakeFiles/server_prototype.dir/ServerController.cpp.o: ../ServerController.h
 CMakeFiles/server_prototype.dir/ServerController.cpp.o: ../nlohmann/json.hpp
@@ -71,6 +76,7 @@ CMakeFiles/server_prototype.dir/Vote.cpp.o: ../Vote.h
 CMakeFiles/server_prototype.dir/main.cpp.o: ../ClientStructure.h
 CMakeFiles/server_prototype.dir/main.cpp.o: ../ConnectionManager.h
 CMakeFiles/server_prototype.dir/main.cpp.o: ../ConsoleManager.h
+CMakeFiles/server_prototype.dir/main.cpp.o: ../DataBaseConnection.h
 CMakeFiles/server_prototype.dir/main.cpp.o: ../PackageSizeParser.h
 CMakeFiles/server_prototype.dir/main.cpp.o: ../ServerController.h
 CMakeFiles/server_prototype.dir/main.cpp.o: ../main.cpp
