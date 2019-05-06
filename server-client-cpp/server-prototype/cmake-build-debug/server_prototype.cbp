@@ -145,6 +145,12 @@
 		<Unit filename="/home/marjan/Desktop/meeTINg/server-client-cpp/server-prototype/User.h">
 			<Option target="server_prototype"/>
 		</Unit>
+		<Unit filename="/home/marjan/Desktop/meeTINg/server-client-cpp/server-prototype/cmake-build-debug/Vote.cpp">
+			<Option target="server_prototype"/>
+		</Unit>
+		<Unit filename="/home/marjan/Desktop/meeTINg/server-client-cpp/server-prototype/cmake-build-debug/Vote.h">
+			<Option target="server_prototype"/>
+		</Unit>
 		<Unit filename="/home/marjan/Desktop/meeTINg/server-client-cpp/server-prototype/main.cpp">
 			<Option target="server_prototype"/>
 		</Unit>

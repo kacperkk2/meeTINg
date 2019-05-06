@@ -9,6 +9,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/server_prototype.dir/Event.cpp.o"
   "CMakeFiles/server_prototype.dir/Group.cpp.o"
   "CMakeFiles/server_prototype.dir/User.cpp.o"
+  "CMakeFiles/server_prototype.dir/Vote.cpp.o"
   "server_prototype.pdb"
   "server_prototype"
 )

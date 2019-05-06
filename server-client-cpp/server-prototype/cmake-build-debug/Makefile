@@ -366,6 +366,33 @@ User.cpp.s:
 	$(MAKE) -f CMakeFiles/server_prototype.dir/build.make CMakeFiles/server_prototype.dir/User.cpp.s
 .PHONY : User.cpp.s
 
+Vote.o: Vote.cpp.o
+
+.PHONY : Vote.o
+
+# target to build an object file
+Vote.cpp.o:
+	$(MAKE) -f CMakeFiles/server_prototype.dir/build.make CMakeFiles/server_prototype.dir/Vote.cpp.o
+.PHONY : Vote.cpp.o
+
+Vote.i: Vote.cpp.i
+
+.PHONY : Vote.i
+
+# target to preprocess a source file
+Vote.cpp.i:
+	$(MAKE) -f CMakeFiles/server_prototype.dir/build.make CMakeFiles/server_prototype.dir/Vote.cpp.i
+.PHONY : Vote.cpp.i
+
+Vote.s: Vote.cpp.s
+
+.PHONY : Vote.s
+
+# target to generate assembly for a file
+Vote.cpp.s:
+	$(MAKE) -f CMakeFiles/server_prototype.dir/build.make CMakeFiles/server_prototype.dir/Vote.cpp.s
+.PHONY : Vote.cpp.s
+
 main.o: main.cpp.o
 
 .PHONY : main.o
@@ -429,6 +456,9 @@ help:
 	@echo "... User.o"
 	@echo "... User.i"
 	@echo "... User.s"
+	@echo "... Vote.o"
+	@echo "... Vote.i"
+	@echo "... Vote.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
