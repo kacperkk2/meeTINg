@@ -9,9 +9,14 @@
 
 using namespace std;
 
-ConnectionManager::ConnectionManager() {
+
+
+ConnectionManager::ConnectionManager(DataBaseConnection &dbc)
+    :dbc(dbc)
+{
     FD_ZERO(&master);
     FD_ZERO(&ready);
+
 }
 
 int ConnectionManager::send_all(int fd, char *buf, int *len) {
@@ -38,8 +43,6 @@ int ConnectionManager::send_all(int fd, char *buf, int *len) {
 }
 
 void ConnectionManager::handle_client_request(int fd) {
-    ServerController sc;
-
 
     char* incomingMessage = new char[cli_struct[fd].get_bytes_needed()];
 
@@ -77,7 +80,7 @@ void ConnectionManager::handle_client_request(int fd) {
 
             cout << cli_struct[fd].get_buffer_message() << endl;
             //obsluga zadania klienta
-            sc.selectAction(fd,cli_struct[fd]);
+            sc.selectAction(fd,cli_struct[fd], *this, dbc);
 
             int bytes = cli_struct[fd].get_whole_package_size();
             if (send_all(fd, cli_struct[fd].get_buffer_message(), &bytes) == -1) {

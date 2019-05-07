@@ -6,7 +6,7 @@
 #include "ServerController.h"
 #include <netinet/in.h>
 
-
+class ServerController;
 class ConnectionManager {
 
 private:
@@ -21,10 +21,12 @@ private:
     int nbytes_rec;
     bool work = true;
     int pipe_fd[2];
-    //ServerController sc = ServerController();
 
+    ServerController sc;
+    DataBaseConnection &dbc;
 public:
-    ConnectionManager();
+
+    ConnectionManager(DataBaseConnection &dbc);
     void manage_connections(int, void*);
     void create_listener(int, int);
     void handle_new_connection();

@@ -23,7 +23,8 @@ using namespace std;
 
 void *handle_client(void* args)
 {
-    ConnectionManager connectionManager;
+    DataBaseConnection dbc("root", "admin");
+    ConnectionManager connectionManager(dbc);
     connectionManager.manage_connections(BACKLOG, args);
     return 0;
 }
@@ -33,8 +34,8 @@ void *handle_client(void* args)
 int main(int argc, char* argv[])
 {
 
-    ServerController sc;
-    sc.logonData("a");
+    //ServerController sc;
+    //sc.logonData("a");
     //sc.selectAction();
 
 //    DataBaseConnection db("admin","admin");

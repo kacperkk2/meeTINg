@@ -8,20 +8,26 @@
 #include <string>
 #include "DataBaseConnection.h"
 #include "ClientStructure.h"
-#include "ConnectionManager.h"
+
 
 using namespace std;
 
+class ConnectionManager;
+class DataBaseConnection;
 class ServerController {
 
 
+
 public:
-    DataBaseConnection dbc = DataBaseConnection("admin", "admin");
+
+
+    //DataBaseConnection dbc;
+
 
     ServerController();
-    void selectAction(int fd, ClientStructure client);
-    string logonData(string message);
-    void sendResponse(int fd, string response, int responseSize);
+    void selectAction(int fd, ClientStructure client, ConnectionManager &cm, DataBaseConnection &dbc);
+    string logonData(string message, ConnectionManager &cm, DataBaseConnection &dbc);
+    void sendResponse(int fd, string response, int responseSize, ConnectionManager &cm);
 };
 
 

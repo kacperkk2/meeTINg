@@ -24,14 +24,14 @@ DataBaseConnection::DataBaseConnection(string userName, string password) {
         con = driver->connect("tcp://127.0.0.1:3306", "root", "admin");
         /* Connect to the MySQL test database */
         con->setSchema("meeting");
-
-        if (correctLogon(userName, password) == 1) {
-            //cout << "ZALOGOWANO" << userName << endl;
-        } else {
-            cout << "NIEZALOGOWANO" << endl;
-            con->close();
-            delete con;
-        }
+//
+//        if (correctLogon(userName, password) == 1) {
+//            //cout << "ZALOGOWANO" << userName << endl;
+//        } else {
+//            cout << "NIEZALOGOWANO" << endl;
+//            con->close();
+//            delete con;
+//        }
 
 
     } catch (sql::SQLException &e) {
