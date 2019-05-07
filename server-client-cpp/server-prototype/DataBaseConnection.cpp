@@ -26,7 +26,7 @@ DataBaseConnection::DataBaseConnection(string userName, string password) {
         con->setSchema("meeting");
 
         if (correctLogon(userName, password) == 1) {
-            cout << "ZALOGOWANO" << userName << endl;
+            //cout << "ZALOGOWANO" << userName << endl;
         } else {
             cout << "NIEZALOGOWANO" << endl;
             con->close();
@@ -107,34 +107,33 @@ void DataBaseConnection::usersList() {
 
 }
 
-void DataBaseConnection::groupsList() {
-
-    try {
-        sql::ResultSet *res;
-
-        stmt = con->createStatement();
-
-        res = stmt->executeQuery("select * from GROUPS");
-        while (res->next()) {
-
-            cout << res->getString("name").c_str() << endl;
-
-        }
-        stmt->close();
-        res->close();
-        delete res;
-        delete stmt;
-
-    } catch (sql::SQLException &e) {
-        cout << "nie jestes zalogowany" << endl;
-        cout << "# ERR: SQLException in " << __FILE__;
-        cout << "(" << __FUNCTION__ << ") on line " << __LINE__ << endl;
-        cout << "# ERR: " << e.what();
-        cout << " (MySQL error code: " << e.getErrorCode();
-        cout << ", SQLState: " << e.getSQLState() << " )" << endl;
-    }
-
-}
+//ResultSet *DataBaseConnection::groupsList() {
+//
+//    try {
+//        ResultSet *res;
+//
+//        stmt = con->createStatement();
+//
+//        res = stmt->executeQuery("select * from GROUPS");
+//
+//        stmt->close();
+//        //res->close();
+//        //delete res;
+//        delete stmt;
+//        return res;
+//
+//    } catch (sql::SQLException &e) {
+//        cout << "nie jestes zalogowany" << endl;
+//        cout << "# ERR: SQLException in " << __FILE__;
+//        cout << "(" << __FUNCTION__ << ") on line " << __LINE__ << endl;
+//        cout << "# ERR: " << e.what();
+//        cout << " (MySQL error code: " << e.getErrorCode();
+//        cout << ", SQLState: " << e.getSQLState() << " )" << endl;
+//    }
+//
+//
+//
+//}
 
 void DataBaseConnection::closeConnection() {
     cout << "Close connection" << endl;

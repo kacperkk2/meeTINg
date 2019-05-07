@@ -25,7 +25,7 @@ public:
     bool correctLogon(string userName, string password);
     void usersList();
     void closeConnection();
-    void groupsList();
+    //ResultSet groupsList();
 
 };
 

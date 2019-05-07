@@ -2,8 +2,8 @@
 // Created by marjan on 06.05.19.
 //
 
-#ifndef SERVER_PROTOTYPE_RESPOSNEFLAG_H
-#define SERVER_PROTOTYPE_RESPOSNEFLAG_H
+#ifndef SERVER_PROTOTYPE_RESPONSEFLAG_H
+#define SERVER_PROTOTYPE_RESPONSEFLAG_H
 
 enum ResponseFlag {
     LOGGING, // pomyślne logowanie
@@ -41,4 +41,4 @@ enum ResponseFlag {
     __ERROR  // błąd
 }
 
-#endif //SERVER_PROTOTYPE_RESPOSNEFLAG_H
+#endif //SERVER_PROTOTYPE_RESPONSEFLAG_H

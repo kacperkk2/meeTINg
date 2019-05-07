@@ -16,6 +16,7 @@ class ClientStructure {
 
 public:
 
+
     ClientStructure() {
         init();
     }

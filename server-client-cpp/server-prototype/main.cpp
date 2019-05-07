@@ -20,6 +20,7 @@
 
 using namespace std;
 
+
 void *handle_client(void* args)
 {
     ConnectionManager connectionManager;
@@ -35,6 +36,15 @@ int main(int argc, char* argv[])
     ServerController sc;
     sc.logonData("a");
     //sc.selectAction();
+
+//    DataBaseConnection db("admin","admin");
+//    sql::ResultSet *res = db.groupsList();
+//
+//    while (res->next()) {
+//
+//        cout << res->getString("name").c_str() << endl;
+//
+//    }
 
 
     int pipefd[2];

@@ -38,6 +38,8 @@ int ConnectionManager::send_all(int fd, char *buf, int *len) {
 }
 
 void ConnectionManager::handle_client_request(int fd) {
+    ServerController sc;
+
 
     char* incomingMessage = new char[cli_struct[fd].get_bytes_needed()];
 
@@ -72,6 +74,10 @@ void ConnectionManager::handle_client_request(int fd) {
         // jesli odebralismy caly pakiet to wyslij mu wiadomosc spowrotem
         if (cli_struct[fd].get_bytes_needed() <= 0) {
             cout << "Mam juz cala wiadomosc, moge ja zwrocic" << endl;
+
+            cout << cli_struct[fd].get_buffer_message() << endl;
+            //obsluga zadania klienta
+            sc.selectAction(fd,cli_struct[fd]);
 
             int bytes = cli_struct[fd].get_whole_package_size();
             if (send_all(fd, cli_struct[fd].get_buffer_message(), &bytes) == -1) {
@@ -217,7 +223,6 @@ void ConnectionManager::create_listener(int PORT, int BACKLOG) {
 
 void ConnectionManager::manage_connections(int BACKLOG, void* args) {
 
-    ServerController sc;
     int* casted_args = (int*) (intptr_t) args;
     pipe_fd[0] = casted_args[0];
     pipe_fd[1] = casted_args[1];
@@ -255,8 +260,7 @@ void ConnectionManager::manage_connections(int BACKLOG, void* args) {
                 }
                 else { // ktorys klient cos napisal
                     handle_client_request(i);
-                    //obsluga zadania klienta
-                    sc.selectAction(i,cli_struct[i]);
+
                 }
             }
         }

@@ -6,32 +6,48 @@
 #include "nlohmann/json.hpp"
 #include "ClientStructure.h"
 #include "DataBaseConnection.h"
+#include <string>
+#include <iostream>
+#include <cstring>
+//#include "ResponseFlag.h"
 
-using namespace std;
 using namespace nlohmann;
+using namespace std;
+
 
 
 ServerController::ServerController() {
 
+    //cm = ConnectionManager();
+    string blad = "ERROR";
+    //cout << blad.c_str()<<endl;
+    const char *c = blad.c_str();
+    //cout<< typeid(blad.c_str()).name() << endl;
+    string message = "{\"id\": 1,\"username\": \"tomasz\",\"password\": \"123\",\"systemRole\": \"USER\"}";
+    auto j = json::parse(message);
+    cout << j["id"]<<endl;
+
 }
 
-void ServerController::selectAction(int fd, ClientStructure client){
-    int f;
-
+void ServerController::selectAction(int fd, ClientStructure client) {
+    int f =1;
     string message = client.get_buffer_message();
-    string flag = message.substr(0,7);
-    string data = message.substr(7);
+    string flag = message.substr(4, 11);
+    string data = message.substr(11);
+    cout << data<<endl;
+    cout<< flag <<endl;
+    string response;
 
-    if(flag == "LOGGING") f = 1;
-    switch(f)
-    {
+    switch (f) {
         case 1:
-            logonData(data);
+            response = logonData(data);
             break;
         default:
-            cout<<"nie ma logowania"<<endl;
+            cout << "nie ma logowania" << endl;
             break;
     }
+
+    sendResponse(fd, response, response.length());
 
 }
 
@@ -40,13 +56,25 @@ string ServerController::ServerController::logonData(string message2) {
 
     string message = "{\"id\": 1,\"username\": \"tomasz\",\"password\": \"123\",\"systemRole\": \"USER\"}";
     string returnMessage;
+
     auto j = json::parse(message);
     if (dbc.correctLogon(j["username"], j["password"])) {
-        returnMessage = "LOGGIN";
+        returnMessage = "LOGGING";
     } else {
-        returnMessage = "ERROR";
+        returnMessage = "__ERROR";
     }
     cout << returnMessage;
     return returnMessage;
+}
+
+void ServerController::sendResponse(int fd, string response, int responseSize) {
+    ConnectionManager cm;
+    cout << "doszedlem" << endl;
+    int *s = (int *) responseSize;
+    const char *c = response.c_str();
+    char *p = new char[response.length()];
+    memcpy(p, c, response.length());
+
+    cm.send_all(fd, p, s);
 }
 

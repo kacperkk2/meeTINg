@@ -142,7 +142,7 @@
 		<Unit filename="/home/michal/Desktop/master/meeTINg/server-client-cpp/server-prototype/RequestFlag.h">
 			<Option target="server_prototype"/>
 		</Unit>
-		<Unit filename="/home/michal/Desktop/master/meeTINg/server-client-cpp/server-prototype/ResposneFlag.h">
+		<Unit filename="/home/michal/Desktop/master/meeTINg/server-client-cpp/server-prototype/ResponseFlag.h">
 			<Option target="server_prototype"/>
 		</Unit>
 		<Unit filename="/home/michal/Desktop/master/meeTINg/server-client-cpp/server-prototype/ServerController.cpp">

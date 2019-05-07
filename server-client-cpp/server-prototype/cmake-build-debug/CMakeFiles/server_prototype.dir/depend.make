@@ -61,6 +61,7 @@ CMakeFiles/server_prototype.dir/ServerController.cpp.o: .././nlohmann/detail/out
 CMakeFiles/server_prototype.dir/ServerController.cpp.o: .././nlohmann/detail/value_t.hpp
 CMakeFiles/server_prototype.dir/ServerController.cpp.o: .././nlohmann/json_fwd.hpp
 CMakeFiles/server_prototype.dir/ServerController.cpp.o: ../ClientStructure.h
+CMakeFiles/server_prototype.dir/ServerController.cpp.o: ../ConnectionManager.h
 CMakeFiles/server_prototype.dir/ServerController.cpp.o: ../DataBaseConnection.h
 CMakeFiles/server_prototype.dir/ServerController.cpp.o: ../PackageSizeParser.h
 CMakeFiles/server_prototype.dir/ServerController.cpp.o: ../ServerController.cpp

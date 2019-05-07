@@ -62,6 +62,7 @@ CMakeFiles/server_prototype.dir/ServerController.cpp.o
  .././nlohmann/detail/value_t.hpp
  .././nlohmann/json_fwd.hpp
  /home/michal/Desktop/master/meeTINg/server-client-cpp/server-prototype/ClientStructure.h
+ /home/michal/Desktop/master/meeTINg/server-client-cpp/server-prototype/ConnectionManager.h
  /home/michal/Desktop/master/meeTINg/server-client-cpp/server-prototype/DataBaseConnection.h
  /home/michal/Desktop/master/meeTINg/server-client-cpp/server-prototype/PackageSizeParser.h
  /home/michal/Desktop/master/meeTINg/server-client-cpp/server-prototype/ServerController.cpp

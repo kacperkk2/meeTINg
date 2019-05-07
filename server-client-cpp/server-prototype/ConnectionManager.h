@@ -3,6 +3,8 @@
 
 #include <map>
 #include "ClientStructure.h"
+#include "ServerController.h"
+#include <netinet/in.h>
 
 
 class ConnectionManager {
@@ -19,6 +21,7 @@ private:
     int nbytes_rec;
     bool work = true;
     int pipe_fd[2];
+    //ServerController sc = ServerController();
 
 public:
     ConnectionManager();

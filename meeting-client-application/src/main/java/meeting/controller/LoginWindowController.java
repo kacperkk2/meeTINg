@@ -56,39 +56,44 @@ public class LoginWindowController {
         String requestString = RequestFlag.LOGGING.toString() + gson.toJson(request);
 
         // wysyłam tego requesta, po czym przychodzi response:
-//        String responseString = meeting.client.sendRequestRecResponse(requestString);
+        String responseString = client.sendRequestRecResponse(requestString);
 
         //symulacja poprawnego responsa:
-        String responseString = ResponseFlag.LOGGING.toString() +
-                "{\n" +
-                "  \"id\": \"1\",\n" +
-                "  \"username\": \"asd123_#\",\n" +
-                "  \"password\": \"b790d976a02850ac9d5605e92ac7283ac477c76c203556fdd94726dd106cdae3\",\n" +
-                "  \"systemRole\": USER\n" +
-                "}";
+//        String responseString = ResponseFlag.LOGGING.toString() +
+//                "{\n" +
+//                "  \"id\": \"1\",\n" +
+//                "  \"username\": \"asd123_#\",\n" +
+//                "  \"password\": \"b790d976a02850ac9d5605e92ac7283ac477c76c203556fdd94726dd106cdae3\",\n" +
+//                "  \"systemRole\": USER\n" +
+//                "}";
 
         if (responseString.substring(0, 7).equals(ResponseFlag.__ERROR.toString())) {
             showLoginErrorAlert();
             return;
         }
 
-        // parsuje JSONa
-        UserLoginResponse response = gson.fromJson(responseString.substring(7), UserLoginResponse.class);
+        if (responseString.substring(0, 7).equals(ResponseFlag.LOGGING.toString())) {
+            System.out.println("doszedlemwjavie");
+            return;
+        }
 
-        // tworze obiekt użytkownika
-        User user = User.builder()
-                .id(response.getId())
-                .username(response.getUsername())
-                .password(response.getPassword())
-                .systemRole(SystemRole.valueOf(response.getSystemRole()))
-                .build();
+//        // parsuje JSONa
+//        UserLoginResponse response = gson.fromJson(responseString.substring(7), UserLoginResponse.class);
+//
+//        // tworze obiekt użytkownika
+//        User user = User.builder()
+//                .id(response.getId())
+//                .username(response.getUsername())
+//                .password(response.getPassword())
+//                .systemRole(SystemRole.valueOf(response.getSystemRole()))
+//                .build();
 
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/GroupsWindow.fxml"));
             StageLoader.loadStage((Stage)((Node) event.getSource()).getScene().getWindow(), fxmlLoader);
             GroupsWindowController groupsWindowController = fxmlLoader.getController();
             groupsWindowController.setClient(client);
-            groupsWindowController.setUser(user);
+            groupsWindowController.setUser(null);
         } catch(Exception e) {
             e.printStackTrace();
         }
