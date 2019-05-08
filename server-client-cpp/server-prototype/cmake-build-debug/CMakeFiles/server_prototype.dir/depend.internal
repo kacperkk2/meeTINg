@@ -65,6 +65,7 @@ CMakeFiles/server_prototype.dir/ServerController.cpp.o
  /home/michal/Desktop/master/meeTINg/server-client-cpp/server-prototype/ConnectionManager.h
  /home/michal/Desktop/master/meeTINg/server-client-cpp/server-prototype/DataBaseConnection.h
  /home/michal/Desktop/master/meeTINg/server-client-cpp/server-prototype/PackageSizeParser.h
+ /home/michal/Desktop/master/meeTINg/server-client-cpp/server-prototype/ResponseFlag.h
  /home/michal/Desktop/master/meeTINg/server-client-cpp/server-prototype/ServerController.cpp
  /home/michal/Desktop/master/meeTINg/server-client-cpp/server-prototype/ServerController.h
  /home/michal/Desktop/master/meeTINg/server-client-cpp/server-prototype/nlohmann/json.hpp

@@ -36,6 +36,6 @@ public enum RequestFlag {
 
     NEWVOTE, // zagłosuj na termin
     COMMENT  // dodaj komentarz
-}
+};
 
 #endif //SERVER_PROTOTYPE_REQUESTFLAG_H

@@ -116,6 +116,7 @@ int ConnectionManager::handle_console_request() {
         set_if_higher_fd(listenerfd);
 
         if(buf == 'q')
+            dbc.closeConnection();
             work = false;
 
         return 1;

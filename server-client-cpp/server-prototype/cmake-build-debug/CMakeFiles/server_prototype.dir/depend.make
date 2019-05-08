@@ -64,6 +64,7 @@ CMakeFiles/server_prototype.dir/ServerController.cpp.o: ../ClientStructure.h
 CMakeFiles/server_prototype.dir/ServerController.cpp.o: ../ConnectionManager.h
 CMakeFiles/server_prototype.dir/ServerController.cpp.o: ../DataBaseConnection.h
 CMakeFiles/server_prototype.dir/ServerController.cpp.o: ../PackageSizeParser.h
+CMakeFiles/server_prototype.dir/ServerController.cpp.o: ../ResponseFlag.h
 CMakeFiles/server_prototype.dir/ServerController.cpp.o: ../ServerController.cpp
 CMakeFiles/server_prototype.dir/ServerController.cpp.o: ../ServerController.h
 CMakeFiles/server_prototype.dir/ServerController.cpp.o: ../nlohmann/json.hpp

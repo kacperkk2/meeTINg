@@ -24,14 +24,6 @@ DataBaseConnection::DataBaseConnection(string userName, string password) {
         con = driver->connect("tcp://127.0.0.1:3306", "root", "admin");
         /* Connect to the MySQL test database */
         con->setSchema("meeting");
-//
-//        if (correctLogon(userName, password) == 1) {
-//            //cout << "ZALOGOWANO" << userName << endl;
-//        } else {
-//            cout << "NIEZALOGOWANO" << endl;
-//            con->close();
-//            delete con;
-//        }
 
 
     } catch (sql::SQLException &e) {
@@ -97,7 +89,6 @@ void DataBaseConnection::usersList() {
         delete stmt;
 
     } catch (sql::SQLException &e) {
-        cout << "nie jestes zalogowany" << endl;
         cout << "# ERR: SQLException in " << __FILE__;
         cout << "(" << __FUNCTION__ << ") on line " << __LINE__ << endl;
         cout << "# ERR: " << e.what();
@@ -115,7 +106,6 @@ string DataBaseConnection::userLoginData(string userName) {
         string rola;
 
         stmt = con->createStatement();
-        cout << "select * from USER where username = \'" + userName + "\';"<< endl;
         res = stmt->executeQuery("select * from USER where username = \'" + userName + "\'");
         while (res->next()) {
 
@@ -132,11 +122,10 @@ string DataBaseConnection::userLoginData(string userName) {
         res->close();
         delete res;
         delete stmt;
-        cout << userData << endl;
+
         return userData;
 
     } catch (sql::SQLException &e) {
-        cout << "nie jestes zalogowany" << endl;
         cout << "# ERR: SQLException in " << __FILE__;
         cout << "(" << __FUNCTION__ << ") on line " << __LINE__ << endl;
         cout << "# ERR: " << e.what();
@@ -147,33 +136,51 @@ string DataBaseConnection::userLoginData(string userName) {
 
 }
 
-//ResultSet *DataBaseConnection::groupsList() {
-//
-//    try {
-//        ResultSet *res;
-//
-//        stmt = con->createStatement();
-//
-//        res = stmt->executeQuery("select * from GROUPS");
-//
-//        stmt->close();
-//        //res->close();
-//        //delete res;
-//        delete stmt;
-//        return res;
-//
-//    } catch (sql::SQLException &e) {
-//        cout << "nie jestes zalogowany" << endl;
-//        cout << "# ERR: SQLException in " << __FILE__;
-//        cout << "(" << __FUNCTION__ << ") on line " << __LINE__ << endl;
-//        cout << "# ERR: " << e.what();
-//        cout << " (MySQL error code: " << e.getErrorCode();
-//        cout << ", SQLState: " << e.getSQLState() << " )" << endl;
-//    }
-//
-//
-//
-//}
+bool DataBaseConnection::correctRegistration(string userName, string password) {
+    int count;
+    try {
+        sql::ResultSet *res;
+
+        stmt = con->createStatement();
+        res = stmt->executeQuery("select count(*) from USER where username = \'" + userName+ "\'");
+
+        while (res->next()) {
+
+            count = res->getInt(1);
+        }
+
+        if(count == 0){
+
+            sql::ResultSet *res1;
+            int indeks;
+            res1 = stmt->executeQuery("select max(user_id) from USER");
+
+            while (res1->next()) {
+                indeks = res1->getInt(1) + 1;
+
+            }
+
+            stmt->executeUpdate("INSERT INTO USER VALUES(\"" + to_string(indeks) + "\",\"" + userName + "\",\"" + password + "\",\"0\")");
+
+            return 1;
+        }
+        stmt->close();
+        res->close();
+        delete res;
+        delete stmt;
+
+
+    } catch (sql::SQLException &e) {
+        cout << "# ERR: SQLException in " << __FILE__;
+        cout << "(" << __FUNCTION__ << ") on line " << __LINE__ << endl;
+        cout << "# ERR: " << e.what();
+        cout << " (MySQL error code: " << e.getErrorCode();
+        cout << ", SQLState: " << e.getSQLState() << " )" << endl;
+    }
+    return 0;
+}
+
+
 
 void DataBaseConnection::closeConnection() {
     cout << "Close connection" << endl;

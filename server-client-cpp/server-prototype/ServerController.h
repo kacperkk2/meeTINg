@@ -24,6 +24,7 @@ public:
     static void selectAction(int fd, ClientStructure client, ConnectionManager &cm, DataBaseConnection &dbc);
     static string userLogin(string message, ConnectionManager &cm, DataBaseConnection &dbc);
     static void sendResponse(int fd, char* response, int responseSize, ConnectionManager &cm);
+    static string userRegistration(string message, ConnectionManager &cm, DataBaseConnection &dbc);
 };
 
 

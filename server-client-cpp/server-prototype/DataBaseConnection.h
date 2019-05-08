@@ -26,6 +26,7 @@ public:
     void usersList();
     void closeConnection();
     string userLoginData(string userName);
+    bool correctRegistration(string userName, string password);
     //ResultSet groupsList();
 
 };

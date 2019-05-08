@@ -8,14 +8,22 @@
 #include "DataBaseConnection.h"
 #include "ConnectionManager.h"
 #include "PackageSizeParser.h"
+#include "ResponseFlag.h"
 #include <string>
 #include <iostream>
 #include <cstring>
-//#include "ResponseFlag.h"
+
 
 using namespace nlohmann;
 using namespace std;
 
+
+ResponseFlag convert(const std::string& str)
+{
+    if(str == "LOGGING") return LOGGING;
+    else if(str == "REGISTR") return REGISTR;
+
+}
 
 
 
@@ -24,7 +32,7 @@ ServerController::ServerController() {
 }
 
 void ServerController::selectAction(int fd, ClientStructure client, ConnectionManager &cm, DataBaseConnection &dbc) {
-    int f =1;
+    ResponseFlag enumFlag;
     int messageSize = client.get_whole_package_size();
     char messageChar[messageSize];
     memcpy(messageChar, client.get_buffer_message(), messageSize);
@@ -32,14 +40,19 @@ void ServerController::selectAction(int fd, ClientStructure client, ConnectionMa
     string flag = message.substr(4, 7);
     string data = message.substr(11);
     string response;
+    enumFlag = convert(flag);
 
 
-    switch (f) {
-        case 1:
+    //enumFlag = REGISTR;
+    switch(enumFlag) {
+        case LOGGING:
             response = userLogin(data, cm, dbc);
             break;
+        case REGISTR:
+            response = userRegistration(data, cm, dbc);
+            break;
         default:
-            cout << "nie ma logowania" << endl;
+            cout << "default switch" << endl;
             break;
     }
 
@@ -71,6 +84,19 @@ string ServerController::userLogin(string message, ConnectionManager &cm, DataBa
     } else {
         returnMessage = "LOGGING";
         returnMessage += dbc.userLoginData(j["username"]);
+    }
+    return returnMessage;
+}
+
+string ServerController::userRegistration(string message, ConnectionManager &cm, DataBaseConnection &dbc) {
+    string returnMessage;
+    auto j = json::parse(message);
+
+    if (!dbc.correctRegistration(j["username"], j["password"])) {
+        returnMessage = "__ERROR";
+    } else {
+        returnMessage = "REGISTR";
+        //returnMessage += dbc.userLoginData(j["username"]);
     }
     return returnMessage;
 }

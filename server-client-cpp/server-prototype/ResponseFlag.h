@@ -6,6 +6,9 @@
 #define SERVER_PROTOTYPE_RESPONSEFLAG_H
 
 enum ResponseFlag {
+
+
+
     LOGGING, // pomyślne logowanie
     REGISTR, // pomyślna rejestracja
 
@@ -39,6 +42,6 @@ enum ResponseFlag {
 
 
     __ERROR  // błąd
-}
+};
 
 #endif //SERVER_PROTOTYPE_RESPONSEFLAG_H
