@@ -115,8 +115,8 @@ string DataBaseConnection::userLoginData(string userName) {
         string rola;
 
         stmt = con->createStatement();
-
-        res = stmt->executeQuery("select * from USER where username = " + userName);
+        cout << "select * from USER where username = \'" + userName + "\';"<< endl;
+        res = stmt->executeQuery("select * from USER where username = \'" + userName + "\'");
         while (res->next()) {
 
             userData += "\"id\":\"" + res->getString("user_id") + "\",";

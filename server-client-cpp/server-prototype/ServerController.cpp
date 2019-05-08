@@ -21,9 +21,6 @@ using namespace std;
 
 ServerController::ServerController() {
 
-    //string message = "0000LOGGING{\"username\": \"tomasz\",\"password\": \"a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3\"}";
-
-
 }
 
 void ServerController::selectAction(int fd, ClientStructure client, ConnectionManager &cm, DataBaseConnection &dbc) {
@@ -66,14 +63,14 @@ void ServerController::selectAction(int fd, ClientStructure client, ConnectionMa
 }
 
 string ServerController::userLogin(string message, ConnectionManager &cm, DataBaseConnection &dbc) {
-    string returnMessage = "LOGGING";
-    string userData = "{\n\"id\": \"1\",\n \"username\": \"asd123_#\",\n \"password\": \"b790d976a02850ac9d5605e92ac7283ac477c76c203556fdd94726dd106cdae3\",\n \"systemRole\": \"TEAM_LEADER\"\n}";
-
+    string returnMessage;
     auto j = json::parse(message);
+
     if (!dbc.correctLogon(j["username"], j["password"])) {
         returnMessage = "__ERROR";
     } else {
         returnMessage = "LOGGING";
+        returnMessage += dbc.userLoginData(j["username"]);
     }
-    return returnMessage+userData;
+    return returnMessage;
 }
