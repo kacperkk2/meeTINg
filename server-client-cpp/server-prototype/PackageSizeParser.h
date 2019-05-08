@@ -12,6 +12,7 @@ private:
 
 public:
     static int32_t parse_int_32(const char (&buf)[4]);
+    void static serialize_int_32(char (&buf)[4], int32_t val);
 
 };
 
