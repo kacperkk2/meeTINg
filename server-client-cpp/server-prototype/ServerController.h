@@ -25,9 +25,9 @@ public:
 
 
     ServerController();
-    void selectAction(int fd, ClientStructure client, ConnectionManager &cm, DataBaseConnection &dbc);
-    string logonData(string message, ConnectionManager &cm, DataBaseConnection &dbc);
-    void sendResponse(int fd, string response, int responseSize, ConnectionManager &cm);
+    static void selectAction(int fd, ClientStructure client, ConnectionManager &cm, DataBaseConnection &dbc);
+    static string logonData(string message, ConnectionManager &cm, DataBaseConnection &dbc);
+    static void sendResponse(int fd, string response, int responseSize, ConnectionManager &cm);
 };
 
 

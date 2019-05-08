@@ -61,7 +61,7 @@ void ServerController::selectAction(int fd, ClientStructure client, ConnectionMa
 }
 
 
-string ServerController::ServerController::logonData(string message, ConnectionManager &cm, DataBaseConnection &dbc) {
+string ServerController::logonData(string message, ConnectionManager &cm, DataBaseConnection &dbc) {
     string returnMessage = "LOGGING";
 //    auto j = json::parse(message);
 //    if (dbc.correctLogon(j["username"], j["password"])) {
