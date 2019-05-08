@@ -20,7 +20,7 @@ ConnectionManager::ConnectionManager(DataBaseConnection &dbc)
 }
 
 int ConnectionManager::send_all(int fd, char *buf, int *len) {
-    cout << buff[0] << buf[4] << buf[5] << buf[11] << buf[12] <<endl;
+    cout << buf[0] << buf[4] << buf[5] << buf[11] << buf[12] <<endl;
     int total = 0; // ile juz sie udalo wyslac
     int left = *len; // ile jeszcze do wyslania
     int nbytes = 0;
