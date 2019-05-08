@@ -45,16 +45,15 @@ void ServerController::selectAction(int fd, ClientStructure client, ConnectionMa
     }
     int32_t m_size = response .size();
     PackageSizeParser::serialize_int_32(buf, m_size);
-    int32_t value_from_buf = PackageSizeParser::parse_int_32(buf);
-    cout << "rozmiar wiadomosci to: "<< value_from_buf <<endl;
 
-    string mr;
+
+    string  mr;
     mr = buf[0];
     mr.push_back(buf[1]);
     mr.push_back(buf[2]);
     mr.push_back(buf[3]);
     mr.append(response);
-    cout << mr <<endl;
+
 
     sendResponse(fd, mr, mr.length(),cm);
 
@@ -73,12 +72,29 @@ string ServerController::logonData(string message, ConnectionManager &cm, DataBa
 }
 
 void ServerController::sendResponse(int fd, string response, int responseSize, ConnectionManager &cm) {
-    cout << response<< responseSize<<endl;
     const char *c = response.c_str();
-    char *p = new char[response.length()];
+    char p[response.length() + 1];
+    //strcpy(p, response.c_str());
     memcpy(p, c, response.length());
-    cout << strlen(p) << endl;
-    cout << p[0] << p[1] << p[2] << p[3]<< p[4] << p[5] << p[6] << p[7]<< p[8]<< p[9] << p[10] << p[11] <<p[12] << p[13] << p[14] << p[15] <<p[16] << p[17]<<endl;
+    for (int i = 0; i < response.length(); i++) {
+        cout << p[i];
+    }
+    cout << endl;
     cm.send_all(fd, p, &responseSize);
 }
+
+//void ServerController::sendResponse(int fd, string response, int responseSize, ConnectionManager &cm) {
+//    //const char *c = response.c_str();
+//    char p[response.length() + 1];
+//    strcpy(p, response.c_str());
+//    //memcpy(p, c, response.length());
+//    cout << p << endl;
+//    for (int i = 0; i < response.length(); i++)
+//        cout << p[i];
+//    cm.send_all(fd, p, &responseSize);
+//}
+
+
+//cout << strlen(p) << endl;
+//cout << p[0] << p[1] << p[2] << p[3]<< p[4] << p[5] << p[6] << p[7]<< p[8]<< p[9] << p[10] << p[11] <<p[12] << p[13] << p[14] << p[15] <<p[16] << p[17]<<endl;
 
