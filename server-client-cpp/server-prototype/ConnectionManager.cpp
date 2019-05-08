@@ -20,6 +20,7 @@ ConnectionManager::ConnectionManager(DataBaseConnection &dbc)
 }
 
 int ConnectionManager::send_all(int fd, char *buf, int *len) {
+    //cout << "doszedlem" << endl;
     int total = 0; // ile juz sie udalo wyslac
     int left = *len; // ile jeszcze do wyslania
     int nbytes = 0;
@@ -78,7 +79,6 @@ void ConnectionManager::handle_client_request(int fd) {
         if (cli_struct[fd].get_bytes_needed() <= 0) {
             cout << "Mam juz cala wiadomosc, moge ja zwrocic" << endl;
 
-            cout << cli_struct[fd].get_buffer_message() << endl;
             //obsluga zadania klienta
             sc.selectAction(fd,cli_struct[fd], *this, dbc);
 

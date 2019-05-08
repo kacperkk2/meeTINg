@@ -55,7 +55,7 @@ public class Client {
 
         // odbierze cala pacze i umiesci w bufferPackage
         receiveResponse();
-
+        System.out.println("doszedlemwjavie");
         String response = removeHeader(bufferPackage);
 
         System.out.println("Odebrana wiadomosc (bez header): " + response);
