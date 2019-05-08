@@ -79,27 +79,8 @@ void ConnectionManager::handle_client_request(int fd) {
         if (cli_struct[fd].get_bytes_needed() <= 0) {
             cout << "Mam juz cala wiadomosc, moge ja zwrocic" << endl;
 
-            std::string m = "LOGGING";
-            m += "{\n\"id\": \"1\",\n \"username\": \"asd123_#\",\n \"password\": \"b790d976a02850ac9d5605e92ac7283ac477c76c203556fdd94726dd106cdae3\",\n \"systemRole\": \"TEAM_LEADER\"\n}";
-
-            char header[4];
-            PackageSizeParser::serialize_int_32(header, m.size());
-
-            char message[m.size()];
-            memcpy(message, m.c_str(), m.size());
-
-            char whole_pack[m.size()+4];
-            memcpy(whole_pack, header, 4);
-            memcpy(&whole_pack[4], message, m.size());
-
-            int bytes = m.size()+4;
-            if (send_all(fd, whole_pack, &bytes) == -1) {
-                perror("send");
-                printf("~~ Sent only %d bytes (error) \n", bytes);
-            }
-
             //obsluga zadania klienta
-//            sc.selectAction(fd,cli_struct[fd], *this, dbc);
+            sc.selectAction(fd,cli_struct[fd], *this, dbc);
 
             // przywracam domyslne ustawienia, bo wyslalem, zostaje czyste na nastepny raz
             cli_struct[fd].dealloc();

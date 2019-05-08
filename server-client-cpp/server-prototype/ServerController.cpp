@@ -21,19 +21,20 @@ using namespace std;
 
 ServerController::ServerController() {
 
-    string message = "0000LOGGING{\"username\": \"tomasz\",\"password\": \"a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3\"}";
+    //string message = "0000LOGGING{\"username\": \"tomasz\",\"password\": \"a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3\"}";
 
 
 }
 
 void ServerController::selectAction(int fd, ClientStructure client, ConnectionManager &cm, DataBaseConnection &dbc) {
     int f =1;
-    //string message = client.get_buffer_message();
+    string message2 = client.get_buffer_message();
+    cout << message2<<endl;
     string message = "0000LOGGING{\"username\": \"tomasz\",\"password\": \"a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3\"}";
     string flag = message.substr(4, 7);
     string data = message.substr(11);
     string response;
-    char buf[4];
+
 
     switch (f) {
         case 1:
@@ -43,58 +44,35 @@ void ServerController::selectAction(int fd, ClientStructure client, ConnectionMa
             cout << "nie ma logowania" << endl;
             break;
     }
-    int32_t m_size = response .size();
-    PackageSizeParser::serialize_int_32(buf, m_size);
 
+    char header[4];
+    PackageSizeParser::serialize_int_32(header, response.size());
 
-    string  mr;
-    mr = buf[0];
-    mr.push_back(buf[1]);
-    mr.push_back(buf[2]);
-    mr.push_back(buf[3]);
-    mr.append(response);
+    char messageResponse[response.size()];
+    memcpy(messageResponse, response.c_str(), response.size());
 
+    char whole_pack[response.size()+4];
+    memcpy(whole_pack, header, 4);
+    memcpy(&whole_pack[4], messageResponse, response.size());
 
-    sendResponse(fd, mr, mr.length(),cm);
+    int bytes = response.size()+4;
+
+    if (cm.send_all(fd, whole_pack, &bytes) == -1) {
+        perror("send");
+        printf("~~ Sent only %d bytes (error) \n", bytes);
+    }
 
 }
-
 
 string ServerController::logonData(string message, ConnectionManager &cm, DataBaseConnection &dbc) {
     string returnMessage = "LOGGING";
-//    auto j = json::parse(message);
-//    if (dbc.correctLogon(j["username"], j["password"])) {
-//        returnMessage = "LOGGING";
-//    } else {
-//        returnMessage = "__ERROR";
-//    }
-    return returnMessage;
-}
+    string userData = "{\n\"id\": \"1\",\n \"username\": \"asd123_#\",\n \"password\": \"b790d976a02850ac9d5605e92ac7283ac477c76c203556fdd94726dd106cdae3\",\n \"systemRole\": \"TEAM_LEADER\"\n}";
 
-void ServerController::sendResponse(int fd, string response, int responseSize, ConnectionManager &cm) {
-    const char *c = response.c_str();
-    char p[response.length() + 1];
-    //strcpy(p, response.c_str());
-    memcpy(p, c, response.length());
-    for (int i = 0; i < response.length(); i++) {
-        cout << p[i];
+    auto j = json::parse(message);
+    if (dbc.correctLogon(j["username"], j["password"])) {
+        returnMessage = "LOGGING";
+    } else {
+        returnMessage = "__ERROR";
     }
-    cout << endl;
-    cm.send_all(fd, p, &responseSize);
+    return returnMessage+userData;
 }
-
-//void ServerController::sendResponse(int fd, string response, int responseSize, ConnectionManager &cm) {
-//    //const char *c = response.c_str();
-//    char p[response.length() + 1];
-//    strcpy(p, response.c_str());
-//    //memcpy(p, c, response.length());
-//    cout << p << endl;
-//    for (int i = 0; i < response.length(); i++)
-//        cout << p[i];
-//    cm.send_all(fd, p, &responseSize);
-//}
-
-
-//cout << strlen(p) << endl;
-//cout << p[0] << p[1] << p[2] << p[3]<< p[4] << p[5] << p[6] << p[7]<< p[8]<< p[9] << p[10] << p[11] <<p[12] << p[13] << p[14] << p[15] <<p[16] << p[17]<<endl;
-

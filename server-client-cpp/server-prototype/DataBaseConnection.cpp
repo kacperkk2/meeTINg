@@ -17,30 +17,30 @@ using namespace sql;
 
 DataBaseConnection::DataBaseConnection(string userName, string password) {
 
-//    try {
+    try {
+
+        /* Create a connection */
+        driver = get_driver_instance();
+        con = driver->connect("tcp://127.0.0.1:3306", "root", "admin");
+        /* Connect to the MySQL test database */
+        con->setSchema("meeting");
 //
-//        /* Create a connection */
-//        driver = get_driver_instance();
-//        con = driver->connect("tcp://127.0.0.1:3306", "root", "admin");
-//        /* Connect to the MySQL test database */
-//        con->setSchema("meeting");
-////
-////        if (correctLogon(userName, password) == 1) {
-////            //cout << "ZALOGOWANO" << userName << endl;
-////        } else {
-////            cout << "NIEZALOGOWANO" << endl;
-////            con->close();
-////            delete con;
-////        }
-//
-//
-//    } catch (sql::SQLException &e) {
-//        cout << "# ERR: SQLException in " << __FILE__;
-//        cout << "(" << __FUNCTION__ << ") on line " << __LINE__ << endl;
-//        cout << "# ERR: " << e.what();
-//        cout << " (MySQL error code: " << e.getErrorCode();
-//        cout << ", SQLState: " << e.getSQLState() << " )" << endl;
-//    }
+//        if (correctLogon(userName, password) == 1) {
+//            //cout << "ZALOGOWANO" << userName << endl;
+//        } else {
+//            cout << "NIEZALOGOWANO" << endl;
+//            con->close();
+//            delete con;
+//        }
+
+
+    } catch (sql::SQLException &e) {
+        cout << "# ERR: SQLException in " << __FILE__;
+        cout << "(" << __FUNCTION__ << ") on line " << __LINE__ << endl;
+        cout << "# ERR: " << e.what();
+        cout << " (MySQL error code: " << e.getErrorCode();
+        cout << ", SQLState: " << e.getSQLState() << " )" << endl;
+    }
 
 }
 
