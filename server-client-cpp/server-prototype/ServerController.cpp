@@ -28,9 +28,10 @@ ServerController::ServerController() {
 
 void ServerController::selectAction(int fd, ClientStructure client, ConnectionManager &cm, DataBaseConnection &dbc) {
     int f =1;
-    string message2 = client.get_buffer_message();
-    cout << message2<<endl;
-    string message = "0000LOGGING{\"username\": \"tomasz\",\"password\": \"a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3\"}";
+    int messageSize = client.get_whole_package_size();
+    char messageChar[messageSize];
+    memcpy(messageChar, client.get_buffer_message(), messageSize);
+    string message(messageChar, messageSize);
     string flag = message.substr(4, 7);
     string data = message.substr(11);
     string response;
@@ -38,7 +39,7 @@ void ServerController::selectAction(int fd, ClientStructure client, ConnectionMa
 
     switch (f) {
         case 1:
-            response = logonData(data, cm, dbc);
+            response = userLogin(data, cm, dbc);
             break;
         default:
             cout << "nie ma logowania" << endl;
@@ -64,15 +65,15 @@ void ServerController::selectAction(int fd, ClientStructure client, ConnectionMa
 
 }
 
-string ServerController::logonData(string message, ConnectionManager &cm, DataBaseConnection &dbc) {
+string ServerController::userLogin(string message, ConnectionManager &cm, DataBaseConnection &dbc) {
     string returnMessage = "LOGGING";
     string userData = "{\n\"id\": \"1\",\n \"username\": \"asd123_#\",\n \"password\": \"b790d976a02850ac9d5605e92ac7283ac477c76c203556fdd94726dd106cdae3\",\n \"systemRole\": \"TEAM_LEADER\"\n}";
 
     auto j = json::parse(message);
-    if (dbc.correctLogon(j["username"], j["password"])) {
-        returnMessage = "LOGGING";
-    } else {
+    if (!dbc.correctLogon(j["username"], j["password"])) {
         returnMessage = "__ERROR";
+    } else {
+        returnMessage = "LOGGING";
     }
     return returnMessage+userData;
 }

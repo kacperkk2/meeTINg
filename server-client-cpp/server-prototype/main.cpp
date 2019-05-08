@@ -38,14 +38,8 @@ int main(int argc, char* argv[])
     //sc.logonData("a");
     //sc.selectAction();
 
-//    DataBaseConnection db("admin","admin");
-//    sql::ResultSet *res = db.groupsList();
-//
-//    while (res->next()) {
-//
-//        cout << res->getString("name").c_str() << endl;
-//
-//    }
+    DataBaseConnection dbc("admin","admin");
+    dbc.userLoginData("1");
 
 
     int pipefd[2];

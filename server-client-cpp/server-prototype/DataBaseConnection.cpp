@@ -107,6 +107,46 @@ void DataBaseConnection::usersList() {
 
 }
 
+string DataBaseConnection::userLoginData(string userName) {
+
+    try {
+        sql::ResultSet *res;
+        string userData = "{";
+        string rola;
+
+        stmt = con->createStatement();
+
+        res = stmt->executeQuery("select * from USER where username = " + userName);
+        while (res->next()) {
+
+            userData += "\"id\":\"" + res->getString("user_id") + "\",";
+            userData += "\"username\":\"" + res->getString("username") + "\",";
+            userData += "\"password\":\"" + res->getString("hashed_password") + "\",";
+            if(res->getString("system_role") == "0") {
+                rola = "USER";
+            }else rola = "TEAM_LEADER";
+            userData += "\"systemRole\":\"" + rola + "\"}";
+
+        }
+        stmt->close();
+        res->close();
+        delete res;
+        delete stmt;
+        cout << userData << endl;
+        return userData;
+
+    } catch (sql::SQLException &e) {
+        cout << "nie jestes zalogowany" << endl;
+        cout << "# ERR: SQLException in " << __FILE__;
+        cout << "(" << __FUNCTION__ << ") on line " << __LINE__ << endl;
+        cout << "# ERR: " << e.what();
+        cout << " (MySQL error code: " << e.getErrorCode();
+        cout << ", SQLState: " << e.getSQLState() << " )" << endl;
+    }
+
+
+}
+
 //ResultSet *DataBaseConnection::groupsList() {
 //
 //    try {
