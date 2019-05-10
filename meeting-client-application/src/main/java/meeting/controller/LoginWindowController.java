@@ -58,42 +58,28 @@ public class LoginWindowController {
         // wysyłam tego requesta, po czym przychodzi response:
         String responseString = client.sendRequestRecResponse(requestString);
 
-        //symulacja poprawnego responsa:
-//        String responseString = ResponseFlag.LOGGING.toString() +
-//                "{\n" +
-//                "  \"id\": \"1\",\n" +
-//                "  \"username\": \"asd123_#\",\n" +
-//                "  \"password\": \"b790d976a02850ac9d5605e92ac7283ac477c76c203556fdd94726dd106cdae3\",\n" +
-//                "  \"systemRole\": USER\n" +
-//                "}";
-
         if (responseString.substring(0, 7).equals(ResponseFlag.__ERROR.toString())) {
             showLoginErrorAlert();
             return;
         }
 
-        if (responseString.substring(0, 7).equals(ResponseFlag.LOGGING.toString())) {
-            System.out.println("doszedlemwjavie");
-            return;
-        }
+        // parsuje JSONa
+        UserLoginResponse response = gson.fromJson(responseString.substring(7), UserLoginResponse.class);
 
-//        // parsuje JSONa
-//        UserLoginResponse response = gson.fromJson(responseString.substring(7), UserLoginResponse.class);
-//
-//        // tworze obiekt użytkownika
-//        User user = User.builder()
-//                .id(response.getId())
-//                .username(response.getUsername())
-//                .password(response.getPassword())
-//                .systemRole(SystemRole.valueOf(response.getSystemRole()))
-//                .build();
+        // tworze obiekt użytkownika
+        User user = User.builder()
+                .id(response.getId())
+                .username(response.getUsername())
+                .password(response.getPassword())
+                .systemRole(SystemRole.valueOf(response.getSystemRole()))
+                .build();
 
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/GroupsWindow.fxml"));
             StageLoader.loadStage((Stage)((Node) event.getSource()).getScene().getWindow(), fxmlLoader);
             GroupsWindowController groupsWindowController = fxmlLoader.getController();
             groupsWindowController.setClient(client);
-            groupsWindowController.setUser(null);
+            groupsWindowController.setUser(user);
         } catch(Exception e) {
             e.printStackTrace();
         }
@@ -137,3 +123,4 @@ public class LoginWindowController {
         return !usernameField.getText().trim().equals("") && !passwordField.getText().trim().equals("");
     }
 }
+

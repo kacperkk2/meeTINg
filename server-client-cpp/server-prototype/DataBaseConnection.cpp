@@ -159,7 +159,7 @@ bool DataBaseConnection::correctRegistration(string userName, string password) {
                 indeks = res1->getInt(1) + 1;
 
             }
-
+            cout<<"INSERT INTO USER VALUES(\"" + to_string(indeks) + "\",\"" + userName + "\",\"" + password + "\",\"0\")"<<endl;
             stmt->executeUpdate("INSERT INTO USER VALUES(\"" + to_string(indeks) + "\",\"" + userName + "\",\"" + password + "\",\"0\")");
 
             return 1;
@@ -176,9 +176,11 @@ bool DataBaseConnection::correctRegistration(string userName, string password) {
         cout << "# ERR: " << e.what();
         cout << " (MySQL error code: " << e.getErrorCode();
         cout << ", SQLState: " << e.getSQLState() << " )" << endl;
+
     }
     return 0;
 }
+
 
 
 

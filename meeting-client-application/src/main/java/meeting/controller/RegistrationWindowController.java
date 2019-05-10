@@ -12,6 +12,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import meeting.client.Client;
 
 import java.nio.charset.StandardCharsets;
 
@@ -24,6 +25,7 @@ public class RegistrationWindowController {
     @FXML private TextField username;
     @FXML private Button registerButton;
     @FXML private Label infoLabel;
+    private Client client = new Client();
 
     @FXML
     public void registerClicked(ActionEvent event) {
@@ -47,10 +49,10 @@ public class RegistrationWindowController {
             String requestString = RequestFlag.REGISTR.toString() + gson.toJson(request);
 
             // wysyłam tego requesta, po czym przychodzi response:
-//            String responseString = meeting.client.sendRequestRecResponse(requestString);
+            String responseString = client.sendRequestRecResponse(requestString);
 
             // symulacja poprawnego responsa:
-            String responseString = ResponseFlag.REGISTR.toString();
+           // String responseString = ResponseFlag.REGISTR.toString();
 
             // jesli odpowiedz ze blad, to komunikat i od nowa
             if(responseString.substring(0, 7).equals(ResponseFlag.__ERROR.toString())) {

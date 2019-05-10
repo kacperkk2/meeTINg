@@ -55,7 +55,6 @@ public class Client {
 
         // odbierze cala pacze i umiesci w bufferPackage
         receiveResponse();
-        System.out.println("doszedlemwjavie");
         String response = removeHeader(bufferPackage);
 
         System.out.println("Odebrana wiadomosc (bez header): " + response);
@@ -102,6 +101,8 @@ public class Client {
         bytesReceived += bytesFromRead;
         bytesNeeded -= bytesFromRead;
 
+        System.out.println("bytesreceived: " + bytesReceived);
+
         // jesli mamy juz naglowek a jeszcze nie wyliczylismy rozmiaru, to go wyliczmy
         if(bytesReceived >= 4 && messageSize == -1)
         {
@@ -115,7 +116,12 @@ public class Client {
             byte[] tmp = Arrays.copyOfRange(bufferPackage, 0, bytesReceived);
             //System.arraycopy(bufferPackage, 0, tmp, 0, bytesReceived);
             bufferPackage = new byte[packageSize];
+
+            System.out.println("packageSize: " + packageSize);
+
+            //tu sie wywala client
             System.arraycopy(tmp, 0, bufferPackage, 0, bytesReceived);
+
         }
     }
 
