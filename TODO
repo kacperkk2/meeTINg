@@ -1,0 +1,38 @@
+
+(male)
+Sleep w rozstawianiu socket'a na koniec rzucić
+
+(duze)
+Select na deskryptorze pipe na początku
+Wyciagnac do osobnej metody
+Przez console zamknięcie serwera
+*Stawianie gniazda na select
+///////////
+Tworzenie mapy podzielone
+Ladniejszy mechanizm na fd set
+Select opakowac w funkcję
+*Select i set do innego obiektu, wszedzie gdzie uzywamy ich uzywamy metod tego obiektu
+////////////
+ConnectionManager.cpp
+Line 248
+Tez przenosimy do waitera
+
+(nwm czy to robimy)
+Jak przypadkowo wyskoczy z selecta co zwraca receive przy nie blokujacym deskryptorze klienta
+
+(spore) ---------------------------------------------------- ZROBIONE, KACPER
+Odbieranie pakietu w strukturze klienckiej i wywolywanie z zewnatrz ze ma odebrac
+
+(male, ale musi chyba byc zrobione cos wczesniej)
+Podpytanie flagi od struktury klienckiej
+
+(duze)
+Wyodrebnione warstwy serializacji i deserializacji
+
+(male) ----------------------------------------------------- ZROBIONE, KACPER
+Serialize int 32 ma byc w kolejnosci sieciowej!!!
+
+(duze w luj)
+Send jest blokujacy - send all
+Problem bo wszystko na 1 wątku
+Send all Zapisanie zlecenia - masz cos do wyslania i powrot do select action? (W connection managerze)

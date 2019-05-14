@@ -10,7 +10,6 @@
 using namespace std;
 
 
-
 ConnectionManager::ConnectionManager(DataBaseConnection &dbc)
     :dbc(dbc)
 {
@@ -45,14 +44,13 @@ int ConnectionManager::send_all(int fd, char *buf, int *len) {
 
 void ConnectionManager::handle_client_request(int fd) {
 
-    char* incomingMessage = new char[cli_struct[fd].get_bytes_needed()];
+    // mowie klienckiej strukturze zeby sobie odebrala pakiet
+    int status = cli_struct[fd].receive_part_message(fd);
 
-    // otrzymujemy jakas wiadomosc
-    nbytes_rec = recv(fd, incomingMessage, cli_struct[fd].get_bytes_needed(), 0);
-
-    if(nbytes_rec  <= 0) // jesli rozlaczyl sie lub sa bledy, to zamykam jego deskryptor
+    // struct cli mowi mi ze rozlaczyl sie lub sa bledy, to zamykam jego deskryptor
+    if(status  < 0)
     {
-        if(nbytes_rec  == 0) // koniec lacznosci
+        if(status == -1) // koniec lacznosci
             printf("~~ Socket %d hung up \n", fd);
         else
             perror("recv");
@@ -67,28 +65,19 @@ void ConnectionManager::handle_client_request(int fd) {
         // usuwam miejsce w mapie
         cli_struct.erase(fd);
     }
-    else // odebrano wiadomosc
-    {
-        cout << "Odebrano bajtow: "<< nbytes_rec << endl;
-        cli_struct[fd].set_part_message(incomingMessage, nbytes_rec);
-        delete [] incomingMessage;
 
-        //zostawiam stare rozwiazanie bo jak byly by watki to nwm czy tamto by dzialalo, rozkmina
-//        if (cli_struct[fd].whole_package_size != -1 && cli_struct[fd].get_bytes_received() >= cli_struct[fd].whole_package_size) {
-        // jesli odebralismy caly pakiet to wyslij mu wiadomosc spowrotem
-        if (cli_struct[fd].get_bytes_needed() <= 0) {
-            cout << "Mam juz cala wiadomosc, moge ja zwrocic" << endl;
+    // struct cli mowi ze odebral cala wiadomosc
+    if(status == 1) {
+        cout << "Mam juz cala wiadomosc, moge ja zwrocic" << endl;
 
-            //obsluga zadania klienta
-            sc.selectAction(fd,cli_struct[fd], *this, dbc);
+        //obsluga zadania klienta
+        sc.selectAction(fd,cli_struct[fd], *this, dbc);
 
-            // przywracam domyslne ustawienia, bo wyslalem, zostaje czyste na nastepny raz
-            cli_struct[fd].dealloc();
-            cli_struct[fd].init();
-        }
-        else
-            cout << "Jeszcze nie mam calej wiadomosci" << endl;
+        // przywracam domyslne ustawienia, bo wyslalem, zostaje czyste na nastepny raz
+        cli_struct[fd].dealloc();
+        cli_struct[fd].init();
     }
+
 }
 
 int ConnectionManager::handle_console_request() {
@@ -116,8 +105,10 @@ int ConnectionManager::handle_console_request() {
         set_if_higher_fd(listenerfd);
 
         if(buf == 'q')
+        {
             dbc.closeConnection();
             work = false;
+        }
 
         return 1;
     }
@@ -251,6 +242,7 @@ void ConnectionManager::manage_connections(int BACKLOG, void* args) {
             if(FD_ISSET(i, &ready)) // sprawdzanie ktory deskryptor
             {
                 if(i == listenerfd) { // to nasluchiwacz, wiec przyszlo nowe polaczenie od klienta
+                    cout<< "Przyszlo nowe polaczenie!"<<endl;
                     handle_new_connection();
                 }
                 else if(i == pipe_fd[0]) { // watek nadrzedny cos chce

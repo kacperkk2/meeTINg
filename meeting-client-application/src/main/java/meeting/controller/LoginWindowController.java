@@ -91,6 +91,8 @@ public class LoginWindowController {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/RegistrationWindow.fxml"));
             StageLoader.loadStage((Stage)((Node) event.getSource()).getScene().getWindow(), fxmlLoader);
+            RegistrationWindowController registrationWindowController = fxmlLoader.getController();
+            registrationWindowController.setClient(client);
         } catch(Exception e) {
             e.printStackTrace();
         }

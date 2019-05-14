@@ -25,7 +25,7 @@ public class RegistrationWindowController {
     @FXML private TextField username;
     @FXML private Button registerButton;
     @FXML private Label infoLabel;
-    private Client client = new Client();
+    private Client client;
 
     @FXML
     public void registerClicked(ActionEvent event) {
@@ -95,5 +95,9 @@ public class RegistrationWindowController {
 
         if(!infoLabel.getText().isEmpty())
             infoLabel.setText("");
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
     }
 }
