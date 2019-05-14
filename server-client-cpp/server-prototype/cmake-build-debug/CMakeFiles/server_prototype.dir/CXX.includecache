@@ -6,24 +6,36 @@
 
 #IncludeRegexTransform: 
 
-/home/michal/Desktop/master/meeTINg/server-client-cpp/server-prototype/DataBaseConnection.cpp
-DataBaseConnection.h
-/home/michal/Desktop/master/meeTINg/server-client-cpp/server-prototype/DataBaseConnection.h
-stdlib.h
+/home/michal/Desktop/master/meeTINg/server-client-cpp/server-prototype/ClientStructure.h
+PackageSizeParser.h
+/home/michal/Desktop/master/meeTINg/server-client-cpp/server-prototype/PackageSizeParser.h
+string.h
 -
+
+/home/michal/Desktop/master/meeTINg/server-client-cpp/server-prototype/ConnectionManager.cpp
 iostream
 -
-mysql_connection.h
+arpa/inet.h
 -
-cppconn/driver.h
+unistd.h
 -
-cppconn/exception.h
+cstring
 -
-cppconn/resultset.h
+fcntl.h
 -
-cppconn/statement.h
+ConnectionManager.h
+/home/michal/Desktop/master/meeTINg/server-client-cpp/server-prototype/ConnectionManager.h
+ServerController.h
+/home/michal/Desktop/master/meeTINg/server-client-cpp/server-prototype/ServerController.h
+
+/home/michal/Desktop/master/meeTINg/server-client-cpp/server-prototype/ConnectionManager.h
+map
 -
-string
+ClientStructure.h
+/home/michal/Desktop/master/meeTINg/server-client-cpp/server-prototype/ClientStructure.h
+ServerController.h
+/home/michal/Desktop/master/meeTINg/server-client-cpp/server-prototype/ServerController.h
+netinet/in.h
 -
 
 /home/michal/Desktop/master/meeTINg/server-client-cpp/server-prototype/DataBaseConnection.h
@@ -33,4 +45,16 @@ mysql_connection.h
 -
 DataBaseConnection.h
 /home/michal/Desktop/master/meeTINg/server-client-cpp/server-prototype/DataBaseConnection.h
+
+/home/michal/Desktop/master/meeTINg/server-client-cpp/server-prototype/PackageSizeParser.h
+cstdint
+-
+
+/home/michal/Desktop/master/meeTINg/server-client-cpp/server-prototype/ServerController.h
+string
+-
+DataBaseConnection.h
+/home/michal/Desktop/master/meeTINg/server-client-cpp/server-prototype/DataBaseConnection.h
+ClientStructure.h
+/home/michal/Desktop/master/meeTINg/server-client-cpp/server-prototype/ClientStructure.h
 

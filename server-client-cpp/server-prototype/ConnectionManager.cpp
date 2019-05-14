@@ -115,9 +115,10 @@ int ConnectionManager::handle_console_request() {
         fdmax = pipe_fd[0];
         set_if_higher_fd(listenerfd);
 
-        if(buf == 'q')
+        if(buf == 'q') {
             dbc.closeConnection();
             work = false;
+        }
 
         return 1;
     }
