@@ -1,7 +1,10 @@
 package meeting.controller;
 
 import meeting.StageLoader;
+import meeting.api.request.EventListRequest;
 import meeting.api.request.GroupListRequest;
+import meeting.api.response.ErrorResponse;
+import meeting.api.response.EventListResponse;
 import meeting.api.response.GroupListResponse;
 import meeting.client.Client;
 import com.google.gson.Gson;
@@ -30,6 +33,7 @@ public class GroupsWindowController {
     @FXML ListView<Group> listView;
     @FXML Button createButton;
     @FXML Button requestsButton;
+    @FXML Label roleInfoLabel;
 
     private Group pickedGroup;
     private Client client;
@@ -43,6 +47,7 @@ public class GroupsWindowController {
             if(user.getSystemRole() == USER) {
                 createButton.setDisable(true);
                 requestsButton.setDisable(true);
+                roleInfoLabel.setText("Logged as User (limited options)");
             }
 
             refreshClicked();
@@ -85,8 +90,6 @@ public class GroupsWindowController {
 
     @FXML
     private void signOutClicked(ActionEvent event){
-        // TODO wyslanie requesta o wylogowanie, ale czy potrzeba???
-        // Tomek: potrzeba chyba przynajmniej dlatego zeby serwer mogl wywalic sockety zwiazane z tym uzytkownikiem
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setHeaderText(null);
@@ -120,8 +123,9 @@ public class GroupsWindowController {
 
         String requestString = RequestFlag.USERGRP.toString() + gson.toJson(groupRequest);
 
-//        String groupResponseString = meeting.client.sendRequestRecResponse(requestString);
+//        String groupResponseString = client.sendRequestRecResponse(requestString);
 
+        // symulacja poprawnego
         String groupResponseString = ResponseFlag.USERGRP.toString() +
                 "{\n" +
                 "  \"items\": [\n" +
@@ -139,7 +143,8 @@ public class GroupsWindowController {
                 "}\n";
 
         if(groupResponseString.substring(0, 7).equals(ResponseFlag.__ERROR.toString())) {
-            // TODO obsługa błędu pobrania listy grup
+            ErrorResponse errorResponse = gson.fromJson(groupResponseString.substring(7), ErrorResponse.class);
+            showErrorAlert(errorResponse.getMessage());
             return;
         }
 
@@ -158,6 +163,13 @@ public class GroupsWindowController {
 
         listView.getItems().clear();
         listView.getItems().addAll(groups);
+    }
+
+    private void showErrorAlert(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.show();
     }
 
     void setClient(Client client) {

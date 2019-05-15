@@ -51,14 +51,10 @@ public class RegistrationWindowController {
             // wysyłam tego requesta, po czym przychodzi response:
             String responseString = client.sendRequestRecResponse(requestString);
 
-            // symulacja poprawnego responsa:
-           // String responseString = ResponseFlag.REGISTR.toString();
-
             // jesli odpowiedz ze blad, to komunikat i od nowa
             if(responseString.substring(0, 7).equals(ResponseFlag.__ERROR.toString())) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error Dialog");
-                // TODO w tego stringa wpakowac komunikat o bledzie z jsona jak przyjdzie error
                 String errorMessage = "Username occupied :(";
                 alert.setHeaderText(errorMessage);
                 alert.showAndWait();
@@ -83,6 +79,7 @@ public class RegistrationWindowController {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/LoginWindow.fxml"));
             StageLoader.loadStage((Stage)((Node) event.getSource()).getScene().getWindow(), fxmlLoader);
+            // TODO dac set client na loginwindow jak tomek wyrzuci tworzenie clienta w loginwindow
         } catch(Exception e) {
             e.printStackTrace();
         }
