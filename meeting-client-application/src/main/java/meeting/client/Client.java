@@ -28,6 +28,8 @@ public class Client {
             reader = new DataInputStream(new BufferedInputStream(clientSocket.getInputStream()));
 
             init();
+
+            System.out.println("Klient rozstawil gniazdo");
         } catch (IOException e) {
             e.printStackTrace();
         }

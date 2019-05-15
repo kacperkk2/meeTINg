@@ -24,11 +24,10 @@ using namespace std;
 void *handle_client(void* args)
 {
     DataBaseConnection dbc("root", "admin");
-    ConnectionManager connectionManager(dbc);
-    connectionManager.manage_connections(BACKLOG, args);
+    ConnectionManager connectionManager(dbc, args, BACKLOG);
+    connectionManager.manage_connections();
     return 0;
 }
-
 
 
 int main(int argc, char* argv[])

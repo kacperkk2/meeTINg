@@ -163,6 +163,9 @@
 		<Unit filename="/home/kklimczu/STUDIA/TIN/meeTINg/server-client-cpp/server-prototype/Vote.h">
 			<Option target="server_prototype"/>
 		</Unit>
+		<Unit filename="/home/kklimczu/STUDIA/TIN/meeTINg/server-client-cpp/server-prototype/Waiter.h">
+			<Option target="server_prototype"/>
+		</Unit>
 		<Unit filename="/home/kklimczu/STUDIA/TIN/meeTINg/server-client-cpp/server-prototype/main.cpp">
 			<Option target="server_prototype"/>
 		</Unit>

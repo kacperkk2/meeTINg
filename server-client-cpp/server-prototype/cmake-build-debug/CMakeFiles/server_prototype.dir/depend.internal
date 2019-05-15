@@ -11,6 +11,7 @@ CMakeFiles/server_prototype.dir/ConnectionManager.cpp.o
  /home/kklimczu/STUDIA/TIN/meeTINg/server-client-cpp/server-prototype/DataBaseConnection.h
  /home/kklimczu/STUDIA/TIN/meeTINg/server-client-cpp/server-prototype/PackageSizeParser.h
  /home/kklimczu/STUDIA/TIN/meeTINg/server-client-cpp/server-prototype/ServerController.h
+ /home/kklimczu/STUDIA/TIN/meeTINg/server-client-cpp/server-prototype/Waiter.h
 CMakeFiles/server_prototype.dir/ConsoleManager.cpp.o
  /home/kklimczu/STUDIA/TIN/meeTINg/server-client-cpp/server-prototype/ConsoleManager.cpp
  /home/kklimczu/STUDIA/TIN/meeTINg/server-client-cpp/server-prototype/ConsoleManager.h
@@ -68,6 +69,7 @@ CMakeFiles/server_prototype.dir/ServerController.cpp.o
  /home/kklimczu/STUDIA/TIN/meeTINg/server-client-cpp/server-prototype/ResponseFlag.h
  /home/kklimczu/STUDIA/TIN/meeTINg/server-client-cpp/server-prototype/ServerController.cpp
  /home/kklimczu/STUDIA/TIN/meeTINg/server-client-cpp/server-prototype/ServerController.h
+ /home/kklimczu/STUDIA/TIN/meeTINg/server-client-cpp/server-prototype/Waiter.h
  /home/kklimczu/STUDIA/TIN/meeTINg/server-client-cpp/server-prototype/nlohmann/json.hpp
 CMakeFiles/server_prototype.dir/User.cpp.o
  /home/kklimczu/STUDIA/TIN/meeTINg/server-client-cpp/server-prototype/User.cpp
@@ -82,4 +84,5 @@ CMakeFiles/server_prototype.dir/main.cpp.o
  /home/kklimczu/STUDIA/TIN/meeTINg/server-client-cpp/server-prototype/DataBaseConnection.h
  /home/kklimczu/STUDIA/TIN/meeTINg/server-client-cpp/server-prototype/PackageSizeParser.h
  /home/kklimczu/STUDIA/TIN/meeTINg/server-client-cpp/server-prototype/ServerController.h
+ /home/kklimczu/STUDIA/TIN/meeTINg/server-client-cpp/server-prototype/Waiter.h
  /home/kklimczu/STUDIA/TIN/meeTINg/server-client-cpp/server-prototype/main.cpp

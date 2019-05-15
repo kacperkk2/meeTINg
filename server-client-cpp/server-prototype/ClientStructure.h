@@ -15,12 +15,16 @@ class ClientStructure {
     int bytes_needed; // ile potrzebuje jeszcze bajtow
     char *buffer_message; // bufor ktory zbiera wiadomosc
     char *receive_buffer; // bufor do ktorego laduje to co otrzymalismy z receive
+    int my_fd; // deskryptor klienta ktory jest wlascicielem struktury
 
 public:
 
-    ClientStructure() {
+    ClientStructure(int fd) {
         init();
+        my_fd = fd;
     }
+
+    ClientStructure() {}
 
     void init() {
         memset(header, 0, 4);
@@ -63,11 +67,11 @@ public:
         std::cout << "-- CLI_STRUCT --- A CALY PAKIET MA: " << whole_package_size << std::endl;
     }
 
-    int receive_part_message(int fd) {
+    int receive_part_message() {
         // przygotowuje bufor, wiadomosc moze byc mniejsza, jest on dealokowany w set_part_message
         receive_buffer = new char[bytes_needed];
 
-        int nbytes_rec = recv(fd, receive_buffer, bytes_needed, 0);
+        int nbytes_rec = recv(my_fd, receive_buffer, bytes_needed, 0);
 
         // jesli rozlaczyl sie lub sa bledy, to daje znac connection managerowi
         if(nbytes_rec  <= 0)
