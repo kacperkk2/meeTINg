@@ -4,8 +4,10 @@ import javafx.scene.control.*;
 import meeting.StageLoader;
 import meeting.api.request.GroupListRequest;
 import meeting.api.request.MembershipRequest;
+import meeting.api.request.NewGroupRequest;
 import meeting.api.response.ErrorResponse;
 import meeting.api.response.GroupListResponse;
+import meeting.api.response.NewGroupResponse;
 import meeting.client.Client;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -147,7 +149,7 @@ public class AllGroupsWindowController {
                 .userId(user.getId())
                 .build();
 
-        String requestString = RequestFlag.GRPLIST.toString() + gson.toJson(allGroupsRequest);;
+        String requestString = RequestFlag.GRPLIST.toString() + gson.toJson(allGroupsRequest);
 
 //        String allGroupsResponseString = client.sendRequestRecResponse(requestString);
 

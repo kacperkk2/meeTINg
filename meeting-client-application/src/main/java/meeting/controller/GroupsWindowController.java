@@ -3,9 +3,11 @@ package meeting.controller;
 import meeting.StageLoader;
 import meeting.api.request.EventListRequest;
 import meeting.api.request.GroupListRequest;
+import meeting.api.request.NewGroupRequest;
 import meeting.api.response.ErrorResponse;
 import meeting.api.response.EventListResponse;
 import meeting.api.response.GroupListResponse;
+import meeting.api.response.NewGroupResponse;
 import meeting.client.Client;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -163,6 +165,58 @@ public class GroupsWindowController {
 
         listView.getItems().clear();
         listView.getItems().addAll(groups);
+    }
+
+    @FXML
+    public void createClicked() {
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("New group");
+        dialog.setHeaderText(null);
+        dialog.setContentText("Please enter group name:");
+
+        Optional<String> result = dialog.showAndWait();
+
+        result.ifPresent(name -> {
+            if (name.equals("")) showErrorAlert("Field can not be empty!");
+            else {
+                // robie JSONa
+                GsonBuilder builder = new GsonBuilder();
+                builder.setPrettyPrinting();
+                Gson gson = builder.create();
+
+                NewGroupRequest newGroupRequest = NewGroupRequest.builder()
+                        .leaderId(user.getId())
+                        .groupName(name)
+                        .build();
+
+                String requestString = RequestFlag.MAKEGRP.toString() + gson.toJson(newGroupRequest);
+
+//                String response = client.sendRequestRecResponse(requestString);
+
+                String response = ResponseFlag.MAKEGRP.toString() +
+                        "{\n" +
+                        "  \"id\": \"6\",\n" +
+                        "  \"name\": \"Nowa grupa\"\n" +
+                        "  \"leader\": \"Kacper Klimczuk\"\n" +
+                        "}\n";
+
+                if(response.substring(0, 7).equals(ResponseFlag.__ERROR.toString())) {
+                    ErrorResponse errorResponse = gson.fromJson(response.substring(7), ErrorResponse.class);
+                    showErrorAlert(errorResponse.getMessage());
+                    return;
+                }
+
+                NewGroupResponse newGroupResponse = gson.fromJson(response.substring(7), NewGroupResponse.class);
+
+                Group g = Group.builder()
+                        .id(newGroupResponse.getId())
+                        .name(newGroupResponse.getName())
+                        .leader(newGroupResponse.getLeader())
+                        .build();
+
+                listView.getItems().add(g);
+            }
+        });
     }
 
     private void showErrorAlert(String message) {

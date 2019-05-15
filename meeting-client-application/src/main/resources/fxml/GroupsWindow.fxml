@@ -49,7 +49,7 @@
                   <FontIcon iconColor="WHITE" iconLiteral="typ-refresh-outline" iconSize="22" strokeType="OUTSIDE" strokeWidth="0.0" />
                </graphic>
             </Button>
-            <Button fx:id="createButton" layoutX="20.0" layoutY="150.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="160.0" style="-fx-background-color: #000000;" text=" CREATE" textFill="WHITE">
+            <Button fx:id="createButton" layoutX="20.0" layoutY="150.0" mnemonicParsing="false" onAction="#createClicked" prefHeight="35.0" prefWidth="160.0" style="-fx-background-color: #000000;" text=" CREATE" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
