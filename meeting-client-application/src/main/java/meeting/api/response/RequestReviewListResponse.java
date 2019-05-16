@@ -9,5 +9,6 @@ import java.util.List;
 @NoArgsConstructor
 public class RequestReviewListResponse {
 
+    private String flag;
     private List<RequestReviewListItemResponse> items;
 }

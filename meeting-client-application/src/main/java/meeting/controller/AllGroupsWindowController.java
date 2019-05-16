@@ -6,6 +6,7 @@ import meeting.api.request.GroupListRequest;
 import meeting.api.request.MembershipRequest;
 import meeting.api.request.NewGroupRequest;
 import meeting.api.response.ErrorResponse;
+import meeting.api.response.FlagResponse;
 import meeting.api.response.GroupListResponse;
 import meeting.api.response.NewGroupResponse;
 import meeting.client.Client;
@@ -63,26 +64,31 @@ public class AllGroupsWindowController {
         Gson gson = builder.create();
 
         MembershipRequest membershipRequest = MembershipRequest.builder()
+                .flag(RequestFlag.MEMBREQ.toString())
                 .userId(user.getId())
                 .groupId(pickedGroup.getId())
                 .build();
 
-        String requestString = RequestFlag.MEMBREQ.toString() + gson.toJson(membershipRequest);
+        String requestString = gson.toJson(membershipRequest);
 
-//        String membershipResponseString = meeting.client.sendRequestRecResponse(requestString);
+//        String membershipResponseString = client.sendRequestRecResponse(requestString);
 
         // symulacja poprawnego
-        String membershipResponseString = ResponseFlag.MEMBREQ.toString();
+        String membershipResponseString =
+                "{\n" +
+                "  \"flag\" : \"MAKEGRP\" \n" +
+                "}\n";
 
-        if(membershipResponseString.substring(0, 7).equals(ResponseFlag.__ERROR.toString())) {
-            ErrorResponse errorResponse = gson.fromJson(membershipResponseString.substring(7), ErrorResponse.class);
-            showErrorAlert(errorResponse.getMessage());
+        FlagResponse response = gson.fromJson(membershipResponseString, FlagResponse.class);
+
+        if(response.getFlag().equals(ResponseFlag.__ERROR.toString())) {
+            showErrorAlert("Cannot do request MEMBREQ");
             return;
         }
 
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Information Dialog");
-        alert.setHeaderText("Membership request send to leader of group");
+        alert.setHeaderText("Membership request sent to leader of group");
         alert.showAndWait();
 
         // zeby po aplikowaniu uzytkownika nie pokazala mu sie znow ta sama grupa zeby nie mogl w nia kliknac
@@ -146,16 +152,18 @@ public class AllGroupsWindowController {
 
         // id uzytkownia idzie po to zeby przyslali spowrotem tylko te grupy do ktorych uzytkownik nie nalezy
         GroupListRequest allGroupsRequest = GroupListRequest.builder()
+                .flag(RequestFlag.GRPLIST.toString())
                 .userId(user.getId())
                 .build();
 
-        String requestString = RequestFlag.GRPLIST.toString() + gson.toJson(allGroupsRequest);
+        String requestString = gson.toJson(allGroupsRequest);
 
 //        String allGroupsResponseString = client.sendRequestRecResponse(requestString);
 
         // symulacja poprawnego
-        String allGroupsResponseString = ResponseFlag.GRPLIST.toString() +
+        String allGroupsResponseString =
                 "{\n" +
+                "  \"flag\" : \"GRPLIST\", \n" +
                 "  \"items\": [\n" +
                 "    {\n" +
                 "      \"id\": \"4\",\n" +
@@ -170,13 +178,12 @@ public class AllGroupsWindowController {
                 "  ]\n" +
                 "}\n";
 
-        if(allGroupsResponseString.substring(0, 7).equals(ResponseFlag.__ERROR.toString())) {
-            ErrorResponse errorResponse = gson.fromJson(allGroupsResponseString.substring(7), ErrorResponse.class);
-            showErrorAlert(errorResponse.getMessage());
+        GroupListResponse groupListResponse = gson.fromJson(allGroupsResponseString, GroupListResponse.class);
+
+        if(groupListResponse.getFlag().equals(ResponseFlag.__ERROR.toString())) {
+            showErrorAlert("Cannot do request GRPLIST");
             return;
         }
-
-        GroupListResponse groupListResponse = gson.fromJson(allGroupsResponseString.substring(7), GroupListResponse.class);
 
         List<Group> groups = new ArrayList<>();
 

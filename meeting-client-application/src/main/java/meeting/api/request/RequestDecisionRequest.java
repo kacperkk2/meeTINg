@@ -7,7 +7,7 @@ import lombok.Data;
 @Builder
 public class RequestDecisionRequest {
 
+    private String flag;
     private long userId;
-
     private long groupId;
 }

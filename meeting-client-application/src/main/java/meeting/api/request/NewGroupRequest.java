@@ -7,6 +7,8 @@ import lombok.Data;
 @Builder
 public class NewGroupRequest {
 
+    private String flag;
+
     private long leaderId;
 
     private String groupName;

@@ -7,5 +7,7 @@ import lombok.Data;
 @Builder
 public class EventListRequest {
 
+    private String flag;
+
     private long groupId;
 }

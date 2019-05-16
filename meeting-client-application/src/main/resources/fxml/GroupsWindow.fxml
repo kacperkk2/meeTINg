@@ -33,7 +33,7 @@
          </children></Pane>
       <Pane layoutX="600.0" layoutY="100.0" prefHeight="480.0" prefWidth="200.0" style="-fx-background-color: #ECECEC;">
          <children>
-            <Button layoutX="20.0" layoutY="80.0" mnemonicParsing="false" onAction="#allGroupsClicked" prefHeight="35.0" prefWidth="160.0" style="-fx-background-color: #000000;" text=" ALL GROUPS" textFill="WHITE">
+            <Button fx:id="allGroupsButton" layoutX="20.0" layoutY="80.0" mnemonicParsing="false" onAction="#allGroupsClicked" prefHeight="35.0" prefWidth="160.0" style="-fx-background-color: #000000;" text=" ALL GROUPS" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>

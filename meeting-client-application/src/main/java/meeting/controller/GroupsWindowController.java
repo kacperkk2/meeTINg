@@ -35,6 +35,7 @@ public class GroupsWindowController {
     @FXML ListView<Group> listView;
     @FXML Button createButton;
     @FXML Button requestsButton;
+    @FXML Button allGroupsButton;
     @FXML Label roleInfoLabel;
 
     private Group pickedGroup;
@@ -50,6 +51,10 @@ public class GroupsWindowController {
                 createButton.setDisable(true);
                 requestsButton.setDisable(true);
                 roleInfoLabel.setText("Logged as User (limited options)");
+            }
+            else {
+                // leader nie moze aplikowac do grup
+                allGroupsButton.setDisable(true);
             }
 
             refreshClicked();
@@ -133,16 +138,18 @@ public class GroupsWindowController {
         Gson gson = builder.create();
 
         GroupListRequest groupRequest = GroupListRequest.builder()
+                .flag(RequestFlag.USERGRP.toString())
                 .userId(user.getId())
                 .build();
 
-        String requestString = RequestFlag.USERGRP.toString() + gson.toJson(groupRequest);
+        String requestString = gson.toJson(groupRequest);
 
 //        String groupResponseString = client.sendRequestRecResponse(requestString);
 
         // symulacja poprawnego
-        String groupResponseString = ResponseFlag.USERGRP.toString() +
+        String groupResponseString =
                 "{\n" +
+                "  \"flag\" : \"USERGRP\", \n" +
                 "  \"items\": [\n" +
                 "    {\n" +
                 "      \"id\": \"1\",\n" +
@@ -157,13 +164,12 @@ public class GroupsWindowController {
                 "  ]\n" +
                 "}\n";
 
-        if(groupResponseString.substring(0, 7).equals(ResponseFlag.__ERROR.toString())) {
-            ErrorResponse errorResponse = gson.fromJson(groupResponseString.substring(7), ErrorResponse.class);
-            showErrorAlert(errorResponse.getMessage());
+        GroupListResponse groupListResponse = gson.fromJson(groupResponseString, GroupListResponse.class);
+
+        if(groupListResponse.getFlag().equals(ResponseFlag.__ERROR.toString())) {
+            showErrorAlert("Cannot do request USERGRP");
             return;
         }
-
-        GroupListResponse groupListResponse = gson.fromJson(groupResponseString.substring(7), GroupListResponse.class);
 
         List<Group> groups = new ArrayList<>();
 
@@ -198,28 +204,29 @@ public class GroupsWindowController {
                 Gson gson = builder.create();
 
                 NewGroupRequest newGroupRequest = NewGroupRequest.builder()
+                        .flag(RequestFlag.MAKEGRP.toString())
                         .leaderId(user.getId())
                         .groupName(name)
                         .build();
 
-                String requestString = RequestFlag.MAKEGRP.toString() + gson.toJson(newGroupRequest);
+                String requestString = gson.toJson(newGroupRequest);
 
 //                String response = client.sendRequestRecResponse(requestString);
 
-                String response = ResponseFlag.MAKEGRP.toString() +
+                String response =
                         "{\n" +
+                        "  \"flag\" : \"MAKEGRP\", \n" +
                         "  \"id\": \"6\",\n" +
                         "  \"name\": \"Nowa grupa\",\n" +
                         "  \"leader\": \"Kacper Klimczuk\"\n" +
                         "}\n";
 
-                if(response.substring(0, 7).equals(ResponseFlag.__ERROR.toString())) {
-                    ErrorResponse errorResponse = gson.fromJson(response.substring(7), ErrorResponse.class);
-                    showErrorAlert(errorResponse.getMessage());
+                NewGroupResponse newGroupResponse = gson.fromJson(response, NewGroupResponse.class);
+
+                if(newGroupResponse.getFlag().equals(ResponseFlag.__ERROR.toString())) {
+                    showErrorAlert("Cannot do request MAKEGRP");
                     return;
                 }
-
-                NewGroupResponse newGroupResponse = gson.fromJson(response.substring(7), NewGroupResponse.class);
 
                 Group g = Group.builder()
                         .id(newGroupResponse.getId())

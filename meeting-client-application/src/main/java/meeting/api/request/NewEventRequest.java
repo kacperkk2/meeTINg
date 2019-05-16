@@ -7,6 +7,8 @@ import lombok.Data;
 @Builder
 public class NewEventRequest {
 
+    private String flag;
+
     private long groupId;
 
     private String eventName;

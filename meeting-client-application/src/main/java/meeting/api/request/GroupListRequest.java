@@ -7,5 +7,7 @@ import lombok.Data;
 @Builder
 public class GroupListRequest {
 
+    private String flag;
+
     private long userId;
 }

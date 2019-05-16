@@ -9,5 +9,7 @@ import java.util.List;
 @NoArgsConstructor
 public class GroupListResponse {
 
+    private String flag;
+
     private List<GroupListItemResponse> items;
 }

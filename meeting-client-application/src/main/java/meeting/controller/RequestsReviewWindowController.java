@@ -15,6 +15,7 @@ import meeting.StageLoader;
 import meeting.api.request.RequestDecisionRequest;
 import meeting.api.request.RequestReviewListRequest;
 import meeting.api.response.ErrorResponse;
+import meeting.api.response.FlagResponse;
 import meeting.api.response.RequestReviewListResponse;
 import meeting.client.Client;
 import meeting.enums.RequestFlag;
@@ -98,16 +99,18 @@ public class RequestsReviewWindowController {
         Gson gson = builder.create();
 
         RequestReviewListRequest request = RequestReviewListRequest.builder()
+                .flag(RequestFlag.USERREQ.toString())
                 .leaderId(user.getId())
                 .build();
 
-        String requestString = RequestFlag.USERREQ.toString() + gson.toJson(request);
+        String requestString = gson.toJson(request);
 
 //        String response = client.sendRequestRecResponse(requestString);
 
         // imitacja response
-        String response = ResponseFlag.USERREQ.toString() +
+        String response =
                 "{\n" +
+                "  \"flag\" : \"USERREQ\", \n" +
                 "  \"items\": [\n" +
                 "    {\n" +
                 "      \"groupId\": \"101\",\n" +
@@ -124,13 +127,12 @@ public class RequestsReviewWindowController {
                 "  ]\n" +
                 "}\n";
 
-        if(response.substring(0, 7).equals(ResponseFlag.__ERROR.toString())) {
-            ErrorResponse errorResponse = gson.fromJson(response.substring(7), ErrorResponse.class);
-            showErrorAlert(errorResponse.getMessage());
+        RequestReviewListResponse reqRevListResponse = gson.fromJson(response, RequestReviewListResponse.class);
+
+        if(reqRevListResponse.getFlag().equals(ResponseFlag.__ERROR.toString())) {
+            showErrorAlert("Cannot do request USERREQ");
             return;
         }
-
-        RequestReviewListResponse reqRevListResponse = gson.fromJson(response.substring(7), RequestReviewListResponse.class);
 
         List<RequestReview> requests = new ArrayList<>();
 
@@ -163,6 +165,13 @@ public class RequestsReviewWindowController {
         }
     }
 
+    String determineFlag(Event evt) {
+        if(((Button)evt.getSource()).getId().equals("acceptButton"))
+            return RequestFlag.USERACC.toString();
+        else
+            return RequestFlag.USERDEC.toString();
+    }
+
     @FXML
     public void decisionClicked(Event evt) {
         // robie JSONa
@@ -170,30 +179,32 @@ public class RequestsReviewWindowController {
         builder.setPrettyPrinting();
         Gson gson = builder.create();
 
+        String flagInApp = determineFlag(evt);
+
         RequestDecisionRequest request = RequestDecisionRequest.builder()
+                .flag(flagInApp)
                 .userId(pickedRequest.getUserId())
                 .groupId(pickedRequest.getGroupId())
                 .build();
 
-        String requestString;
-
-        if(((Button)evt.getSource()).getId().equals("acceptButton"))
-            requestString = RequestFlag.USERACC.toString() + gson.toJson(request);
-        else
-            requestString = RequestFlag.USERDEC.toString() + gson.toJson(request);
+        String requestString = gson.toJson(request);
 
 //        String response = client.sendRequestRecResponse(requestString);
 
         // imitacja response
-        String response = ResponseFlag.USERACC.toString();
+        String decisionResponse =
+                "{\n" +
+                "  \"flag\" : \"USERACC\" \n" +
+                "}\n";
 
-        if(response.substring(0, 7).equals(ResponseFlag.__ERROR.toString())) {
-            ErrorResponse errorResponse = gson.fromJson(response.substring(7), ErrorResponse.class);
-            showErrorAlert(errorResponse.getMessage());
+        FlagResponse response = gson.fromJson(decisionResponse, FlagResponse.class);
+
+        if(response.getFlag().equals(ResponseFlag.__ERROR.toString())) {
+            showErrorAlert("Cannot do request USERACC/USERDEC");
             return;
         }
 
-        if(((Control)evt.getSource()).getId().equals("acceptButton")) {
+        if(flagInApp.equals(RequestFlag.USERACC.toString())) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Information Dialog");
             alert.setHeaderText("User \"" + pickedRequest.getUserName() +"\" accepted to group \"" + pickedRequest.getGroupName() + "\"");

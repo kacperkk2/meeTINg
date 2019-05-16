@@ -5,6 +5,7 @@ import meeting.api.request.UserDataRequest;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import meeting.api.response.ErrorResponse;
+import meeting.api.response.FlagResponse;
 import meeting.enums.RequestFlag;
 import meeting.enums.ResponseFlag;
 import javafx.event.ActionEvent;
@@ -39,6 +40,7 @@ public class RegistrationWindowController {
 
             // tworze requesta
             UserDataRequest request = UserDataRequest.builder()
+                    .flag(RequestFlag.REGISTR.toString())
                     .username(username.getText())
                     .password(hashedPassword)
                     .build();
@@ -47,19 +49,20 @@ public class RegistrationWindowController {
             GsonBuilder builder = new GsonBuilder();
             builder.setPrettyPrinting();
             Gson gson = builder.create();
-            String requestString = RequestFlag.REGISTR.toString() + gson.toJson(request);
 
-            // wysyłam tego requesta, po czym przychodzi response:
+            String requestString = gson.toJson(request);
+
             String responseString = client.sendRequestRecResponse(requestString);
 
+            FlagResponse response = gson.fromJson(responseString, FlagResponse.class);
+
             // jesli odpowiedz ze blad, to komunikat i od nowa
-            if(responseString.substring(0, 7).equals(ResponseFlag.__ERROR.toString())) {
-                ErrorResponse errorResponse = gson.fromJson(responseString.substring(7), ErrorResponse.class);
-                showErrorAlert(errorResponse.getMessage());
+            if(response.getFlag().equals(ResponseFlag.__ERROR.toString())) {
+                showErrorAlert("Username occupied :(");
                 return;
             }
             // jesli odpowiedz ze zapisano uzytkownika to komunikat i do okna logowania
-            else if(responseString.substring(0, 7).equals(ResponseFlag.REGISTR.toString())) {
+            else if(response.getFlag().equals(ResponseFlag.REGISTR.toString())) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Information Dialog");
                 alert.setHeaderText("Account created :)");

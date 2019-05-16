@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class NewGroupResponse {
 
+    private String flag;
+
     private long id;
 
     private String name;

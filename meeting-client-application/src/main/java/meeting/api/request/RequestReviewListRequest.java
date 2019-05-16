@@ -7,5 +7,6 @@ import lombok.Data;
 @Builder
 public class RequestReviewListRequest {
 
+    private String flag;
     private long leaderId;
 }
