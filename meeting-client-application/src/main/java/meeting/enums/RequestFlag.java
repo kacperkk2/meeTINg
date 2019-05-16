@@ -15,7 +15,8 @@ public enum RequestFlag {
     MEMBREQ, // aplikuj o dolaczenie do grupy
 
     USERREQ, // wyświetl requesty użytkowników
-    USERDEC, // zaakceptuj/odrzuć użytkownika
+    USERDEC, // odrzuć użytkownika
+    USERACC, // zaakceptuj użytkownika
 
     GRPEVNT, // wyświetl eventy grupy
     SHOWEVT, // pokaż konkretny event

@@ -4,6 +4,7 @@ import meeting.StageLoader;
 import meeting.api.request.UserDataRequest;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import meeting.api.response.ErrorResponse;
 import meeting.enums.RequestFlag;
 import meeting.enums.ResponseFlag;
 import javafx.event.ActionEvent;
@@ -53,11 +54,9 @@ public class RegistrationWindowController {
 
             // jesli odpowiedz ze blad, to komunikat i od nowa
             if(responseString.substring(0, 7).equals(ResponseFlag.__ERROR.toString())) {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error Dialog");
-                String errorMessage = "Username occupied :(";
-                alert.setHeaderText(errorMessage);
-                alert.showAndWait();
+                ErrorResponse errorResponse = gson.fromJson(responseString.substring(7), ErrorResponse.class);
+                showErrorAlert(errorResponse.getMessage());
+                return;
             }
             // jesli odpowiedz ze zapisano uzytkownika to komunikat i do okna logowania
             else if(responseString.substring(0, 7).equals(ResponseFlag.REGISTR.toString())) {
@@ -72,6 +71,13 @@ public class RegistrationWindowController {
         else {
             infoLabel.setText("Passwords doesnt match");
         }
+    }
+
+    private void showErrorAlert(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.show();
     }
 
     @FXML

@@ -70,6 +70,19 @@ public class GroupsWindowController {
     }
 
     @FXML
+    private void requestsClicked(Event event) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/RequestsReviewWindow.fxml"));
+            StageLoader.loadStage((Stage)((Node) event.getSource()).getScene().getWindow(), fxmlLoader);
+            RequestsReviewWindowController reqWindowController = fxmlLoader.getController();
+            reqWindowController.setClient(client);
+            reqWindowController.setUser(user);
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
     private void listClicked(Event event){
         // warunek zeby po kliknieciu w puste pola sie nie wywolywalo i zeby po kliknieciu w puste pole nie odpalalo sie dla biezacego pickedGroup
         if(listView.getSelectionModel().getSelectedItem() != null &&
@@ -196,7 +209,7 @@ public class GroupsWindowController {
                 String response = ResponseFlag.MAKEGRP.toString() +
                         "{\n" +
                         "  \"id\": \"6\",\n" +
-                        "  \"name\": \"Nowa grupa\"\n" +
+                        "  \"name\": \"Nowa grupa\",\n" +
                         "  \"leader\": \"Kacper Klimczuk\"\n" +
                         "}\n";
 
