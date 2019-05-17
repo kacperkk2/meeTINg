@@ -7,9 +7,8 @@ import java.util.List;
 
 @Data
 @NoArgsConstructor
-public class EventListResponse {
+public class RequestReviewListResponse {
 
     private String flag;
-
-    private List<EventListItemResponse> items;
+    private List<RequestReviewListItemResponse> items;
 }

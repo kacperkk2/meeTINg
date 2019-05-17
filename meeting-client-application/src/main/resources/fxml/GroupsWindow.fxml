@@ -26,14 +26,14 @@
                   <FontIcon iconColor="WHITE" iconLiteral="fa-sign-out" iconSize="20" strokeType="OUTSIDE" strokeWidth="0.0" />
                </graphic>
             </Button>
-            <Label layoutX="557.0" layoutY="17.0" text="Logged as Admin (Team Leader)">
+            <Label fx:id="roleInfoLabel" alignment="CENTER_RIGHT" layoutX="465.0" layoutY="17.0" prefHeight="18.0" prefWidth="321.0" text="Logged as Admin (Team Leader)">
                <font>
                   <Font size="14.0" />
                </font></Label>
          </children></Pane>
       <Pane layoutX="600.0" layoutY="100.0" prefHeight="480.0" prefWidth="200.0" style="-fx-background-color: #ECECEC;">
          <children>
-            <Button layoutX="20.0" layoutY="80.0" mnemonicParsing="false" onAction="#allGroupsClicked" prefHeight="35.0" prefWidth="160.0" style="-fx-background-color: #000000;" text=" ALL GROUPS" textFill="WHITE">
+            <Button fx:id="allGroupsButton" layoutX="20.0" layoutY="80.0" mnemonicParsing="false" onAction="#allGroupsClicked" prefHeight="35.0" prefWidth="160.0" style="-fx-background-color: #000000;" text=" ALL GROUPS" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
@@ -49,7 +49,7 @@
                   <FontIcon iconColor="WHITE" iconLiteral="typ-refresh-outline" iconSize="22" strokeType="OUTSIDE" strokeWidth="0.0" />
                </graphic>
             </Button>
-            <Button fx:id="createButton" layoutX="20.0" layoutY="150.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="160.0" style="-fx-background-color: #000000;" text=" CREATE" textFill="WHITE">
+            <Button fx:id="createButton" layoutX="20.0" layoutY="150.0" mnemonicParsing="false" onAction="#createClicked" prefHeight="35.0" prefWidth="160.0" style="-fx-background-color: #000000;" text=" CREATE" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
@@ -57,7 +57,7 @@
                   <FontIcon iconColor="WHITE" iconLiteral="typ-plus-outline" iconSize="22" strokeType="OUTSIDE" strokeWidth="0.0" />
                </graphic>
             </Button>
-            <Button fx:id="requestsButton" layoutX="20.0" layoutY="200.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="160.0" style="-fx-background-color: #000000;" text=" REQUESTS" textFill="WHITE">
+            <Button fx:id="requestsButton" layoutX="20.0" layoutY="200.0" mnemonicParsing="false" onAction="#requestsClicked" prefHeight="35.0" prefWidth="160.0" style="-fx-background-color: #000000;" text=" REQUESTS" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>

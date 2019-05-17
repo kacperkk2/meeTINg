@@ -5,11 +5,8 @@ import lombok.Data;
 
 @Data
 @Builder
-public class NewEventRequest {
+public class RequestReviewListRequest {
 
     private String flag;
-
-    private long groupId;
-
-    private String eventName;
+    private long leaderId;
 }

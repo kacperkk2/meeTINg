@@ -1,8 +1,14 @@
 package meeting.controller;
 
+import javafx.scene.control.*;
 import meeting.StageLoader;
+import meeting.api.request.GroupListRequest;
 import meeting.api.request.MembershipRequest;
+import meeting.api.request.NewGroupRequest;
+import meeting.api.response.ErrorResponse;
+import meeting.api.response.FlagResponse;
 import meeting.api.response.GroupListResponse;
+import meeting.api.response.NewGroupResponse;
 import meeting.client.Client;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -14,10 +20,6 @@ import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 import meeting.model.Group;
 import meeting.model.User;
@@ -26,11 +28,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static meeting.enums.SystemRole.USER;
+
 
 public class AllGroupsWindowController {
 
     @FXML ListView<Group> listView;
     @FXML Button applyButton;
+    @FXML Label roleInfoLabel;
 
     private Group pickedGroup;
     private Client client;
@@ -38,8 +43,16 @@ public class AllGroupsWindowController {
 
     @FXML
     public void initialize() {
+
         applyButton.setDisable(true);
-        Platform.runLater(this::refreshClicked);
+
+        Platform.runLater(() ->{
+            if(user.getSystemRole() == USER) {
+                roleInfoLabel.setText("Logged as User (limited options)");
+            }
+
+            refreshClicked();
+        });
     }
 
     @FXML
@@ -51,28 +64,35 @@ public class AllGroupsWindowController {
         Gson gson = builder.create();
 
         MembershipRequest membershipRequest = MembershipRequest.builder()
+                .flag(RequestFlag.MEMBREQ.toString())
                 .userId(user.getId())
                 .groupId(pickedGroup.getId())
                 .build();
 
-        String requestString = RequestFlag.MEMBREQ.toString() + gson.toJson(membershipRequest);
+        String requestString = gson.toJson(membershipRequest);
 
-//        String membershipResponseString = meeting.client.sendRequestRecResponse(requestString);
+//        String membershipResponseString = client.sendRequestRecResponse(requestString);
 
-        String membershipResponseString = ResponseFlag.MEMBREQ.toString();
+        // symulacja poprawnego
+        String membershipResponseString =
+                "{\n" +
+                "  \"flag\" : \"MAKEGRP\" \n" +
+                "}\n";
 
-        if(membershipResponseString.substring(0, 7).equals(ResponseFlag.__ERROR.toString())) {
-            // TODO request o membership sie nie udal
+        FlagResponse response = gson.fromJson(membershipResponseString, FlagResponse.class);
+
+        if(response.getFlag().equals(ResponseFlag.__ERROR.toString())) {
+            showErrorAlert("Cannot do request MEMBREQ");
             return;
         }
 
-        // TODO jesli juz aplikowal do grupy to teraz to sprawdzic idac komunikat, albo blokowac button po wybraniu grupy do ktorej juz aplikowal
-        // Tomek: prosciej: nie pobierac grup do ktorych uzytkownik juz nalezy
-
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Information Dialog");
-        alert.setHeaderText("Membership request send to leader of group");
+        alert.setHeaderText("Membership request sent to leader of group");
         alert.showAndWait();
+
+        // zeby po aplikowaniu uzytkownika nie pokazala mu sie znow ta sama grupa zeby nie mogl w nia kliknac
+        refreshClicked();
     }
 
     @FXML
@@ -101,7 +121,6 @@ public class AllGroupsWindowController {
 
     @FXML
     private void signOutClicked(ActionEvent event) {
-        // TODO wyslanie requesta o wylogowanie, ale czy potrzeba???
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setHeaderText(null);
@@ -114,6 +133,8 @@ public class AllGroupsWindowController {
                 try {
                     FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/LoginWindow.fxml"));
                     StageLoader.loadStage((Stage)((Node) event.getSource()).getScene().getWindow(), fxmlLoader);
+
+                    // TODO dac ustawianie clienta jak tomek juz ogarnie
                 } catch(Exception e) {
                     e.printStackTrace();
                 }
@@ -129,12 +150,20 @@ public class AllGroupsWindowController {
         builder.setPrettyPrinting();
         Gson gson = builder.create();
 
-        String requestString = RequestFlag.GRPLIST.toString();
+        // id uzytkownia idzie po to zeby przyslali spowrotem tylko te grupy do ktorych uzytkownik nie nalezy
+        GroupListRequest allGroupsRequest = GroupListRequest.builder()
+                .flag(RequestFlag.GRPLIST.toString())
+                .userId(user.getId())
+                .build();
 
-//        String groupResponseString = meeting.client.sendRequestRecResponse(requestString);
+        String requestString = gson.toJson(allGroupsRequest);
 
-        String groupResponseString = ResponseFlag.GRPLIST.toString() +
+//        String allGroupsResponseString = client.sendRequestRecResponse(requestString);
+
+        // symulacja poprawnego
+        String allGroupsResponseString =
                 "{\n" +
+                "  \"flag\" : \"GRPLIST\", \n" +
                 "  \"items\": [\n" +
                 "    {\n" +
                 "      \"id\": \"4\",\n" +
@@ -149,12 +178,12 @@ public class AllGroupsWindowController {
                 "  ]\n" +
                 "}\n";
 
-        if(groupResponseString.substring(0, 7).equals(ResponseFlag.__ERROR.toString())) {
-            // TODO obsługa błędu pobrania listy grup
+        GroupListResponse groupListResponse = gson.fromJson(allGroupsResponseString, GroupListResponse.class);
+
+        if(groupListResponse.getFlag().equals(ResponseFlag.__ERROR.toString())) {
+            showErrorAlert("Cannot do request GRPLIST");
             return;
         }
-
-        GroupListResponse groupListResponse = gson.fromJson(groupResponseString.substring(7), GroupListResponse.class);
 
         List<Group> groups = new ArrayList<>();
 
@@ -169,6 +198,13 @@ public class AllGroupsWindowController {
 
         listView.getItems().clear();
         listView.getItems().addAll(groups);
+    }
+
+    private void showErrorAlert(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.show();
     }
 
     void setClient(Client client) {

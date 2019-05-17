@@ -4,6 +4,8 @@ import meeting.StageLoader;
 import meeting.api.request.UserDataRequest;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import meeting.api.response.ErrorResponse;
+import meeting.api.response.FlagResponse;
 import meeting.enums.RequestFlag;
 import meeting.enums.ResponseFlag;
 import javafx.event.ActionEvent;
@@ -25,7 +27,7 @@ public class RegistrationWindowController {
     @FXML private TextField username;
     @FXML private Button registerButton;
     @FXML private Label infoLabel;
-    private Client client = new Client();
+    private Client client;
 
     @FXML
     public void registerClicked(ActionEvent event) {
@@ -38,6 +40,7 @@ public class RegistrationWindowController {
 
             // tworze requesta
             UserDataRequest request = UserDataRequest.builder()
+                    .flag(RequestFlag.REGISTR.toString())
                     .username(username.getText())
                     .password(hashedPassword)
                     .build();
@@ -46,25 +49,20 @@ public class RegistrationWindowController {
             GsonBuilder builder = new GsonBuilder();
             builder.setPrettyPrinting();
             Gson gson = builder.create();
-            String requestString = RequestFlag.REGISTR.toString() + gson.toJson(request);
 
-            // wysyłam tego requesta, po czym przychodzi response:
+            String requestString = gson.toJson(request);
+
             String responseString = client.sendRequestRecResponse(requestString);
 
-            // symulacja poprawnego responsa:
-           // String responseString = ResponseFlag.REGISTR.toString();
+            FlagResponse response = gson.fromJson(responseString, FlagResponse.class);
 
             // jesli odpowiedz ze blad, to komunikat i od nowa
-            if(responseString.substring(0, 7).equals(ResponseFlag.__ERROR.toString())) {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error Dialog");
-                // TODO w tego stringa wpakowac komunikat o bledzie z jsona jak przyjdzie error
-                String errorMessage = "Username occupied :(";
-                alert.setHeaderText(errorMessage);
-                alert.showAndWait();
+            if(response.getFlag().equals(ResponseFlag.__ERROR.toString())) {
+                showErrorAlert("Username occupied :(");
+                return;
             }
             // jesli odpowiedz ze zapisano uzytkownika to komunikat i do okna logowania
-            else if(responseString.substring(0, 7).equals(ResponseFlag.REGISTR.toString())) {
+            else if(response.getFlag().equals(ResponseFlag.REGISTR.toString())) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Information Dialog");
                 alert.setHeaderText("Account created :)");
@@ -78,11 +76,19 @@ public class RegistrationWindowController {
         }
     }
 
+    private void showErrorAlert(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.show();
+    }
+
     @FXML
     public void cancelClicked(ActionEvent event) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/LoginWindow.fxml"));
             StageLoader.loadStage((Stage)((Node) event.getSource()).getScene().getWindow(), fxmlLoader);
+            // TODO dac set client na loginwindow jak tomek wyrzuci tworzenie clienta w loginwindow
         } catch(Exception e) {
             e.printStackTrace();
         }
@@ -95,5 +101,9 @@ public class RegistrationWindowController {
 
         if(!infoLabel.getText().isEmpty())
             infoLabel.setText("");
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
     }
 }

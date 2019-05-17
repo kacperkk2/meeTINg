@@ -97,15 +97,17 @@ public class EventsWindowController {
         Gson gson = builder.create();
 
         EventListRequest request = EventListRequest.builder()
+                .flag(RequestFlag.GRPEVNT.toString())
                 .groupId(pickedGroup.getId())
                 .build();
 
-        String requestString = RequestFlag.GRPEVNT.toString() + gson.toJson(request);
+        String requestString = gson.toJson(request);
 
-//        String response = meeting.client.sendRequestRecResponse(request);
+//        String response = client.sendRequestRecResponse(requestString);
 
-        String response = ResponseFlag.GRPEVNT.toString() +
+        String response =
                 "{\n" +
+                "  \"flag\" : \"GRPEVNT\", \n" +
                 "  \"items\": [\n" +
                 "    {\n" +
                 "      \"id\": \"101\",\n" +
@@ -122,13 +124,12 @@ public class EventsWindowController {
                 "  ]\n" +
                 "}\n";
 
-        if(response.substring(0, 7).equals(ResponseFlag.__ERROR.toString())) {
-            ErrorResponse errorResponse = gson.fromJson(response.substring(7), ErrorResponse.class);
-            showEventErrorAlert(errorResponse.getMessage());
+        EventListResponse eventListResponse = gson.fromJson(response, EventListResponse.class);
+
+        if(eventListResponse.getFlag().equals(ResponseFlag.__ERROR.toString())) {
+            showEventErrorAlert("Cannot do request GRPEVNT");
             return;
         }
-
-        EventListResponse eventListResponse = gson.fromJson(response.substring(7), EventListResponse.class);
 
         List<Event> events = new ArrayList<>();
 
@@ -168,27 +169,28 @@ public class EventsWindowController {
         Gson gson = builder.create();
 
         NewEventRequest newEventRequest = NewEventRequest.builder()
+                .flag(RequestFlag.MAKEEVT.toString())
                 .groupId(pickedGroup.getId())
                 .eventName(name)
                 .build();
 
-        String request = RequestFlag.MAKEEVT.toString() + gson.toJson(newEventRequest);
+        String request = gson.toJson(newEventRequest);
 
 //        String response = meeting.client.sendRequestRecResponse(request);
 
-        String response = ResponseFlag.MAKEEVT.toString() +
+        String response =
                 "{\n" +
+                "  \"flag\" : \"MAKEEVT\", \n" +
                 "  \"id\": \"65\",\n" +
                 "  \"name\": \"Nowy event\"\n" +
                 "}\n";
 
-        if(response.substring(0, 7).equals(ResponseFlag.__ERROR.toString())) {
-            ErrorResponse errorResponse = gson.fromJson(response.substring(7), ErrorResponse.class);
-            showEventErrorAlert(errorResponse.getMessage());
+        NewEventResponse newEventResponse = gson.fromJson(response, NewEventResponse.class);
+
+        if(newEventRequest.getFlag().equals(ResponseFlag.__ERROR.toString())) {
+            showEventErrorAlert("Cannot do request MAKEEVT");
             return;
         }
-
-        NewEventResponse newEventResponse = gson.fromJson(response.substring(7), NewEventResponse.class);
 
         Event e = Event.builder()
                 .id(newEventResponse.getId())

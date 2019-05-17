@@ -28,6 +28,8 @@ public class Client {
             reader = new DataInputStream(new BufferedInputStream(clientSocket.getInputStream()));
 
             init();
+
+            System.out.println("Klient rozstawil gniazdo");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -147,14 +149,14 @@ public class Client {
     private int convertHeaderToInt(byte[] header) {
 
         ByteBuffer buffer = ByteBuffer.wrap(header);
-        buffer.order(ByteOrder.nativeOrder());
+        buffer.order(ByteOrder.BIG_ENDIAN);
         return buffer.getInt();
     }
 
     private byte[] convertIntToHeader(int mSize) {
 
         ByteBuffer buffer = ByteBuffer.allocate(4);
-        buffer.order(ByteOrder.nativeOrder());
+        buffer.order(ByteOrder.BIG_ENDIAN);
         buffer.putInt(mSize);
         return buffer.array();
     }

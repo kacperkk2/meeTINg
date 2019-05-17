@@ -3,13 +3,15 @@ package meeting.api.response;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Data
 @NoArgsConstructor
-public class EventListResponse {
+public class NewGroupResponse {
 
     private String flag;
 
-    private List<EventListItemResponse> items;
+    private long id;
+
+    private String name;
+
+    private String leader;
 }

@@ -45,6 +45,7 @@ public class LoginWindowController {
 
         // tworze requesta
         UserDataRequest request = UserDataRequest.builder()
+                .flag(RequestFlag.LOGGING.toString())
                 .username(usernameField.getText())
                 .password(hashedPassword)
                 .build();
@@ -53,18 +54,19 @@ public class LoginWindowController {
         GsonBuilder builder = new GsonBuilder();
         builder.setPrettyPrinting();
         Gson gson = builder.create();
-        String requestString = RequestFlag.LOGGING.toString() + gson.toJson(request);
+
+        String requestString = gson.toJson(request);
 
         // wysyłam tego requesta, po czym przychodzi response:
         String responseString = client.sendRequestRecResponse(requestString);
 
-        if (responseString.substring(0, 7).equals(ResponseFlag.__ERROR.toString())) {
+        // parsuje JSONa
+        UserLoginResponse response = gson.fromJson(responseString, UserLoginResponse.class);
+
+        if (response.getFlag().equals(ResponseFlag.__ERROR.toString())) {
             showLoginErrorAlert();
             return;
         }
-
-        // parsuje JSONa
-        UserLoginResponse response = gson.fromJson(responseString.substring(7), UserLoginResponse.class);
 
         // tworze obiekt użytkownika
         User user = User.builder()
@@ -91,6 +93,8 @@ public class LoginWindowController {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/RegistrationWindow.fxml"));
             StageLoader.loadStage((Stage)((Node) event.getSource()).getScene().getWindow(), fxmlLoader);
+            RegistrationWindowController registrationWindowController = fxmlLoader.getController();
+            registrationWindowController.setClient(client);
         } catch(Exception e) {
             e.printStackTrace();
         }

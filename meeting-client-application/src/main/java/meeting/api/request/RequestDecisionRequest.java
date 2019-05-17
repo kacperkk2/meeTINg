@@ -5,11 +5,9 @@ import lombok.Data;
 
 @Data
 @Builder
-public class NewEventRequest {
+public class RequestDecisionRequest {
 
     private String flag;
-
+    private long userId;
     private long groupId;
-
-    private String eventName;
 }

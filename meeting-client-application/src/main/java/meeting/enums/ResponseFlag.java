@@ -15,7 +15,8 @@ public enum ResponseFlag {
     MEMBREQ, // decyzja o dodaniu do grupy
 
     USERREQ, // requesty użytkowników
-    USERDEC, // potwierdzenie decyzji
+    USERDEC, // potwierdzenie decyzji o nie przyjeciu
+    USERACC, // potwierdzenie decyzji o przyjeciu
 
     GRPEVNT, // eventy grupy
     SHOWEVT, // konkretny event

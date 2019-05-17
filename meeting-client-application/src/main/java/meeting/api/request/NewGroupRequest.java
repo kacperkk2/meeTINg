@@ -5,10 +5,11 @@ import lombok.Data;
 
 @Data
 @Builder
-public class UserDataRequest {
+public class NewGroupRequest {
+
     private String flag;
 
-    private String username;
+    private long leaderId;
 
-    private String password;
+    private String groupName;
 }

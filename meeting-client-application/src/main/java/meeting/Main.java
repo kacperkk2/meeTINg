@@ -3,6 +3,7 @@ package meeting;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
+import meeting.client.Client;
 
 
 public class Main extends Application {

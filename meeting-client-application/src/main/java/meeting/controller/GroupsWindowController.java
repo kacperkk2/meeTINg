@@ -1,8 +1,13 @@
 package meeting.controller;
 
 import meeting.StageLoader;
+import meeting.api.request.EventListRequest;
 import meeting.api.request.GroupListRequest;
+import meeting.api.request.NewGroupRequest;
+import meeting.api.response.ErrorResponse;
+import meeting.api.response.EventListResponse;
 import meeting.api.response.GroupListResponse;
+import meeting.api.response.NewGroupResponse;
 import meeting.client.Client;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -30,6 +35,8 @@ public class GroupsWindowController {
     @FXML ListView<Group> listView;
     @FXML Button createButton;
     @FXML Button requestsButton;
+    @FXML Button allGroupsButton;
+    @FXML Label roleInfoLabel;
 
     private Group pickedGroup;
     private Client client;
@@ -43,6 +50,11 @@ public class GroupsWindowController {
             if(user.getSystemRole() == USER) {
                 createButton.setDisable(true);
                 requestsButton.setDisable(true);
+                roleInfoLabel.setText("Logged as User (limited options)");
+            }
+            else {
+                // leader nie moze aplikowac do grup
+                allGroupsButton.setDisable(true);
             }
 
             refreshClicked();
@@ -57,6 +69,19 @@ public class GroupsWindowController {
             AllGroupsWindowController allGroupsWindowController = fxmlLoader.getController();
             allGroupsWindowController.setClient(client);
             allGroupsWindowController.setUser(user);
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void requestsClicked(Event event) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/RequestsReviewWindow.fxml"));
+            StageLoader.loadStage((Stage)((Node) event.getSource()).getScene().getWindow(), fxmlLoader);
+            RequestsReviewWindowController reqWindowController = fxmlLoader.getController();
+            reqWindowController.setClient(client);
+            reqWindowController.setUser(user);
         } catch(Exception e) {
             e.printStackTrace();
         }
@@ -85,8 +110,6 @@ public class GroupsWindowController {
 
     @FXML
     private void signOutClicked(ActionEvent event){
-        // TODO wyslanie requesta o wylogowanie, ale czy potrzeba???
-        // Tomek: potrzeba chyba przynajmniej dlatego zeby serwer mogl wywalic sockety zwiazane z tym uzytkownikiem
 
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setHeaderText(null);
@@ -115,15 +138,18 @@ public class GroupsWindowController {
         Gson gson = builder.create();
 
         GroupListRequest groupRequest = GroupListRequest.builder()
+                .flag(RequestFlag.USERGRP.toString())
                 .userId(user.getId())
                 .build();
 
-        String requestString = RequestFlag.USERGRP.toString() + gson.toJson(groupRequest);
+        String requestString = gson.toJson(groupRequest);
 
-//        String groupResponseString = meeting.client.sendRequestRecResponse(requestString);
+//        String groupResponseString = client.sendRequestRecResponse(requestString);
 
-        String groupResponseString = ResponseFlag.USERGRP.toString() +
+        // symulacja poprawnego
+        String groupResponseString =
                 "{\n" +
+                "  \"flag\" : \"USERGRP\", \n" +
                 "  \"items\": [\n" +
                 "    {\n" +
                 "      \"id\": \"1\",\n" +
@@ -138,12 +164,12 @@ public class GroupsWindowController {
                 "  ]\n" +
                 "}\n";
 
-        if(groupResponseString.substring(0, 7).equals(ResponseFlag.__ERROR.toString())) {
-            // TODO obsługa błędu pobrania listy grup
+        GroupListResponse groupListResponse = gson.fromJson(groupResponseString, GroupListResponse.class);
+
+        if(groupListResponse.getFlag().equals(ResponseFlag.__ERROR.toString())) {
+            showErrorAlert("Cannot do request USERGRP");
             return;
         }
-
-        GroupListResponse groupListResponse = gson.fromJson(groupResponseString.substring(7), GroupListResponse.class);
 
         List<Group> groups = new ArrayList<>();
 
@@ -158,6 +184,66 @@ public class GroupsWindowController {
 
         listView.getItems().clear();
         listView.getItems().addAll(groups);
+    }
+
+    @FXML
+    public void createClicked() {
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("New group");
+        dialog.setHeaderText(null);
+        dialog.setContentText("Please enter group name:");
+
+        Optional<String> result = dialog.showAndWait();
+
+        result.ifPresent(name -> {
+            if (name.equals("")) showErrorAlert("Field can not be empty!");
+            else {
+                // robie JSONa
+                GsonBuilder builder = new GsonBuilder();
+                builder.setPrettyPrinting();
+                Gson gson = builder.create();
+
+                NewGroupRequest newGroupRequest = NewGroupRequest.builder()
+                        .flag(RequestFlag.MAKEGRP.toString())
+                        .leaderId(user.getId())
+                        .groupName(name)
+                        .build();
+
+                String requestString = gson.toJson(newGroupRequest);
+
+//                String response = client.sendRequestRecResponse(requestString);
+
+                String response =
+                        "{\n" +
+                        "  \"flag\" : \"MAKEGRP\", \n" +
+                        "  \"id\": \"6\",\n" +
+                        "  \"name\": \"Nowa grupa\",\n" +
+                        "  \"leader\": \"Kacper Klimczuk\"\n" +
+                        "}\n";
+
+                NewGroupResponse newGroupResponse = gson.fromJson(response, NewGroupResponse.class);
+
+                if(newGroupResponse.getFlag().equals(ResponseFlag.__ERROR.toString())) {
+                    showErrorAlert("Cannot do request MAKEGRP");
+                    return;
+                }
+
+                Group g = Group.builder()
+                        .id(newGroupResponse.getId())
+                        .name(newGroupResponse.getName())
+                        .leader(newGroupResponse.getLeader())
+                        .build();
+
+                listView.getItems().add(g);
+            }
+        });
+    }
+
+    private void showErrorAlert(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.show();
     }
 
     void setClient(Client client) {

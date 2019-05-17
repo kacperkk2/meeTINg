@@ -3,6 +3,7 @@
 
 #include "PackageSizeParser.h"
 #include <string.h>
+#include <arpa/inet.h>
 
 
 class ClientStructure {
@@ -13,13 +14,17 @@ class ClientStructure {
     int whole_package_size; // ile zawiera bajtow caly pakiet, -1 -nieznane
     int bytes_needed; // ile potrzebuje jeszcze bajtow
     char *buffer_message; // bufor ktory zbiera wiadomosc
+    char *receive_buffer; // bufor do ktorego laduje to co otrzymalismy z receive
+    int my_fd; // deskryptor klienta ktory jest wlascicielem struktury
 
 public:
 
-
-    ClientStructure() {
+    ClientStructure(int fd) {
         init();
+        my_fd = fd;
     }
+
+    ClientStructure() {}
 
     void init() {
         memset(header, 0, 4);
@@ -32,10 +37,10 @@ public:
         whole_package_size = -1;
     }
 
-    void set_part_message(char *message, int bytes) {
+    void set_part_message(int bytes) {
         std::cout << "-- CLI_STRUCT --- OTRZYMALEM: " << bytes << std::endl;
 
-        memcpy(&buffer_message[bytes_received], message, bytes);
+        memcpy(&buffer_message[bytes_received], receive_buffer, bytes);
         bytes_received += bytes;
         bytes_needed -= bytes;
 
@@ -55,8 +60,37 @@ public:
             delete[] tmp;
         }
 
+        // dealokacja bufora receive_buffer, bo zakonczylismy odbior pakietu
+        delete [] receive_buffer;
+
         std::cout << "-- CLI_STRUCT --- MAM LACZNIE: " << bytes_received << std::endl;
         std::cout << "-- CLI_STRUCT --- A CALY PAKIET MA: " << whole_package_size << std::endl;
+    }
+
+    int receive_part_message() {
+        // przygotowuje bufor, wiadomosc moze byc mniejsza, jest on dealokowany w set_part_message
+        receive_buffer = new char[bytes_needed];
+
+        int nbytes_rec = recv(my_fd, receive_buffer, bytes_needed, 0);
+
+        // jesli rozlaczyl sie lub sa bledy, to daje znac connection managerowi
+        if(nbytes_rec  <= 0)
+        {
+            if(nbytes_rec  == 0) // koniec lacznosci
+                return -1;
+            else                 // blad
+                return -2;
+        }
+
+        // wrzuc do bufora odebrana porcje
+        set_part_message(nbytes_rec);
+
+        // daje znac connection managerowi ze odebralem caly pakiet
+        if(bytes_needed <= 0)
+            return 1;
+
+        // jesli wczesniej nie zwrocilem -1/-2 - blad lub 1 - caly pakiet odebrany, to daje znac ze po prostu odebralem porcje
+        return 0;
     }
 
     void dealloc() {

@@ -10,6 +10,7 @@ CMakeFiles/server_prototype.dir/ConnectionManager.cpp.o: ../ConnectionManager.h
 CMakeFiles/server_prototype.dir/ConnectionManager.cpp.o: ../DataBaseConnection.h
 CMakeFiles/server_prototype.dir/ConnectionManager.cpp.o: ../PackageSizeParser.h
 CMakeFiles/server_prototype.dir/ConnectionManager.cpp.o: ../ServerController.h
+CMakeFiles/server_prototype.dir/ConnectionManager.cpp.o: ../Waiter.h
 
 CMakeFiles/server_prototype.dir/ConsoleManager.cpp.o: ../ConsoleManager.cpp
 CMakeFiles/server_prototype.dir/ConsoleManager.cpp.o: ../ConsoleManager.h
@@ -67,6 +68,7 @@ CMakeFiles/server_prototype.dir/ServerController.cpp.o: ../PackageSizeParser.h
 CMakeFiles/server_prototype.dir/ServerController.cpp.o: ../ResponseFlag.h
 CMakeFiles/server_prototype.dir/ServerController.cpp.o: ../ServerController.cpp
 CMakeFiles/server_prototype.dir/ServerController.cpp.o: ../ServerController.h
+CMakeFiles/server_prototype.dir/ServerController.cpp.o: ../Waiter.h
 CMakeFiles/server_prototype.dir/ServerController.cpp.o: ../nlohmann/json.hpp
 
 CMakeFiles/server_prototype.dir/User.cpp.o: ../User.cpp
@@ -81,5 +83,6 @@ CMakeFiles/server_prototype.dir/main.cpp.o: ../ConsoleManager.h
 CMakeFiles/server_prototype.dir/main.cpp.o: ../DataBaseConnection.h
 CMakeFiles/server_prototype.dir/main.cpp.o: ../PackageSizeParser.h
 CMakeFiles/server_prototype.dir/main.cpp.o: ../ServerController.h
+CMakeFiles/server_prototype.dir/main.cpp.o: ../Waiter.h
 CMakeFiles/server_prototype.dir/main.cpp.o: ../main.cpp
 

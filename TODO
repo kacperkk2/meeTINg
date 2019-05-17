@@ -1,0 +1,39 @@
+
+(male) ---------------------------------------------------- ZROBIONE, KACPER
+Sleepy w razie niepowodzen np. w rozstawianiu socket'a na koniec rzucić
+
+(duze) ------------------------------------------------------ ZROBIONE, KACPER
+Select na deskryptorze pipe na początku
+Wyciagnac do osobnej metody
+Przez console zamknięcie serwera
+*Stawianie gniazda na select
+///////////
+Tworzenie mapy podzielone
+Ladniejszy mechanizm na fd set
+Select opakowac w funkcję
+*Select i set do innego obiektu, wszedzie gdzie uzywamy ich uzywamy metod tego obiektu
+////////////
+ConnectionManager.cpp
+Line 248
+Tez przenosimy do waitera
+
+(spore) ---------------------------------------------------- ZROBIONE, KACPER
+Odbieranie pakietu w strukturze klienckiej i wywolywanie z zewnatrz ze ma odebrac
+
+(male) ----------------------------------------------------- ZROBIONE, KACPER
+Serialize int 32 ma byc w kolejnosci sieciowej!!!
+
+
+
+// TODO
+
+(raczej male - poczytac co zwraca receive jesli wyskoczy przypadkowo - czy wgl moze?? jeli moze to to zabezpieczyc (receive teraz w clientstructure))
+Jak przypadkowo wyskoczy z selecta co zwraca receive przy nie blokujacym deskryptorze klienta
+
+(duze - chodzi zeby zrobic klase ktora przyjmuje flage i obiekt/obiekty, zamienia obiekty na json i skleja flage i jsona i podaje to do wyslania warstwie nizszej)
+Wyodrebnione warstwy serializacji i deserializacji
+
+(spore - chyba trzeba dodac w struct client miejsce na bufor do wysylania i zrobic to samo co dla receive)
+Send jest blokujacy - send all
+Problem bo wszystko na 1 wątku
+Send all Zapisanie zlecenia - masz cos do wyslania i powrot do select action? (W connection managerze)

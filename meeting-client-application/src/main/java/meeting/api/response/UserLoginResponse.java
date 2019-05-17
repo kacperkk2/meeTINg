@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UserLoginResponse {
 
+    private String flag;
+
     private long id;
 
     private String username;

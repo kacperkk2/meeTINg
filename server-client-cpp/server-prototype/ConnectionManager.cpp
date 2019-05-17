@@ -10,13 +10,21 @@
 using namespace std;
 
 
-
-ConnectionManager::ConnectionManager(DataBaseConnection &dbc)
+ConnectionManager::ConnectionManager(DataBaseConnection &dbc, void* args, int BACKLOG)
     :dbc(dbc)
 {
-    FD_ZERO(&master);
-    FD_ZERO(&ready);
+    int* casted_args = (int*) (intptr_t) args;
+    pipe_fd[0] = casted_args[0];
+    pipe_fd[1] = casted_args[1];
 
+    // zainicjalizuje listenerfd, listeneraddr
+    create_listener(casted_args[2], BACKLOG);
+
+    // tworze waitera i daje mu deskryptory ktorych ma nie usunac
+    waiter = Waiter(pipe_fd[0], pipe_fd[1], listenerfd);
+
+    waiter.add_descr(listenerfd);
+    waiter.add_descr(pipe_fd[0]);
 }
 
 int ConnectionManager::send_all(int fd, char *buf, int *len) {
@@ -45,50 +53,36 @@ int ConnectionManager::send_all(int fd, char *buf, int *len) {
 
 void ConnectionManager::handle_client_request(int fd) {
 
-    char* incomingMessage = new char[cli_struct[fd].get_bytes_needed()];
+    // mowie klienckiej strukturze zeby sobie odebrala pakiet
+    int status = cli_struct[fd].receive_part_message();
 
-    // otrzymujemy jakas wiadomosc
-    nbytes_rec = recv(fd, incomingMessage, cli_struct[fd].get_bytes_needed(), 0);
-
-    if(nbytes_rec  <= 0) // jesli rozlaczyl sie lub sa bledy, to zamykam jego deskryptor
+    // struct cli mowi mi ze rozlaczyl sie lub sa bledy, to zamykam jego deskryptor
+    if(status  < 0)
     {
-        if(nbytes_rec  == 0) // koniec lacznosci
+        if(status == -1) // koniec lacznosci
             printf("~~ Socket %d hung up \n", fd);
         else
             perror("recv");
 
-        close(fd);
-        FD_CLR(fd, &master);
-
-        // jesli ten klient ktory sie rozlaczyl to byl najwiekszy deskryptor, to teraz najwiekszy bedzie o jeden mniej
-        if(fd == fdmax)
-            fdmax --;
+        // mowie waiterowi zeby usunal deskryptor ze zbioru i go zamknal
+        waiter.close_descr(fd);
 
         // usuwam miejsce w mapie
         cli_struct.erase(fd);
     }
-    else // odebrano wiadomosc
-    {
-        cout << "Odebrano bajtow: "<< nbytes_rec << endl;
-        cli_struct[fd].set_part_message(incomingMessage, nbytes_rec);
-        delete [] incomingMessage;
 
-        //zostawiam stare rozwiazanie bo jak byly by watki to nwm czy tamto by dzialalo, rozkmina
-//        if (cli_struct[fd].whole_package_size != -1 && cli_struct[fd].get_bytes_received() >= cli_struct[fd].whole_package_size) {
-        // jesli odebralismy caly pakiet to wyslij mu wiadomosc spowrotem
-        if (cli_struct[fd].get_bytes_needed() <= 0) {
-            cout << "Mam juz cala wiadomosc, moge ja zwrocic" << endl;
+    // struct cli mowi ze odebral cala wiadomosc
+    if(status == 1) {
+        cout << "Mam juz cala wiadomosc, moge ja zwrocic" << endl;
 
-            //obsluga zadania klienta
-            sc.selectAction(fd,cli_struct[fd], *this, dbc);
+        //obsluga zadania klienta
+        sc.selectAction(fd,cli_struct[fd], *this, dbc);
 
-            // przywracam domyslne ustawienia, bo wyslalem, zostaje czyste na nastepny raz
-            cli_struct[fd].dealloc();
-            cli_struct[fd].init();
-        }
-        else
-            cout << "Jeszcze nie mam calej wiadomosci" << endl;
+        // przywracam domyslne ustawienia, bo wyslalem, zostaje czyste na nastepny raz
+        cli_struct[fd].dealloc();
+        cli_struct[fd].init();
     }
+
 }
 
 int ConnectionManager::handle_console_request() {
@@ -100,22 +94,14 @@ int ConnectionManager::handle_console_request() {
 
     if(buf == 'x' || buf == 'q')
     {
-        // zamykam polaczenia
-        for(int j = 3; j < fdmax+1; j++)
-        {
-            // nie zamykam pipe do lacznosci z watkiem i swojego socketa nasluchujacego
-            if(j != pipe_fd[0] && j != pipe_fd[1] && j != listenerfd)
-            {
-                close(j);
-                FD_CLR(j, &master);
-            }
-        }
+        waiter.close_all_descr();
 
-        // fdmax ustawiam na najnizsze mozliwe, bo zamknalem wszystkich klientow
-        fdmax = pipe_fd[0];
-        set_if_higher_fd(listenerfd);
-
+<<<<<<< HEAD
         if(buf == 'q') {
+=======
+        if(buf == 'q')
+        {
+>>>>>>> 023fd06f419005ae7d1eb4875fc1d5bc87de790a
             dbc.closeConnection();
             work = false;
         }
@@ -133,10 +119,10 @@ void ConnectionManager::handle_new_connection() {
     int attempts = 0;
 
     while(attempts < 20) {
-        sleep(2);
         if ((clientfd = accept(listenerfd, (sockaddr*)&clientaddr, &addrlength)) == -1)
         {
             attempts++;
+            delay();
             continue; // na wszelki wypadek nie wychodze jakby sie nie udalo accept
         }
         else
@@ -147,6 +133,7 @@ void ConnectionManager::handle_new_connection() {
                 perror("F_GETFL clientfd");
                 printf("~~ Connection from %s on socket %d refused. Retrying... \n", inet_ntoa(clientaddr.sin_addr), clientfd);
                 close(clientfd);
+                delay();
                 continue;
             }
             if (fcntl(clientfd, F_SETFL, flags | O_NONBLOCK) == -1) {
@@ -154,13 +141,14 @@ void ConnectionManager::handle_new_connection() {
                 perror("F_SETFL clientfd");
                 printf("~~ Connection from %s on socket %d refused. Retrying... \n", inet_ntoa(clientaddr.sin_addr), clientfd);
                 close(clientfd);
+                delay();
                 continue;
             }
-            FD_SET(clientfd, &master);
-            set_if_higher_fd(clientfd);
+
+            waiter.add_descr(clientfd);
 
             // tworze w mapie miejsce na strukture klienta
-            cli_struct[clientfd] = ClientStructure();
+            cli_struct[clientfd] = ClientStructure(clientfd);
 
             printf("~~ New connection from %s on socket %d \n", inet_ntoa(clientaddr.sin_addr), clientfd);
             return;
@@ -170,6 +158,10 @@ void ConnectionManager::handle_new_connection() {
     exit(EXIT_FAILURE);
 }
 
+void ConnectionManager::delay()
+{
+    sleep(2);
+}
 
 void ConnectionManager::create_listener(int PORT, int BACKLOG) {
     // TODO mozna dodac tak samo ograniczona ilosc prob stworzenia socketu nasluchujacego (tak jak w handle_new_connection), ale to do ustalenia
@@ -180,11 +172,11 @@ void ConnectionManager::create_listener(int PORT, int BACKLOG) {
     inet_pton(AF_INET, "0.0.0.0", &listeneraddr.sin_addr);
 
      while (!listener_set) {
-         sleep(2);
 
         if((listenerfd = socket(AF_INET, SOCK_STREAM, 0)) == -1)
         {
             perror("socket");
+            delay();
             continue;
         }
 
@@ -192,11 +184,13 @@ void ConnectionManager::create_listener(int PORT, int BACKLOG) {
         if (flags == -1) {
             perror("F_GETFL listenerfd");
             close(listenerfd);
+            delay();
             continue;
         }
         if (fcntl(listenerfd, F_SETFL, flags | O_NONBLOCK) == -1) {
             perror("F_SETFL listenerfd");
             close(listenerfd);
+            delay();
             continue;
         }
 
@@ -204,6 +198,7 @@ void ConnectionManager::create_listener(int PORT, int BACKLOG) {
         {
             perror("bind");
             close(listenerfd);
+            delay();
             continue;
         }
 
@@ -211,56 +206,32 @@ void ConnectionManager::create_listener(int PORT, int BACKLOG) {
         {
             perror("listen");
             close(listenerfd);
+            delay();
             continue;
         }
 
-        FD_SET(listenerfd, &master);
-        set_if_higher_fd(listenerfd);
         listener_set = true;
     }
 }
 
-void ConnectionManager::manage_connections(int BACKLOG, void* args) {
-
-    int* casted_args = (int*) (intptr_t) args;
-    pipe_fd[0] = casted_args[0];
-    pipe_fd[1] = casted_args[1];
-
-    FD_SET(pipe_fd[0], &master); // dodaje read pipe deskryptor do listy moich deskryptorow
-    fdmax = pipe_fd[0];
-
-    struct timeval tv;
-
-    create_listener(casted_args[2], BACKLOG);
+void ConnectionManager::manage_connections() {
 
     // glowna petla, czyli obsluguj wszystkie deskryptory
     while(work)
     {
-        tv = {2, 0};
-        ready = master; // przekopiuj oryginalny set, bo select zmienia seta
-        errors = master;
-        // TODO sprawdzenie, czy nie wywalilo klienta - errors powinien w jakis sposob zwracac deskryptor, gdzie wystapil blad
+        std::vector<int> ready_descr = waiter.make_select();
 
-        if(select(fdmax+1, &ready, (fd_set *)0, &errors, &tv) == -1) {
-            perror("select");
-            continue;
-        }
-
-        // patrze ktory deskryptor obudzil selecta
-        for(int i = 3; i < fdmax+1; i++)
+        // patrze ktory deskryptor obudzil selecta (jak select zwroci -1 to vector pusty, jak select wyskoczy to nic do niego nie wlozy wiec tez pusty)
+        for(auto &descr : ready_descr)
         {
-            if(FD_ISSET(i, &ready)) // sprawdzanie ktory deskryptor
-            {
-                if(i == listenerfd) { // to nasluchiwacz, wiec przyszlo nowe polaczenie od klienta
-                    handle_new_connection();
-                }
-                else if(i == pipe_fd[0]) { // watek nadrzedny cos chce
-                    if (handle_console_request() == 1) break;
-                }
-                else { // ktorys klient cos napisal
-                    handle_client_request(i);
-
-                }
+            if(descr == listenerfd) { // to nasluchiwacz, wiec przyszlo nowe polaczenie od klienta
+                handle_new_connection();
+            }
+            else if(descr == pipe_fd[0]) { // watek nadrzedny cos chce
+                if (handle_console_request() == 1) break;
+            }
+            else { // ktorys klient cos napisal
+                handle_client_request(descr);
             }
         }
     }
@@ -270,7 +241,3 @@ void ConnectionManager::manage_connections(int BACKLOG, void* args) {
     close(listenerfd);
 }
 
-void ConnectionManager::set_if_higher_fd(int fdnew) {
-    if(fdnew > fdmax) // jesli ten numer jest wiekszy od aktualnego to zapamietuje
-        fdmax = fdnew;
-}

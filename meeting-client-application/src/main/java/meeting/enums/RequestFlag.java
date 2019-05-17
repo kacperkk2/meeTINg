@@ -6,7 +6,7 @@ public enum RequestFlag {
     REGISTR, // rejestracja
 
     USERGRP, // wyświetl grupy użytkownika
-    SHOWGRP, // pokaż konkretną grupę
+    SHOWGRP, // pokaż konkretną grupę <-----czym sie rozni od: GRPEVNT, // wyświetl eventy grupy
     GRPLIST, // pokaż wszystkie dostepne grupy
     MAKEGRP, // stwórz nową grupę
     RMGROUP, // usuń grupę
@@ -15,7 +15,8 @@ public enum RequestFlag {
     MEMBREQ, // aplikuj o dolaczenie do grupy
 
     USERREQ, // wyświetl requesty użytkowników
-    USERDEC, // zaakceptuj/odrzuć użytkownika
+    USERDEC, // odrzuć użytkownika
+    USERACC, // zaakceptuj użytkownika
 
     GRPEVNT, // wyświetl eventy grupy
     SHOWEVT, // pokaż konkretny event
