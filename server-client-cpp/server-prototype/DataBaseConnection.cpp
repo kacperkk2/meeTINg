@@ -265,7 +265,7 @@ string DataBaseConnection::allGroups() {
 
 string DataBaseConnection::makeGroup(int userId, string groupName) {
 
-
+    string userName;
     int indeks = freeID("GROUPS", "group_id");
     try {
 
@@ -273,15 +273,21 @@ string DataBaseConnection::makeGroup(int userId, string groupName) {
         sql::ResultSet *res;
 
         stmt = con->createStatement();
-        cout << "INSERT INTO GROUPS VALUES(\"" + to_string(indeks) + "\",\"" + to_string(userId) + "\",\"" + groupName + "\")" << endl;
         stmt->executeUpdate(
                 "INSERT INTO GROUPS VALUES(\"" + to_string(indeks) + "\",\"" + to_string(userId) + "\",\"" + groupName + "\")");
+
+        res = stmt->executeQuery(
+                "select username from USER where user_id = " + to_string(userId));
+        while (res->next()) {
+
+            userName =  res->getString("username");
+        }
 
         stmt->close();
         res->close();
         delete res;
         delete stmt;
-        string response = "{\n  \"flag\" : \"MAKEGRP\", \n  \"id\": \"6\",\n  \"name\": \"Nowa grupa\",\n  \"leader\": \"Kacper Klimczuk\"\n}\n";
+        string response = " \"id\": \"" + to_string(indeks) + "\",\n  \"name\": \"" + groupName + "\",\n  \"leader\": \"" + userName + "\"\n}\n";
         return response;
 
     } catch (sql::SQLException &e) {
