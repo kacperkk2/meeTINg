@@ -5,7 +5,7 @@
 #include "ConnectionManager.h"
 #include "ConsoleManager.h"
 #include "PackageSizeParser.h"
-#include "ServerController.h"
+
 
 #include "mysql_connection.h"
 #include <cppconn/driver.h>

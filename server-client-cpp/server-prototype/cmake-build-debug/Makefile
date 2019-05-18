@@ -39,19 +39,19 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /snap/clion/70/bin/cmake/linux/bin/cmake
+CMAKE_COMMAND = /snap/clion/69/bin/cmake/linux/bin/cmake
 
 # The command to remove a file.
-RM = /snap/clion/70/bin/cmake/linux/bin/cmake -E remove -f
+RM = /snap/clion/69/bin/cmake/linux/bin/cmake -E remove -f
 
 # Escaping for special characters.
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/kklimczu/STUDIA/TIN/meeTINg/server-client-cpp/server-prototype
+CMAKE_SOURCE_DIR = /home/michal/Desktop/master/meeTINg/server-client-cpp/server-prototype
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/kklimczu/STUDIA/TIN/meeTINg/server-client-cpp/server-prototype/cmake-build-debug
+CMAKE_BINARY_DIR = /home/michal/Desktop/master/meeTINg/server-client-cpp/server-prototype/cmake-build-debug
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -59,7 +59,7 @@ CMAKE_BINARY_DIR = /home/kklimczu/STUDIA/TIN/meeTINg/server-client-cpp/server-pr
 # Special rule for the target rebuild_cache
 rebuild_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
-	/snap/clion/70/bin/cmake/linux/bin/cmake -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+	/snap/clion/69/bin/cmake/linux/bin/cmake -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
 .PHONY : rebuild_cache
 
 # Special rule for the target rebuild_cache
@@ -70,7 +70,7 @@ rebuild_cache/fast: rebuild_cache
 # Special rule for the target edit_cache
 edit_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
-	/snap/clion/70/bin/cmake/linux/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+	/snap/clion/69/bin/cmake/linux/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
 .PHONY : edit_cache
 
 # Special rule for the target edit_cache
@@ -80,9 +80,9 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/kklimczu/STUDIA/TIN/meeTINg/server-client-cpp/server-prototype/cmake-build-debug/CMakeFiles /home/kklimczu/STUDIA/TIN/meeTINg/server-client-cpp/server-prototype/cmake-build-debug/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/michal/Desktop/master/meeTINg/server-client-cpp/server-prototype/cmake-build-debug/CMakeFiles /home/michal/Desktop/master/meeTINg/server-client-cpp/server-prototype/cmake-build-debug/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/kklimczu/STUDIA/TIN/meeTINg/server-client-cpp/server-prototype/cmake-build-debug/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/michal/Desktop/master/meeTINg/server-client-cpp/server-prototype/cmake-build-debug/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -285,6 +285,33 @@ Group.cpp.s:
 	$(MAKE) -f CMakeFiles/server_prototype.dir/build.make CMakeFiles/server_prototype.dir/Group.cpp.s
 .PHONY : Group.cpp.s
 
+MessageParser.o: MessageParser.cpp.o
+
+.PHONY : MessageParser.o
+
+# target to build an object file
+MessageParser.cpp.o:
+	$(MAKE) -f CMakeFiles/server_prototype.dir/build.make CMakeFiles/server_prototype.dir/MessageParser.cpp.o
+.PHONY : MessageParser.cpp.o
+
+MessageParser.i: MessageParser.cpp.i
+
+.PHONY : MessageParser.i
+
+# target to preprocess a source file
+MessageParser.cpp.i:
+	$(MAKE) -f CMakeFiles/server_prototype.dir/build.make CMakeFiles/server_prototype.dir/MessageParser.cpp.i
+.PHONY : MessageParser.cpp.i
+
+MessageParser.s: MessageParser.cpp.s
+
+.PHONY : MessageParser.s
+
+# target to generate assembly for a file
+MessageParser.cpp.s:
+	$(MAKE) -f CMakeFiles/server_prototype.dir/build.make CMakeFiles/server_prototype.dir/MessageParser.cpp.s
+.PHONY : MessageParser.cpp.s
+
 Offer.o: Offer.cpp.o
 
 .PHONY : Offer.o
@@ -474,6 +501,9 @@ help:
 	@echo "... Group.o"
 	@echo "... Group.i"
 	@echo "... Group.s"
+	@echo "... MessageParser.o"
+	@echo "... MessageParser.i"
+	@echo "... MessageParser.s"
 	@echo "... Offer.o"
 	@echo "... Offer.i"
 	@echo "... Offer.s"

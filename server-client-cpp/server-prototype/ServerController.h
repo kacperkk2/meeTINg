@@ -8,9 +8,11 @@
 #include <string>
 #include "DataBaseConnection.h"
 #include "ClientStructure.h"
+#include "nlohmann/json.hpp"
 
 
 using namespace std;
+using namespace nlohmann;
 
 class ConnectionManager;
 class DataBaseConnection;
@@ -21,10 +23,11 @@ class ServerController {
 public:
 
     ServerController();
-    static void selectAction(int fd, ClientStructure client, ConnectionManager &cm, DataBaseConnection &dbc);
-    static string userLogin(string message, ConnectionManager &cm, DataBaseConnection &dbc);
+    static void selectAction(int fd, json messageJson, ConnectionManager &cm, DataBaseConnection &dbc);
     static void sendResponse(int fd, char* response, int responseSize, ConnectionManager &cm);
-    static string userRegistration(string message, ConnectionManager &cm, DataBaseConnection &dbc);
+
+    static string userLogin(string, string, ConnectionManager &cm, DataBaseConnection &dbc);
+    static string userRegistration(string, string, ConnectionManager &cm, DataBaseConnection &dbc);
 };
 
 

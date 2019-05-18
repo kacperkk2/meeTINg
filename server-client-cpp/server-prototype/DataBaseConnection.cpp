@@ -21,7 +21,7 @@ DataBaseConnection::DataBaseConnection(string userName, string password) {
 
         /* Create a connection */
         driver = get_driver_instance();
-        con = driver->connect("tcp://127.0.0.1:3306", "phpmyadmin", "KKlimczu&&90");
+        con = driver->connect("tcp://127.0.0.1:3306", "root", "admin");
         /* Connect to the MySQL test database */
         con->setSchema("meeting");
 
@@ -102,7 +102,7 @@ string DataBaseConnection::userLoginData(string userName) {
 
     try {
         sql::ResultSet *res;
-        string userData = "{";
+        string userData = ",";
         string rola;
 
         stmt = con->createStatement();

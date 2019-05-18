@@ -4,6 +4,7 @@
 #include "PackageSizeParser.h"
 #include <string.h>
 #include <arpa/inet.h>
+#include <iostream>
 
 
 class ClientStructure {

@@ -5,6 +5,7 @@
 #include <fcntl.h>
 #include "ConnectionManager.h"
 #include "ServerController.h"
+#include "MessageParser.h"
 
 
 using namespace std;
@@ -75,8 +76,11 @@ void ConnectionManager::handle_client_request(int fd) {
     if(status == 1) {
         cout << "Mam juz cala wiadomosc, moge ja zwrocic" << endl;
 
+        //parsowanie wiadmosci
+        json messageJson = mp.parseRequest(cli_struct[fd]);
+
         //obsluga zadania klienta
-        sc.selectAction(fd,cli_struct[fd], *this, dbc);
+        sc.selectAction(fd, messageJson, *this, dbc);
 
         // przywracam domyslne ustawienia, bo wyslalem, zostaje czyste na nastepny raz
         cli_struct[fd].dealloc();
@@ -96,12 +100,8 @@ int ConnectionManager::handle_console_request() {
     {
         waiter.close_all_descr();
 
-<<<<<<< HEAD
-        if(buf == 'q') {
-=======
         if(buf == 'q')
         {
->>>>>>> 023fd06f419005ae7d1eb4875fc1d5bc87de790a
             dbc.closeConnection();
             work = false;
         }

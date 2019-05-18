@@ -1,4 +1,4 @@
-/snap/clion/70/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /home/kklimczu/STUDIA/TIN/meeTINg/server-client-cpp/server-prototype
+/snap/clion/69/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /home/michal/Desktop/master/meeTINg/server-client-cpp/server-prototype
 -- Configuring done
 -- Generating done
--- Build files have been written to: /home/kklimczu/STUDIA/TIN/meeTINg/server-client-cpp/server-prototype/cmake-build-debug
+-- Build files have been written to: /home/michal/Desktop/master/meeTINg/server-client-cpp/server-prototype/cmake-build-debug

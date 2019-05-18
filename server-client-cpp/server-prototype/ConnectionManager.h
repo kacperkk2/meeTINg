@@ -4,10 +4,12 @@
 #include <map>
 #include "ClientStructure.h"
 #include "ServerController.h"
+#include "MessageParser.h"
 #include "Waiter.h"
 #include <netinet/in.h>
 
-class ServerController;
+//class ServerController;
+//class MessageParser;
 class ConnectionManager {
 
 private:
@@ -21,6 +23,7 @@ private:
     char buf; // jednobajtowe komunikaty od watka nadrzednego
     bool work = true;
 
+    MessageParser mp;
     ServerController sc;
     DataBaseConnection &dbc;
 public:

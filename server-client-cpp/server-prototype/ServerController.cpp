@@ -31,25 +31,16 @@ ServerController::ServerController() {
 
 }
 
-void ServerController::selectAction(int fd, ClientStructure client, ConnectionManager &cm, DataBaseConnection &dbc) {
-    ResponseFlag enumFlag;
-    int messageSize = client.get_whole_package_size();
-    char messageChar[messageSize];
-    memcpy(messageChar, client.get_buffer_message(), messageSize);
-    string message(messageChar, messageSize);
-    string flag = message.substr(4, 7);
-    string data = message.substr(11);
+void ServerController::selectAction(int fd, json messageJson, ConnectionManager &cm, DataBaseConnection &dbc) {
     string response;
-    enumFlag = convert(flag);
+    ResponseFlag enumFlag = convert(messageJson["flag"]);
 
-
-    //enumFlag = REGISTR;
     switch(enumFlag) {
         case LOGGING:
-            response = userLogin(data, cm, dbc);
+            response = userLogin(messageJson["username"], messageJson["password"] , cm, dbc);
             break;
         case REGISTR:
-            response = userRegistration(data, cm, dbc);
+            response = userRegistration(messageJson["username"], messageJson["password"], cm, dbc);
             break;
         default:
             cout << "default switch" << endl;
@@ -75,27 +66,27 @@ void ServerController::selectAction(int fd, ClientStructure client, ConnectionMa
 
 }
 
-string ServerController::userLogin(string message, ConnectionManager &cm, DataBaseConnection &dbc) {
+string ServerController::userLogin(string userName, string userPassword, ConnectionManager &cm, DataBaseConnection &dbc) {
     string returnMessage;
-    auto j = json::parse(message);
 
-    if (!dbc.correctLogon(j["username"], j["password"])) {
-        returnMessage = "__ERROR";
+
+    if (!dbc.correctLogon(userName, userPassword)) {
+        returnMessage = "{\"flag\":\"__ERROR\"}";
     } else {
-        returnMessage = "LOGGING";
-        returnMessage += dbc.userLoginData(j["username"]);
+        returnMessage = "{\"flag\":\"LOGGING\"";
+        returnMessage += dbc.userLoginData(userName);
     }
     return returnMessage;
 }
 
-string ServerController::userRegistration(string message, ConnectionManager &cm, DataBaseConnection &dbc) {
+string ServerController::userRegistration(string userName, string userPassword, ConnectionManager &cm, DataBaseConnection &dbc) {
     string returnMessage;
-    auto j = json::parse(message);
 
-    if (!dbc.correctRegistration(j["username"], j["password"])) {
-        returnMessage = "__ERROR";
+
+    if (!dbc.correctRegistration(userName, userPassword)) {
+        returnMessage = "{\"flag\":\"__ERROR\"}";
     } else {
-        returnMessage = "REGISTR";
+        returnMessage = "{\"flag\":\"REGISTR\"}";
         //returnMessage += dbc.userLoginData(j["username"]);
     }
     return returnMessage;
