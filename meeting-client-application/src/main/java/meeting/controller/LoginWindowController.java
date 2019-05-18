@@ -50,12 +50,17 @@ public class LoginWindowController {
                 .password(hashedPassword)
                 .build();
 
+        System.out.println("Dlugosc username: " + usernameField.getText().length());
+        System.out.println("Dlugosc password: " + hashedPassword.length());
+
         // robie JSONa
         GsonBuilder builder = new GsonBuilder();
         builder.setPrettyPrinting();
         Gson gson = builder.create();
 
         String requestString = gson.toJson(request);
+
+        System.out.println("Dlugosc requestString: " + requestString.length());
 
         // wysyłam tego requesta, po czym przychodzi response:
         String responseString = client.sendRequestRecResponse(requestString);
