@@ -24,6 +24,8 @@ ResponseFlag convert(const std::string& str)
     if(str == "LOGGING") return LOGGING;
     else if(str == "REGISTR") return REGISTR;
     else if(str == "USERGRP") return USERGRP;
+    else if(str == "GRPLIST") return GRPLIST;
+    else if(str == "MAKEGRP") return MAKEGRP;
 
 }
 
@@ -46,6 +48,12 @@ void ServerController::selectAction(int fd, json messageJson, ConnectionManager 
             break;
         case USERGRP:
             response = userGroups(messageJson["userId"], dbc);
+            break;
+        case GRPLIST:
+            response = allGroups(dbc);
+            break;
+        case MAKEGRP:
+            response = makeGroup(messageJson["leaderId"], messageJson["groupName"],  dbc);
             break;
         default:
             cout << "default switch" << endl;
@@ -109,3 +117,24 @@ string ServerController::userGroups(int userId, DataBaseConnection &dbc) {
 
     return returnMessage;
 }
+
+string ServerController::allGroups(DataBaseConnection &dbc) {
+    string returnMessage;
+
+    returnMessage = "{\"flag\":\"GRPLIST\",";
+    returnMessage += dbc.allGroups();
+
+
+    return returnMessage;
+}
+
+string ServerController::makeGroup(int userId, string groupName, DataBaseConnection &dbc) {
+    string returnMessage;
+
+    returnMessage = "{\"flag\":\"MAKEGRP\",";
+    returnMessage += dbc.makeGroup(userId, groupName);
+
+    cout << returnMessage<<endl;
+    return returnMessage;
+}
+

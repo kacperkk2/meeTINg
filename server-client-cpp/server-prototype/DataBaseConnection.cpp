@@ -112,9 +112,9 @@ string DataBaseConnection::userLoginData(string userName) {
             userData += "\"id\":\"" + res->getString("user_id") + "\",";
             userData += "\"username\":\"" + res->getString("username") + "\",";
             userData += "\"password\":\"" + res->getString("hashed_password") + "\",";
-            if(res->getString("system_role") == "0") {
+            if (res->getString("system_role") == "0") {
                 rola = "USER";
-            }else rola = "TEAM_LEADER";
+            } else rola = "TEAM_LEADER";
             userData += "\"systemRole\":\"" + rola + "\"}";
 
         }
@@ -138,29 +138,24 @@ string DataBaseConnection::userLoginData(string userName) {
 
 bool DataBaseConnection::correctRegistration(string userName, string password) {
     int count;
+    int indeks = freeID("USER", "user_id");
     try {
         sql::ResultSet *res;
 
         stmt = con->createStatement();
-        res = stmt->executeQuery("select count(*) from USER where username = \'" + userName+ "\'");
+        res = stmt->executeQuery("select count(*) from USER where username = \'" + userName + "\'");
 
         while (res->next()) {
 
             count = res->getInt(1);
         }
 
-        if(count == 0){
+        if (count == 0) {
 
-            sql::ResultSet *res1;
-            int indeks;
-            res1 = stmt->executeQuery("select max(user_id) from USER");
-
-            while (res1->next()) {
-                indeks = res1->getInt(1) + 1;
-
-            }
-            cout<<"INSERT INTO USER VALUES(\"" + to_string(indeks) + "\",\"" + userName + "\",\"" + password + "\",\"0\")"<<endl;
-            stmt->executeUpdate("INSERT INTO USER VALUES(\"" + to_string(indeks) + "\",\"" + userName + "\",\"" + password + "\",\"0\")");
+            //cout<<"INSERT INTO USER VALUES(\"" + to_string(indeks) + "\",\"" + userName + "\",\"" + password + "\",\"0\")"<<endl;
+            stmt->executeUpdate(
+                    "INSERT INTO USER VALUES(\"" + to_string(indeks) + "\",\"" + userName + "\",\"" + password +
+                    "\",\"0\")");
 
             return 1;
         }
@@ -182,7 +177,6 @@ bool DataBaseConnection::correctRegistration(string userName, string password) {
 }
 
 
-
 void DataBaseConnection::closeConnection() {
     cout << "Close connection" << endl;
     con->close();
@@ -192,6 +186,7 @@ void DataBaseConnection::closeConnection() {
 
 string DataBaseConnection::userGroupsList(int userId) {
 
+    int iterator = 0;
     string userGroups = "\"items\": [";
 
     try {
@@ -199,20 +194,20 @@ string DataBaseConnection::userGroupsList(int userId) {
 
         stmt = con->createStatement();
 
-        res = stmt->executeQuery("select g.group_id, g.name, (select USER.username from USER where user_id = g.leader_id) as leader_name from GROUP_USER gu join GROUPS g on gu.group_id = g.group_id  join USER u on u.user_id = gu.user_id where u.user_id = " + to_string(userId));
+        res = stmt->executeQuery(
+                "select g.group_id, g.name, (select USER.username from USER where user_id = g.leader_id) as leader_name from GROUP_USER gu join GROUPS g on gu.group_id = g.group_id  join USER u on u.user_id = gu.user_id where u.user_id = " +
+                to_string(userId));
         while (res->next()) {
-
+            iterator++;
             userGroups += "{\"id\":\"" + res->getString("group_id") + "\",";
             userGroups += "\"name\":\"" + res->getString("name") + "\",";
             userGroups += "\"leader\":\"" + res->getString("leader_name") + "\"},";
 
         }
-        userGroups.pop_back();
+        if(iterator != 0) userGroups.pop_back();
         userGroups += "]}";
 
-        cout << userGroups << endl;
 
-        //userData = "{\"flag\" : \"USERGRP\",  \"items\": [{\"id\": \"1\",\"name\": \"TKOM\",\"leader\": \"Gawkowski\"},{\"id\": \"21\",\"name\": \"TIN\",\"leader\": \"Blinowski\"}]}       ";
         stmt->close();
         res->close();
         delete res;
@@ -228,4 +223,109 @@ string DataBaseConnection::userGroupsList(int userId) {
         cout << ", SQLState: " << e.getSQLState() << " )" << endl;
     }
 
+}
+
+string DataBaseConnection::allGroups() {
+
+    string userGroups = "\"items\": [";
+
+    try {
+        sql::ResultSet *res;
+
+        stmt = con->createStatement();
+
+        res = stmt->executeQuery(
+                "select g.group_id, g.name, (select USER.username from USER where user_id = g.leader_id) as leader_name from GROUPS g");
+        while (res->next()) {
+
+            userGroups += "{\"id\":\"" + res->getString("group_id") + "\",";
+            userGroups += "\"name\":\"" + res->getString("name") + "\",";
+            userGroups += "\"leader\":\"" + res->getString("leader_name") + "\"},";
+
+        }
+        userGroups.pop_back();
+        userGroups += "]}";
+
+        stmt->close();
+        res->close();
+        delete res;
+        delete stmt;
+
+        return userGroups;
+
+    } catch (sql::SQLException &e) {
+        cout << "# ERR: SQLException in " << __FILE__;
+        cout << "(" << __FUNCTION__ << ") on line " << __LINE__ << endl;
+        cout << "# ERR: " << e.what();
+        cout << " (MySQL error code: " << e.getErrorCode();
+        cout << ", SQLState: " << e.getSQLState() << " )" << endl;
+    }
+
+}
+
+string DataBaseConnection::makeGroup(int userId, string groupName) {
+
+
+    int indeks = freeID("GROUPS", "group_id");
+    try {
+
+
+        sql::ResultSet *res;
+
+        stmt = con->createStatement();
+        cout << "INSERT INTO GROUPS VALUES(\"" + to_string(indeks) + "\",\"" + to_string(userId) + "\",\"" + groupName + "\")" << endl;
+        stmt->executeUpdate(
+                "INSERT INTO GROUPS VALUES(\"" + to_string(indeks) + "\",\"" + to_string(userId) + "\",\"" + groupName + "\")");
+
+        stmt->close();
+        res->close();
+        delete res;
+        delete stmt;
+        string response = "{\n  \"flag\" : \"MAKEGRP\", \n  \"id\": \"6\",\n  \"name\": \"Nowa grupa\",\n  \"leader\": \"Kacper Klimczuk\"\n}\n";
+        return response;
+
+    } catch (sql::SQLException &e) {
+        cout << "# ERR: SQLException in " << __FILE__;
+        cout << "(" << __FUNCTION__ << ") on line " << __LINE__ << endl;
+        cout << "# ERR: " << e.what();
+        cout << " (MySQL error code: " << e.getErrorCode();
+        cout << ", SQLState: " << e.getSQLState() << " )" << endl;
+    }
+
+
+}
+
+int DataBaseConnection::freeID(string tableName, string idName) {
+
+    int id;
+
+    try {
+
+        sql::ResultSet *res1;
+
+        stmt = con->createStatement();
+
+        res1 = stmt->executeQuery(
+                "SELECT min(g." + idName + ") + 1 as 'id' \n" "from " + tableName + " g\n" "left outer join " +
+                tableName + " b\n" "on b." +
+                idName + "= g." + idName + " +1\n" "where b." + idName + " is null");
+        while (res1->next()) {
+            id = stoi(res1->getString("id"));
+
+        }
+
+        stmt->close();
+        res1->close();
+        delete res1;
+        delete stmt;
+
+        return id;
+
+    } catch (sql::SQLException &e) {
+        cout << "# ERR: SQLException in " << __FILE__;
+        cout << "(" << __FUNCTION__ << ") on line " << __LINE__ << endl;
+        cout << "# ERR: " << e.what();
+        cout << " (MySQL error code: " << e.getErrorCode();
+        cout << ", SQLState: " << e.getSQLState() << " )" << endl;
+    }
 }
