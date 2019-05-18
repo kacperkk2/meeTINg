@@ -21,3 +21,19 @@ json MessageParser::parseRequest(ClientStructure client){
 
     return j;
 }
+//{
+//"array": [
+//{
+//"id" : 1,
+//"name" : "siema"
+//},
+//{
+//"id" : 2,
+//"name" : "siemaa"
+//},
+//{
+//"id" : 3,
+//"name" : "siemaaa"
+//}
+//],
+//}

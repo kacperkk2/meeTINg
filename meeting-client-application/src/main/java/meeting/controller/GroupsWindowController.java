@@ -144,25 +144,27 @@ public class GroupsWindowController {
 
         String requestString = gson.toJson(groupRequest);
 
-//        String groupResponseString = client.sendRequestRecResponse(requestString);
+        String groupResponseString = client.sendRequestRecResponse(requestString);
 
         // symulacja poprawnego
-        String groupResponseString =
-                "{\n" +
-                "  \"flag\" : \"USERGRP\", \n" +
-                "  \"items\": [\n" +
-                "    {\n" +
-                "      \"id\": \"1\",\n" +
-                "      \"name\": \"TKOM\",\n" +
-                "      \"leader\": \"Gawkowski\"\n" +
-                "    },\n" +
-                "    {\n" +
-                "      \"id\": \"21\",\n" +
-                "      \"name\": \"TIN\",\n" +
-                "      \"leader\": \"Blinowski\"\n" +
-                "    }\n" +
-                "  ]\n" +
-                "}\n";
+//        String groupResponseString =
+//                "{\n" +
+//                "  \"flag\" : \"USERGRP\", \n" +
+//                "  \"items\": [\n" +
+//                "    {\n" +
+//                "      \"id\": \"1\",\n" +
+//                "      \"name\": \"TKOM\",\n" +
+//                "      \"leader\": \"Gawkowski\"\n" +
+//                "    },\n" +
+//                "    {\n" +
+//                "      \"id\": \"21\",\n" +
+//                "      \"name\": \"TIN\",\n" +
+//                "      \"leader\": \"Blinowski\"\n" +
+//                "    }\n" +
+//                "  ]\n" +
+//                "}\n";
+
+        System.out.println(groupResponseString);
 
         GroupListResponse groupListResponse = gson.fromJson(groupResponseString, GroupListResponse.class);
 

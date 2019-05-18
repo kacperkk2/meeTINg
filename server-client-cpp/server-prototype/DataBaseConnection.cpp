@@ -183,10 +183,49 @@ bool DataBaseConnection::correctRegistration(string userName, string password) {
 
 
 
-
 void DataBaseConnection::closeConnection() {
     cout << "Close connection" << endl;
     con->close();
 
     delete con;
+}
+
+string DataBaseConnection::userGroupsList(int userId) {
+
+    string userGroups = "\"items\": [";
+
+    try {
+        sql::ResultSet *res;
+
+        stmt = con->createStatement();
+
+        res = stmt->executeQuery("select g.group_id, g.name, (select USER.username from USER where user_id = g.leader_id) as leader_name from GROUP_USER gu join GROUPS g on gu.group_id = g.group_id  join USER u on u.user_id = gu.user_id where u.user_id = " + to_string(userId));
+        while (res->next()) {
+
+            userGroups += "{\"id\":\"" + res->getString("group_id") + "\",";
+            userGroups += "\"name\":\"" + res->getString("name") + "\",";
+            userGroups += "\"leader\":\"" + res->getString("leader_name") + "\"},";
+
+        }
+        userGroups.pop_back();
+        userGroups += "]}";
+
+        cout << userGroups << endl;
+
+        //userData = "{\"flag\" : \"USERGRP\",  \"items\": [{\"id\": \"1\",\"name\": \"TKOM\",\"leader\": \"Gawkowski\"},{\"id\": \"21\",\"name\": \"TIN\",\"leader\": \"Blinowski\"}]}       ";
+        stmt->close();
+        res->close();
+        delete res;
+        delete stmt;
+
+        return userGroups;
+
+    } catch (sql::SQLException &e) {
+        cout << "# ERR: SQLException in " << __FILE__;
+        cout << "(" << __FUNCTION__ << ") on line " << __LINE__ << endl;
+        cout << "# ERR: " << e.what();
+        cout << " (MySQL error code: " << e.getErrorCode();
+        cout << ", SQLState: " << e.getSQLState() << " )" << endl;
+    }
+
 }

@@ -23,6 +23,7 @@ ResponseFlag convert(const std::string& str)
 {
     if(str == "LOGGING") return LOGGING;
     else if(str == "REGISTR") return REGISTR;
+    else if(str == "USERGRP") return USERGRP;
 
 }
 
@@ -33,6 +34,7 @@ ServerController::ServerController() {
 
 void ServerController::selectAction(int fd, json messageJson, ConnectionManager &cm, DataBaseConnection &dbc) {
     string response;
+
     ResponseFlag enumFlag = convert(messageJson["flag"]);
 
     switch(enumFlag) {
@@ -41,6 +43,9 @@ void ServerController::selectAction(int fd, json messageJson, ConnectionManager 
             break;
         case REGISTR:
             response = userRegistration(messageJson["username"], messageJson["password"], dbc);
+            break;
+        case USERGRP:
+            response = userGroups(messageJson["userId"], dbc);
             break;
         default:
             cout << "default switch" << endl;
@@ -90,5 +95,17 @@ string ServerController::userRegistration(string userName, string userPassword, 
     } else {
         returnMessage = "{\"flag\":\"REGISTR\"}";
     }
+    return returnMessage;
+}
+
+string ServerController::userGroups(int userId, DataBaseConnection &dbc) {
+    string returnMessage;
+
+    returnMessage = "{\"flag\":\"USERGRP\",";
+    returnMessage += dbc.userGroupsList(userId);
+
+    cout << returnMessage << endl;
+    cout << "{\"flag\" : \"USERGRP\",  \"items\": [{\"id\": \"1\",\"name\": \"TKOM\",\"leader\": \"Gawkowski\"},{\"id\": \"21\",\"name\": \"TIN\",\"leader\": \"Blinowski\"}]}";
+
     return returnMessage;
 }

@@ -28,6 +28,7 @@ public:
     string userLoginData(string userName);
     bool correctRegistration(string userName, string password);
     //ResultSet groupsList();
+    string userGroupsList(int userId);
 
 };
 

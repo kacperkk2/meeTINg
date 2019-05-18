@@ -80,7 +80,7 @@ void ConnectionManager::handle_client_request(int fd) {
         json messageJson = MessageParser::parseRequest(cli_struct[fd]);
 
         //obsluga zadania klienta
-        sc.selectAction(fd, messageJson, *this, dbc);
+        ServerController::selectAction(fd, messageJson, *this, dbc);
 
         // przywracam domyslne ustawienia, bo wyslalem, zostaje czyste na nastepny raz
         cli_struct[fd].dealloc();
