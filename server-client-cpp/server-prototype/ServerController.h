@@ -24,10 +24,10 @@ public:
 
     ServerController();
     static void selectAction(int fd, json messageJson, ConnectionManager &cm, DataBaseConnection &dbc);
-    static void sendResponse(int fd, char* response, int responseSize, ConnectionManager &cm);
+    static void sendResponse(int fd, string response, ConnectionManager &cm);
 
-    static string userLogin(string, string, ConnectionManager &cm, DataBaseConnection &dbc);
-    static string userRegistration(string, string, ConnectionManager &cm, DataBaseConnection &dbc);
+    static string userLogin(string, string, DataBaseConnection &dbc);
+    static string userRegistration(string, string, DataBaseConnection &dbc);
 };
 
 

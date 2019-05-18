@@ -4,7 +4,6 @@
 #include <map>
 #include "ClientStructure.h"
 #include "ServerController.h"
-#include "MessageParser.h"
 #include "Waiter.h"
 #include <netinet/in.h>
 
@@ -23,7 +22,6 @@ private:
     char buf; // jednobajtowe komunikaty od watka nadrzednego
     bool work = true;
 
-    MessageParser mp;
     ServerController sc;
     DataBaseConnection &dbc;
 public:

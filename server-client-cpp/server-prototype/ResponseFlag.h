@@ -5,6 +5,8 @@
 #ifndef SERVER_PROTOTYPE_RESPONSEFLAG_H
 #define SERVER_PROTOTYPE_RESPONSEFLAG_H
 
+using namespace std;
+
 enum ResponseFlag {
 
 
@@ -42,6 +44,8 @@ enum ResponseFlag {
 
 
     __ERROR  // błąd
+
+
 };
 
 #endif //SERVER_PROTOTYPE_RESPONSEFLAG_H

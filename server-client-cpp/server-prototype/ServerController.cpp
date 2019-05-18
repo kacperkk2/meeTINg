@@ -12,6 +12,7 @@
 #include <string>
 #include <iostream>
 #include <cstring>
+#include <boost/config.hpp>
 
 
 using namespace nlohmann;
@@ -26,7 +27,6 @@ ResponseFlag convert(const std::string& str)
 }
 
 
-
 ServerController::ServerController() {
 
 }
@@ -37,16 +37,20 @@ void ServerController::selectAction(int fd, json messageJson, ConnectionManager 
 
     switch(enumFlag) {
         case LOGGING:
-            response = userLogin(messageJson["username"], messageJson["password"] , cm, dbc);
+            response = userLogin(messageJson["username"], messageJson["password"] , dbc);
             break;
         case REGISTR:
-            response = userRegistration(messageJson["username"], messageJson["password"], cm, dbc);
+            response = userRegistration(messageJson["username"], messageJson["password"], dbc);
             break;
         default:
             cout << "default switch" << endl;
             break;
     }
 
+    sendResponse(fd, response, cm);
+}
+
+void ServerController::sendResponse(int fd, string response, ConnectionManager &cm){
     char header[4];
     PackageSizeParser::serialize_int_32(header, response.size());
 
@@ -66,9 +70,8 @@ void ServerController::selectAction(int fd, json messageJson, ConnectionManager 
 
 }
 
-string ServerController::userLogin(string userName, string userPassword, ConnectionManager &cm, DataBaseConnection &dbc) {
+string ServerController::userLogin(string userName, string userPassword, DataBaseConnection &dbc) {
     string returnMessage;
-
 
     if (!dbc.correctLogon(userName, userPassword)) {
         returnMessage = "{\"flag\":\"__ERROR\"}";
@@ -79,15 +82,13 @@ string ServerController::userLogin(string userName, string userPassword, Connect
     return returnMessage;
 }
 
-string ServerController::userRegistration(string userName, string userPassword, ConnectionManager &cm, DataBaseConnection &dbc) {
+string ServerController::userRegistration(string userName, string userPassword, DataBaseConnection &dbc) {
     string returnMessage;
-
 
     if (!dbc.correctRegistration(userName, userPassword)) {
         returnMessage = "{\"flag\":\"__ERROR\"}";
     } else {
         returnMessage = "{\"flag\":\"REGISTR\"}";
-        //returnMessage += dbc.userLoginData(j["username"]);
     }
     return returnMessage;
 }

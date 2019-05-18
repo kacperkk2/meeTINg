@@ -14,7 +14,7 @@ class MessageParser {
 
 public:
     MessageParser();
-    json parseRequest(ClientStructure client);
+    static json parseRequest(ClientStructure client);
 
 };
 

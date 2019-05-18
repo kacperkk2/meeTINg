@@ -77,7 +77,7 @@ void ConnectionManager::handle_client_request(int fd) {
         cout << "Mam juz cala wiadomosc, moge ja zwrocic" << endl;
 
         //parsowanie wiadmosci
-        json messageJson = mp.parseRequest(cli_struct[fd]);
+        json messageJson = MessageParser::parseRequest(cli_struct[fd]);
 
         //obsluga zadania klienta
         sc.selectAction(fd, messageJson, *this, dbc);
