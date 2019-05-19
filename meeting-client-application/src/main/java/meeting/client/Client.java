@@ -36,7 +36,7 @@ public class Client {
     }
 
     private void init() {
-        bytesNeeded = 128; // ile chcemy za pierwszym zamahem pobrac bajtow
+        bytesNeeded = 200; // ile chcemy za pierwszym zamahem pobrac bajtow
         bufferPackage = new byte[bytesNeeded]; // robie bufor zeby pomiescil ten pierwszy rzut
         messageSize = -1;
         bytesReceived = 0;
@@ -47,13 +47,14 @@ public class Client {
     public String sendRequestRecResponse(String request) {
 
         // przychodzi sam json w stringu, wiec dodajemy do niego dlugosc i to jest paczka
-        String requestPackage = addHeader(request);
+        byte[] header = convertIntToHeader(request.length());
 
-        System.out.println("Do wyslania wiadomosc (z header): " + requestPackage);
-        System.out.println("Do wyslania bajtow (z naglowkiem): " + requestPackage.getBytes().length);
+        System.out.println("Do wyslania wiadomosc (bez headera): " + request);
+        System.out.println("Do wyslania bajtow (z naglowkiem): " + (request.getBytes().length + 4));
 
         // wysyla naszego requesta
-        sendRequest(requestPackage.getBytes());
+        byte[] pack = conc(header, request.getBytes());
+        sendRequest(pack);
 
         // odbierze cala pacze i umiesci w bufferPackage
         receiveResponse();
@@ -68,10 +69,15 @@ public class Client {
         return response;
     }
 
-    private String removeHeader(byte[] responsePackage) {
+    private byte[] conc(byte[] header, byte[] reqBytes) {
+        byte[] pack = new byte[header.length + reqBytes.length];
+        System.arraycopy(header, 0, pack, 0, header.length);
+        System.arraycopy(reqBytes, 0, pack, header.length, reqBytes.length);
 
-        // biore pierwsze 4 bajty paczki, na nich jest zapisany rozmiar dalszej czesci
-        //int mSize = convertHeaderToInt(Arrays.copyOfRange(responsePackage, 0, 4));
+        return pack;
+    }
+
+    private String removeHeader(byte[] responsePackage) {
 
         // wycinam naglowek
         byte[] response = Arrays.copyOfRange(responsePackage, 4, packageSize);
@@ -136,14 +142,6 @@ public class Client {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    private String addHeader(String message) {
-        // dlugosc wiadomosci do tablicy header[4]
-        byte[] header = convertIntToHeader(message.length());
-
-        // cala paczka to header + wiadomosc
-        return new String(header) + message;
     }
 
     private int convertHeaderToInt(byte[] header) {
