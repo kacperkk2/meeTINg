@@ -146,7 +146,7 @@ public class GroupsWindowController {
 
         String groupResponseString = client.sendRequestRecResponse(requestString);
 
-        // symulacja poprawnego
+        //symulacja poprawnego
 //        String groupResponseString =
 //                "{\n" +
 //                "  \"flag\" : \"USERGRP\", \n" +
@@ -213,15 +213,10 @@ public class GroupsWindowController {
 
                 String requestString = gson.toJson(newGroupRequest);
 
-//                String response = client.sendRequestRecResponse(requestString);
 
-                String response =
-                        "{\n" +
-                        "  \"flag\" : \"MAKEGRP\", \n" +
-                        "  \"id\": \"6\",\n" +
-                        "  \"name\": \"Nowa grupa\",\n" +
-                        "  \"leader\": \"Kacper Klimczuk\"\n" +
-                        "}\n";
+                String response = client.sendRequestRecResponse(requestString);
+
+
 
                 NewGroupResponse newGroupResponse = gson.fromJson(response, NewGroupResponse.class);
 

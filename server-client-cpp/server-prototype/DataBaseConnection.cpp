@@ -44,13 +44,10 @@ bool DataBaseConnection::correctLogon(string userName, string password) {
 
         stmt = con->createStatement();
 
-        res = stmt->executeQuery("select * from USER");
+        res = stmt->executeQuery("select count(*) from USER where username = \"" + userName + "\" and hashed_password = \"" + password + "\"" );
         while (res->next()) {
 
-            if (res->getString("username").c_str() == userName) {
-                if (res->getString("hashed_password").c_str() == password) return 1;
-
-            }
+            if (res->getInt("count(*)") == 1) return 1;
 
         }
         stmt->close();
@@ -152,7 +149,6 @@ bool DataBaseConnection::correctRegistration(string userName, string password) {
 
         if (count == 0) {
 
-            //cout<<"INSERT INTO USER VALUES(\"" + to_string(indeks) + "\",\"" + userName + "\",\"" + password + "\",\"0\")"<<endl;
             stmt->executeUpdate(
                     "INSERT INTO USER VALUES(\"" + to_string(indeks) + "\",\"" + userName + "\",\"" + password +
                     "\",\"0\")");
@@ -195,11 +191,12 @@ string DataBaseConnection::userGroupsList(int userId) {
         stmt = con->createStatement();
 
         res = stmt->executeQuery(
-                "select g.group_id, g.name, (select USER.username from USER where user_id = g.leader_id) as leader_name from GROUP_USER gu join GROUPS g on gu.group_id = g.group_id  join USER u on u.user_id = gu.user_id where u.user_id = " +
+                "select g.group_id, g.name, (select USER.username from USER where user_id = g.leader_id) as leader_name from GROUP_USER gu join GROUPS g on gu.group_id = g.group_id  join USER u on u.user_id = gu.user_id where gu.status = 1 and u.user_id = " +
                 to_string(userId));
         while (res->next()) {
             iterator++;
             userGroups += "{\"id\":\"" + res->getString("group_id") + "\",";
+
             userGroups += "\"name\":\"" + res->getString("name") + "\",";
             userGroups += "\"leader\":\"" + res->getString("leader_name") + "\"},";
 
@@ -225,7 +222,7 @@ string DataBaseConnection::userGroupsList(int userId) {
 
 }
 
-string DataBaseConnection::allGroups() {
+string DataBaseConnection::allGroups(int userId) {
 
     string userGroups = "\"items\": [";
 
@@ -235,7 +232,7 @@ string DataBaseConnection::allGroups() {
         stmt = con->createStatement();
 
         res = stmt->executeQuery(
-                "select g.group_id, g.name, (select USER.username from USER where user_id = g.leader_id) as leader_name from GROUPS g");
+                "select g.group_id, g.name, (select USER.username from USER where user_id = g.leader_id) as leader_name from GROUPS g where (select count(*) from GROUP_USER where GROUP_USER.group_id = g.group_id and GROUP_USER.user_id = " + to_string(userId) + " and GROUP_USER.status = 1) = 0 and (select count(*) from GROUP_USER where GROUP_USER.group_id = g.group_id and GROUP_USER.user_id = \"" + to_string(userId) + "\" and GROUP_USER.status = 0) = 0");
         while (res->next()) {
 
             userGroups += "{\"id\":\"" + res->getString("group_id") + "\",";
@@ -335,3 +332,27 @@ int DataBaseConnection::freeID(string tableName, string idName) {
         cout << ", SQLState: " << e.getSQLState() << " )" << endl;
     }
 }
+
+bool DataBaseConnection::applyGroup(int userId, int groupId) {
+    try {
+        stmt = con->createStatement();
+        cout << "INSERT INTO GROUP_USER VALUES(" + to_string(groupId) + "," + to_string(userId) + ", 0)" << endl;
+        stmt->executeUpdate(
+                "INSERT INTO GROUP_USER VALUES(\"" + to_string(groupId) + "\",\"" + to_string(userId) + "\", 0)");
+
+
+    stmt->close();
+    delete stmt;
+    return 1;
+
+    } catch (sql::SQLException &e) {
+        cout << "# ERR: SQLException in " << __FILE__;
+        cout << "(" << __FUNCTION__ << ") on line " << __LINE__ << endl;
+        cout << "# ERR: " << e.what();
+        cout << " (MySQL error code: " << e.getErrorCode();
+        cout << ", SQLState: " << e.getSQLState() << " )" << endl;
+
+    }
+    return 0;
+}
+

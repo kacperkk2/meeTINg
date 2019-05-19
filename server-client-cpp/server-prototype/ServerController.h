@@ -29,8 +29,9 @@ public:
     static string userLogin(string, string, DataBaseConnection &dbc);
     static string userRegistration(string, string, DataBaseConnection &dbc);
     static string userGroups(int userId, DataBaseConnection &dbc);
-    static string allGroups(DataBaseConnection &dbc);
+    static string allGroups(int userId, DataBaseConnection &dbc);
     static string makeGroup(int userId, string groupName, DataBaseConnection &dbc);
+    static string applyGroup(int userId, int groupId, DataBaseConnection &dbc);
 
 };
 

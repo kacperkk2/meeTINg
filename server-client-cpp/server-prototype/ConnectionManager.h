@@ -7,8 +7,7 @@
 #include "Waiter.h"
 #include <netinet/in.h>
 
-//class ServerController;
-//class MessageParser;
+
 class ConnectionManager {
 
 private:
@@ -37,5 +36,4 @@ public:
 
 };
 
-//userData = "{\"flag\" : \"USERGRP\",\"items\": [{\"id\": \"1\",\"name\": \"TKOM\",\"leader\": \"Gawkowski\"},{\"id\": \"21\",\"name\": \"TIN\",\"leader\": \"Blinowski\"}]}       ";
 #endif //SERVER_PROTOTYPE_CONNECTIONMANAGER_H

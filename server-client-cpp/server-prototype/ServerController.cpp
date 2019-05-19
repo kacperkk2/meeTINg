@@ -26,6 +26,7 @@ ResponseFlag convert(const std::string& str)
     else if(str == "USERGRP") return USERGRP;
     else if(str == "GRPLIST") return GRPLIST;
     else if(str == "MAKEGRP") return MAKEGRP;
+    else if(str == "MEMBREQ") return MEMBREQ;
 
 }
 
@@ -38,6 +39,7 @@ void ServerController::selectAction(int fd, json messageJson, ConnectionManager 
     string response;
 
     ResponseFlag enumFlag = convert(messageJson["flag"]);
+    cout << "json: " << messageJson << endl;
 
     switch(enumFlag) {
         case LOGGING:
@@ -50,10 +52,14 @@ void ServerController::selectAction(int fd, json messageJson, ConnectionManager 
             response = userGroups(messageJson["userId"], dbc);
             break;
         case GRPLIST:
-            response = allGroups(dbc);
+            response = allGroups(messageJson["userId"], dbc);
             break;
         case MAKEGRP:
             response = makeGroup(messageJson["leaderId"], messageJson["groupName"],  dbc);
+            break;
+        case MEMBREQ:
+            cout <<  "membreq" << endl;
+            response = applyGroup(messageJson["userId"], messageJson["groupId"],  dbc);
             break;
         default:
             cout << "default switch" << endl;
@@ -112,18 +118,14 @@ string ServerController::userGroups(int userId, DataBaseConnection &dbc) {
     returnMessage = "{\"flag\":\"USERGRP\",";
     returnMessage += dbc.userGroupsList(userId);
 
-    cout << returnMessage << endl;
-    cout << "{\"flag\" : \"USERGRP\",  \"items\": [{\"id\": \"1\",\"name\": \"TKOM\",\"leader\": \"Gawkowski\"},{\"id\": \"21\",\"name\": \"TIN\",\"leader\": \"Blinowski\"}]}";
-
     return returnMessage;
 }
 
-string ServerController::allGroups(DataBaseConnection &dbc) {
+string ServerController::allGroups(int userId, DataBaseConnection &dbc) {
     string returnMessage;
 
     returnMessage = "{\"flag\":\"GRPLIST\",";
-    returnMessage += dbc.allGroups();
-
+    returnMessage += dbc.allGroups(userId);
 
     return returnMessage;
 }
@@ -134,7 +136,17 @@ string ServerController::makeGroup(int userId, string groupName, DataBaseConnect
     returnMessage = "{\"flag\":\"MAKEGRP\",";
     returnMessage += dbc.makeGroup(userId, groupName);
 
-    cout << returnMessage<<endl;
     return returnMessage;
 }
+
+string ServerController::applyGroup(int userId, int groupId, DataBaseConnection &dbc) {
+    string returnMessage;
+
+    returnMessage = "{\"flag\":\"MEMBREQ\"}";
+    if (dbc.applyGroup(userId, groupId)) return returnMessage;
+
+    returnMessage = "{\"flag\":\"__ERROR\"}";
+    return returnMessage;
+}
+
 

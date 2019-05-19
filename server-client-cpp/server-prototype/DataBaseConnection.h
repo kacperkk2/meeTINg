@@ -29,16 +29,18 @@ public:
     bool correctRegistration(string userName, string password);
     //ResultSet groupsList();
     string userGroupsList(int userId);
-    string allGroups();
+    string allGroups(int userId);
     string makeGroup(int userId, string groupName);
     int freeID(string tableName, string idName);
+    bool applyGroup(int userId, int groupId);
 
 };
 
 //{
-//"flag": "MAKEGRP",
-//"leaderId": 7,
-//"groupName": "ddd"
+//"flag": "MEMBREQ",
+//"userId": 6,
+//"groupId": 6
 //}
+
 
 #endif //TESTDB_DATABASECONNECTION_H
