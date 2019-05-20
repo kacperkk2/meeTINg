@@ -105,27 +105,28 @@ public class RequestsReviewWindowController {
 
         String requestString = gson.toJson(request);
 
-//        String response = client.sendRequestRecResponse(requestString);
+
+        String response = client.sendRequestRecResponse(requestString);
 
         // imitacja response
-        String response =
-                "{\n" +
-                "  \"flag\" : \"USERREQ\", \n" +
-                "  \"items\": [\n" +
-                "    {\n" +
-                "      \"groupId\": \"101\",\n" +
-                "      \"groupName\": \"TKOM 2019\",\n" +
-                "      \"userName\": \"Marcin Jancurewicz\",\n" +
-                "      \"userId\": \"20\"\n" +
-                "    },\n" +
-                "    {\n" +
-                "      \"groupId\": \"121\",\n" +
-                "      \"groupName\": \"TKOM 2018\",\n" +
-                "      \"userName\": \"Michael do Santa\",\n" +
-                "      \"userId\": \"23\"\n" +
-                "    }\n" +
-                "  ]\n" +
-                "}\n";
+//        String response =
+//                "{\n" +
+//                "  \"flag\" : \"USERREQ\", \n" +
+//                "  \"items\": [\n" +
+//                "    {\n" +
+//                "      \"groupId\": \"101\",\n" +
+//                "      \"groupName\": \"TKOM 2019\",\n" +
+//                "      \"userName\": \"Marcin Jancurewicz\",\n" +
+//                "      \"userId\": \"20\"\n" +
+//                "    },\n" +
+//                "    {\n" +
+//                "      \"groupId\": \"121\",\n" +
+//                "      \"groupName\": \"TKOM 2018\",\n" +
+//                "      \"userName\": \"Michael do Santa\",\n" +
+//                "      \"userId\": \"23\"\n" +
+//                "    }\n" +
+//                "  ]\n" +
+//                "}\n";
 
         RequestReviewListResponse reqRevListResponse = gson.fromJson(response, RequestReviewListResponse.class);
 
@@ -188,14 +189,14 @@ public class RequestsReviewWindowController {
                 .build();
 
         String requestString = gson.toJson(request);
-
-//        String response = client.sendRequestRecResponse(requestString);
+        System.out.println(requestString);
+        String decisionResponse = client.sendRequestRecResponse(requestString);
 
         // imitacja response
-        String decisionResponse =
-                "{\n" +
-                "  \"flag\" : \"USERACC\" \n" +
-                "}\n";
+//        String decisionResponse =
+//                "{\n" +
+//                "  \"flag\" : \"USERACC\" \n" +
+//                "}\n";
 
         FlagResponse response = gson.fromJson(decisionResponse, FlagResponse.class);
 

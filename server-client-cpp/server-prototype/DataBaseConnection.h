@@ -33,13 +33,17 @@ public:
     string makeGroup(int userId, string groupName);
     int freeID(string tableName, string idName);
     bool applyGroup(int userId, int groupId);
+    string userRequest(int leaderId);
+    bool userAccept(int userId, int groupId);
+    bool userDecline(int userId, int groupId);
+    string groupEvents(int groupId);
+    bool makeEvent(int groupId, string eventName);
 
 };
-
 //{
-//"flag": "MEMBREQ",
-//"userId": 6,
-//"groupId": 6
+//"flag": "MAKEEVT",
+//"groupId": 3,
+//"eventName": "12"
 //}
 
 

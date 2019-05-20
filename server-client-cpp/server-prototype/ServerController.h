@@ -32,6 +32,11 @@ public:
     static string allGroups(int userId, DataBaseConnection &dbc);
     static string makeGroup(int userId, string groupName, DataBaseConnection &dbc);
     static string applyGroup(int userId, int groupId, DataBaseConnection &dbc);
+    static string userRequest(int leaderId,  DataBaseConnection &dbc);
+    static string userAccept(int userId, int groupId, DataBaseConnection &dbc);
+    static string userDecline(int userId, int groupId, DataBaseConnection &dbc);
+    static string groupEvents(int groupId, DataBaseConnection &dbc);
+    static string makeEvent(int groupId, string eventName, DataBaseConnection &dbc);
 
 };
 

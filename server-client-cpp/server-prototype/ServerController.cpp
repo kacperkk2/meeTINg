@@ -27,6 +27,11 @@ ResponseFlag convert(const std::string& str)
     else if(str == "GRPLIST") return GRPLIST;
     else if(str == "MAKEGRP") return MAKEGRP;
     else if(str == "MEMBREQ") return MEMBREQ;
+    else if(str == "USERREQ") return USERREQ;
+    else if(str == "USERACC") return USERACC;
+    else if(str == "USERDEC") return USERDEC;
+    else if(str == "GRPEVNT") return GRPEVNT;
+    else if(str == "MAKEEVT") return MAKEEVT;
 
 }
 
@@ -58,8 +63,22 @@ void ServerController::selectAction(int fd, json messageJson, ConnectionManager 
             response = makeGroup(messageJson["leaderId"], messageJson["groupName"],  dbc);
             break;
         case MEMBREQ:
-            cout <<  "membreq" << endl;
             response = applyGroup(messageJson["userId"], messageJson["groupId"],  dbc);
+            break;
+        case USERREQ:
+            response = userRequest(messageJson["leaderId"],  dbc);
+            break;
+        case USERACC:
+            response = userAccept(messageJson["userId"], messageJson["groupId"], dbc);
+            break;
+        case USERDEC:
+            response = userDecline(messageJson["userId"], messageJson["groupId"], dbc);
+            break;
+        case GRPEVNT:
+            response = groupEvents(messageJson["groupId"], dbc);
+            break;
+        case MAKEEVT:
+            response = makeEvent(messageJson["groupId"],messageJson["eventName"], dbc);
             break;
         default:
             cout << "default switch" << endl;
@@ -144,6 +163,54 @@ string ServerController::applyGroup(int userId, int groupId, DataBaseConnection 
 
     returnMessage = "{\"flag\":\"MEMBREQ\"}";
     if (dbc.applyGroup(userId, groupId)) return returnMessage;
+
+    returnMessage = "{\"flag\":\"__ERROR\"}";
+    return returnMessage;
+}
+
+string ServerController::userRequest(int leaderId, DataBaseConnection &dbc) {
+    string returnMessage;
+
+    returnMessage = "{\"flag\":\"USERREQ\",";
+    returnMessage += dbc.userRequest(leaderId);
+
+    return returnMessage;
+}
+
+string ServerController::userAccept(int userId, int groupId, DataBaseConnection &dbc) {
+    string returnMessage;
+
+    returnMessage = "{\"flag\":\"USERACC\"}";
+    if (dbc.userAccept(userId, groupId)) return returnMessage;
+
+    returnMessage = "{\"flag\":\"__ERROR\"}";
+    return returnMessage;
+}
+
+string ServerController::userDecline(int userId, int groupId, DataBaseConnection &dbc) {
+    string returnMessage;
+
+    returnMessage = "{\"flag\":\"USERDEC\"}";
+    if (dbc.userDecline(userId, groupId)) return returnMessage;
+
+    returnMessage = "{\"flag\":\"__ERROR\"}";
+    return returnMessage;
+}
+
+string ServerController::groupEvents(int groupId, DataBaseConnection &dbc)  {
+    string returnMessage;
+
+    returnMessage = "{\"flag\":\"GRPEVNT\",";
+    returnMessage += dbc.groupEvents(groupId);
+
+    return returnMessage;
+}
+
+string ServerController::makeEvent(int groupId, string eventName, DataBaseConnection &dbc)  {
+    string returnMessage;
+
+    returnMessage = "{\"flag\":\"MAKEEVT\", \"id\": \"" + to_string(groupId) + "\", \"name\": \"" + eventName + "\" }";
+    if (dbc.makeEvent(groupId, eventName)) return returnMessage;
 
     returnMessage = "{\"flag\":\"__ERROR\"}";
     return returnMessage;
