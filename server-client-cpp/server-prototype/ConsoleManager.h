@@ -9,7 +9,7 @@ private:
     ConsoleManager() = default;
 
 public:
-    static void runConsole(int writefd);
+    static void runConsole(int readfd, int writefd);
 
 };
 

@@ -23,7 +23,7 @@ using namespace std;
 
 void *handle_client(void* args)
 {
-    DataBaseConnection dbc("root", "admin");
+    DataBaseConnection dbc("root", "marcin11");
     ConnectionManager connectionManager(dbc, args, BACKLOG);
     connectionManager.manage_connections();
     return 0;
@@ -59,10 +59,12 @@ int main(int argc, char* argv[])
     }
 
     int writefd = pipefd[1];
+    int readfd = pipefd[0];
 
-    ConsoleManager::runConsole(writefd);
+    ConsoleManager::runConsole(readfd, writefd);
 
     close(writefd);
+    close(readfd);
     pthread_join(thread_id, NULL);
 
     return 0;

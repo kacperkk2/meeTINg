@@ -4,8 +4,9 @@
 
 using namespace std;
 
-void ConsoleManager::runConsole(int writefd) {
-    char message;
+void ConsoleManager::runConsole(int readfd, int writefd) {
+    char message=0;
+    char response=0;
 
     while(message != 'q')
     {
@@ -36,6 +37,12 @@ void ConsoleManager::runConsole(int writefd) {
         if(write(writefd, &message, sizeof(message)) == -1)
         {
             perror("write");
+            exit(EXIT_FAILURE);
+        }
+
+        response='S';
+        if(read(readfd, &response, sizeof(response)) == -1){
+            perror("read");
             exit(EXIT_FAILURE);
         }
     }

@@ -96,6 +96,15 @@ int ConnectionManager::handle_console_request() {
         exit(EXIT_FAILURE);
     }
 
+//    switch(buf){
+//        case 'x':
+//            waiter.close_all_descr();
+//            break;
+//        case 'q':
+//            waiter.close_all_descr();
+//            dbc.closeConnection();
+//            break;
+//    }
     if(buf == 'x' || buf == 'q')
     {
         waiter.close_all_descr();
@@ -105,9 +114,19 @@ int ConnectionManager::handle_console_request() {
             dbc.closeConnection();
             work = false;
         }
+        char message=0;
 
+        if(write(pipe_fd[1], &message,sizeof(message))){
+            perror("write_writefd_pipe");
+            exit(EXIT_FAILURE);
+        }
+        cout << message << " lmao it works" << endl;
         return 1;
     }
+
+
+
+
     return 0;
 }
 

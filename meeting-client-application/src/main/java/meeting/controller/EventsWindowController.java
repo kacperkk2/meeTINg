@@ -173,7 +173,7 @@ public class EventsWindowController {
                 .flag(RequestFlag.MAKEEVT.toString())
                 .groupId(pickedGroup.getId())
                 .eventName(name)
-                .build();1
+                .build();
 
         String request = gson.toJson(newEventRequest);
         System.out.println(request);
