@@ -104,26 +104,6 @@ public class EventsWindowController {
         String requestString = gson.toJson(request);
 
         String response = client.sendRequestRecResponse(requestString);
-        System.out.println("moja eventy: " + response);
-
-//        String response =
-//                "{\n" +
-//                "  \"flag\" : \"GRPEVNT\", \n" +
-//                "  \"items\": [\n" +
-//                "    {\n" +
-//                "      \"id\": \"101\",\n" +
-//                "      \"name\": \"Idziemy na piwko\"\n" +
-//                "    },\n" +
-//                "    {\n" +
-//                "      \"id\": \"102\",\n" +
-//                "      \"name\": \"Jedziemy na działkę\"\n" +
-//                "    },\n" +
-//                "    {\n" +
-//                "      \"id\": \"103\",\n" +
-//                "      \"name\": \"Jedziemy do Jozefa Polovki\"\n" +
-//                "    }\n" +
-//                "  ]\n" +
-//                "}\n";
 
         EventListResponse eventListResponse = gson.fromJson(response, EventListResponse.class);
 
@@ -173,19 +153,11 @@ public class EventsWindowController {
                 .flag(RequestFlag.MAKEEVT.toString())
                 .groupId(pickedGroup.getId())
                 .eventName(name)
-                .build();1
+                .build();
 
         String request = gson.toJson(newEventRequest);
-        System.out.println(request);
 
         String response = client.sendRequestRecResponse(request);
-
-//        String response =
-//                "{\n" +
-//                "  \"flag\" : \"MAKEEVT\", \n" +
-//                "  \"id\": \"65\",\n" +
-//                "  \"name\": \"Nowy event\"\n" +
-//                "}\n";
 
         NewEventResponse newEventResponse = gson.fromJson(response, NewEventResponse.class);
 

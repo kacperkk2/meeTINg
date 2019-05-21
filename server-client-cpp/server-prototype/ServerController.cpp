@@ -44,7 +44,6 @@ void ServerController::selectAction(int fd, json messageJson, ConnectionManager 
     string response;
 
     ResponseFlag enumFlag = convert(messageJson["flag"]);
-    cout << "json: " << messageJson << endl;
 
     switch(enumFlag) {
         case LOGGING:

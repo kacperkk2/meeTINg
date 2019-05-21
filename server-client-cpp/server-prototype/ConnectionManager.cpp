@@ -74,7 +74,7 @@ void ConnectionManager::handle_client_request(int fd) {
 
     // struct cli mowi ze odebral cala wiadomosc
     if(status == 1) {
-        cout << "Mam juz cala wiadomosc, moge ja zwrocic" << endl;
+        //cout << "Mam juz cala wiadomosc, moge ja zwrocic" << endl;
 
         //parsowanie wiadmosci
         json messageJson = MessageParser::parseRequest(cli_struct[fd]);

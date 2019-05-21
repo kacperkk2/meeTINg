@@ -39,7 +39,7 @@ public:
     }
 
     void set_part_message(int bytes) {
-        std::cout << "-- CLI_STRUCT --- OTRZYMALEM: " << bytes << std::endl;
+        //std::cout << "-- CLI_STRUCT --- OTRZYMALEM: " << bytes << std::endl;
 
         memcpy(&buffer_message[bytes_received], receive_buffer, bytes);
         bytes_received += bytes;
@@ -64,8 +64,8 @@ public:
         // dealokacja bufora receive_buffer, bo zakonczylismy odbior pakietu
         delete [] receive_buffer;
 
-        std::cout << "-- CLI_STRUCT --- MAM LACZNIE: " << bytes_received << std::endl;
-        std::cout << "-- CLI_STRUCT --- A CALY PAKIET MA: " << whole_package_size << std::endl;
+        //std::cout << "-- CLI_STRUCT --- MAM LACZNIE: " << bytes_received << std::endl;
+        //std::cout << "-- CLI_STRUCT --- A CALY PAKIET MA: " << whole_package_size << std::endl;
     }
 
     int receive_part_message() {

@@ -66,35 +66,6 @@ bool DataBaseConnection::correctLogon(string userName, string password) {
     return 0;
 }
 
-
-void DataBaseConnection::usersList() {
-
-    try {
-        sql::ResultSet *res;
-
-        stmt = con->createStatement();
-
-        res = stmt->executeQuery("select * from USER");
-        while (res->next()) {
-
-            cout << res->getString("username").c_str() << endl;
-
-        }
-        stmt->close();
-        res->close();
-        delete res;
-        delete stmt;
-
-    } catch (sql::SQLException &e) {
-        cout << "# ERR: SQLException in " << __FILE__;
-        cout << "(" << __FUNCTION__ << ") on line " << __LINE__ << endl;
-        cout << "# ERR: " << e.what();
-        cout << " (MySQL error code: " << e.getErrorCode();
-        cout << ", SQLState: " << e.getSQLState() << " )" << endl;
-    }
-
-}
-
 string DataBaseConnection::userLoginData(string userName) {
 
     try {
@@ -361,7 +332,7 @@ bool DataBaseConnection::applyGroup(int userId, int groupId) {
 string DataBaseConnection::userRequest(int leaderId) {
 
     string response = "\"items\": [";
-
+    int iterator = 0;
     try {
         sql::ResultSet *res;
 
@@ -370,14 +341,14 @@ string DataBaseConnection::userRequest(int leaderId) {
                 "SELECT g.group_id, g.name, u.username, u.user_id FROM GROUP_USER gu JOIN GROUPS g on g.group_id = gu.group_id join USER u on u.user_id = gu.user_id"
                 " WHERE g.leader_id =" + to_string(leaderId) + " and gu.status = 0");
         while (res->next()) {
-
+            iterator++;
             response += "{\"groupId\":\"" + res->getString("group_id") + "\",";
             response += "\"groupName\":\"" + res->getString("name") + "\",";
             response += "\"userName\":\"" + res->getString("username") + "\",";
             response += "\"userId\":\"" + res->getString("user_id") + "\"},";
 
         }
-        response.pop_back();
+        if(iterator != 0) response.pop_back();
         response += "]}";
 
         stmt->close();
@@ -400,7 +371,6 @@ string DataBaseConnection::userRequest(int leaderId) {
 bool DataBaseConnection::userAccept(int userId, int groupId) {
     try {
         stmt = con->createStatement();
-        cout << "UPDATE GROUP_USER SET status = 1 WHERE group_id = " + to_string(groupId) + " and user_id = " + to_string(userId) << endl;
         stmt->executeUpdate(
                 "UPDATE GROUP_USER SET status = 1 WHERE group_id = " + to_string(groupId) + " and user_id = " + to_string(userId));
 
@@ -422,7 +392,6 @@ bool DataBaseConnection::userAccept(int userId, int groupId) {
 bool DataBaseConnection::userDecline(int userId, int groupId) {
     try {
         stmt = con->createStatement();
-        cout << "DELETE FROM GROUP_USER WHERE group_id = " + to_string(groupId) + " and user_id = " + to_string(userId) << endl;
         stmt->executeUpdate(
                 "DELETE FROM GROUP_USER WHERE group_id = " + to_string(groupId) + " and user_id = " + to_string(userId));
 
@@ -479,7 +448,7 @@ string DataBaseConnection::groupEvents(int groupId) {
 
 bool DataBaseConnection::makeEvent(int groupId, string eventName) {
     int indeks = freeID("EVENT", "event_id");
-    cout << "INSERT INTO EVENT VALUES(\"" + to_string(indeks) + "\",\"" + eventName + "\",\"" + to_string(groupId) + "\", \"deafult_description\")" << endl;
+
     try {
         stmt = con->createStatement();
         stmt->executeUpdate(

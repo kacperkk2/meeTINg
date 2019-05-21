@@ -73,12 +73,6 @@ public class AllGroupsWindowController {
 
         String membershipResponseString = client.sendRequestRecResponse(requestString);
 
-        // symulacja poprawnego
-//        String membershipResponseString =
-//                "{\n" +
-//                "  \"flag\" : \"MEMBREQ\" \n" +
-//                "}\n";
-
         FlagResponse response = gson.fromJson(membershipResponseString, FlagResponse.class);
 
         if(response.getFlag().equals(ResponseFlag.__ERROR.toString())) {
@@ -158,26 +152,7 @@ public class AllGroupsWindowController {
 
         String requestString = gson.toJson(allGroupsRequest);
 
-
         String allGroupsResponseString = client.sendRequestRecResponse(requestString);
-
-        // symulacja poprawnego
-//        String allGroupsResponseString =
-//                "{\n" +
-//                "  \"flag\" : \"GRPLIST\", \n" +
-//                "  \"items\": [\n" +
-//                "    {\n" +
-//                "      \"id\": \"4\",\n" +
-//                "      \"name\": \"MAD\",\n" +
-//                "      \"leader\": \"Stronkowski\"\n" +
-//                "    },\n" +
-//                "    {\n" +
-//                "      \"id\": \"3\",\n" +
-//                "      \"name\": \"FO\",\n" +
-//                "      \"leader\": \"Gradowski\"\n" +
-//                "    }\n" +
-//                "  ]\n" +
-//                "}\n";
 
         GroupListResponse groupListResponse = gson.fromJson(allGroupsResponseString, GroupListResponse.class);
 
